@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bid Detail - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <main class="main-content detail-wrapper" style="padding: 0;">
+      <!-- Header -->
+      <div style="padding: 16px 24px; border-bottom: 1px solid var(--border-color); background: #FFF;">
+        <a href="bidding.html" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 500; color: var(--primary-teal); text-decoration: none; margin-bottom: 8px; font-size: 13px;">
+          <i class="ph ph-arrow-left"></i> Back to Bidding Management
+        </a>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+              <h1 style="font-size: 20px; margin: 0; color: var(--text-dark);">BID-00800</h1>
+              <span class="badge bid-review" id="header-bid-status" style="border-radius: 12px; padding: 2px 10px; font-size: 12px; font-weight: 600;">Under Review</span>
+              <button class="btn btn-primary" id="btn-edit-bid" style="padding: 4px 12px; font-size: 13px; margin-left: 8px;"><i class="ph ph-pencil-simple"></i> Edit</button>
+            </div>
+            <div style="color: var(--text-muted); font-size: 14px;">Digital Dynamics Â· TechCorp Solutions</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bid-detail-layout">
+        
+        <!-- LEFT COLUMN -->
+        <div class="bid-col-left">
+          <div class="association-card" style="border-radius: var(--radius-md);">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+              <strong>Request Summary</strong>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div class="card-row"><span class="c-label">Client</span> <span class="c-val">TechCorp Solutions</span></div>
+              <div class="card-row"><span class="c-label">Industry</span> <span class="c-val">Financial Services</span></div>
+              <div class="card-row"><span class="c-label">Location</span> <span class="c-val">New York, USA</span></div>
+              <div class="card-row"><span class="c-label">Bid type</span> <span class="c-val"><span style="background: #E0F2FE; color: #0284C7; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">ODC</span></span></div>
+              <div class="card-row"><span class="c-label">Estimated value</span> <span class="c-val" style="color: var(--primary-teal); font-weight: 600;">$180,000</span></div>
+              <div class="card-row"><span class="c-label">Bid deadline</span> <span class="c-val">2023-11-15</span></div>
+              <div class="card-row"><span class="c-label">Sales owner</span> <span class="c-val">Alex Thompson</span></div>
+            </div>
+          </div>
+
+          <!-- Account Context Block -->
+          <div class="association-card" style="border-radius: var(--radius-md); background: #F8FAFC;">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+              <strong>Account Context</strong>
+              <a href="company.html" style="font-size: 12px; color: var(--primary-teal); font-weight: 500; text-decoration: none;">View Account</a>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div class="card-row"><span class="c-label">Customer Size</span> <span class="c-val" style="font-weight: 500;">Whale</span></div>
+              <div class="card-row"><span class="c-label">Potential Tag</span> <span class="c-val"><span class="badge b-yellow" style="font-size: 10px; padding: 2px 6px;">Mega-potential</span></span></div>
+              <div class="card-row"><span class="c-label">Account Health</span> <span class="c-val" style="color: #DC2626; font-weight: 500;"><i class="ph-fill ph-warning-circle" style="margin-right: 4px;"></i> Red</span></div>
+              <div class="card-row"><span class="c-label">Service Line</span> <span class="c-val">CRM, AI</span></div>
+            </div>
+          </div>
+
+          <div class="association-card" style="border-radius: var(--radius-md);">
+            <div class="card-header" style="background: transparent; border-bottom: none; display: flex; justify-content: space-between; align-items: center;">
+              <strong>RFP from Client</strong>
+              <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-upload-simple"></i> Upload file</button>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div class="upload-zone" style="margin-bottom: 16px;">
+                <i class="ph ph-cloud-arrow-up" style="font-size: 32px; color: var(--primary-teal); margin-bottom: 8px;"></i>
+                <div style="color: var(--primary-teal); font-weight: 500; font-size: 13px;">Drag and drop file here or <br><span style="text-decoration: underline;">browse files</span></div>
+              </div>
+
+              <!-- File List -->
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <i class="ph ph-file-csv" style="font-size: 24px; color: #E74C3C;"></i>
+                  <div>
+                    <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">bids-import-template.csv</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Excel Â· 116 B Â· Alex Thompson (Sales) Â· 2026-06-14 20:56</div>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <i class="ph ph-file-pdf" style="font-size: 24px; color: #E74C3C;"></i>
+                  <div>
+                    <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">RFP_Document.pdf</div>
+                    <div style="font-size: 11px; color: var(--text-light);">PDF Â· 2.4 MB Â· Alex Thompson (Sales) Â· 2023-10-18 09:30</div>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <i class="ph ph-file-doc" style="font-size: 24px; color: #E74C3C;"></i>
+                  <div>
+                    <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">Technical_Specs.docx</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Word Â· 890 KB Â· Alex Thompson (Sales) Â· 2023-10-19 14:15</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MIDDLE COLUMN -->
+        <div class="bid-col-mid">
+          <div class="detail-tabs" id="bid-tabs" style="border-radius: var(--radius-md) var(--radius-md) 0 0; background: #FFF;">
+            <div class="detail-tab active" data-key="overview">Overview</div>
+            <div class="detail-tab" data-key="deliverables">Deliverables</div>
+            <div class="detail-tab" data-key="discussion">Discussion</div>
+            <div class="detail-tab" data-key="teamAccess">Team & Access</div>
+          </div>
+
+          <div style="background: #FFF; padding: 24px; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 var(--radius-md) var(--radius-md); min-height: 500px;">
+            
+            <!-- OVERVIEW TAB -->
+            <div class="tab-content active" id="overview">
+              <h2 style="font-size: 16px; margin-bottom: 24px;">Summary</h2>
+              
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; letter-spacing: 0.5px;">BIDDING STATUS</div>
+              <span class="badge bid-review" id="summary-bid-status" style="border-radius: 12px; padding: 4px 12px; font-size: 12px; font-weight: 600; display: inline-block; margin-bottom: 32px;">Under Review</span>
+
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; letter-spacing: 0.5px;">BID OVERVIEW</div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;">
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DEAL ID</div>
+                  <div class="c-val" style="color: var(--text-dark);">D-426-0000012</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DEAL NAME</div>
+                  <div class="c-val" style="color: var(--primary-teal); font-weight: 500;">Enterprise SaaS rollout</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">COMPANY NAME</div>
+                  <div class="c-val" style="color: var(--primary-teal); font-weight: 500;">TechCorp Solutions</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">INDUSTRY</div>
+                  <div class="c-val" style="color: var(--text-dark);">Financial Services</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">COUNTRY/REGION</div>
+                  <div class="c-val" style="color: var(--text-dark);">Singapore</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">PROJECT TYPE</div>
+                  <div class="c-val" style="color: var(--text-dark);">Project based</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">ESTIMATE VALUE</div>
+                  <div class="c-val" style="color: var(--text-dark); font-weight: 500;">$180,000</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">CLOSE DATE</div>
+                  <div class="c-val" style="color: var(--text-dark);">2026-09-01</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">CLIENT SEGMENTATION</div>
+                  <div class="c-val"><span style="background: #F0F0FF; color: #5C5CFF; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">T2</span></div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">CURRENCY</div>
+                  <div class="c-val" style="color: var(--text-dark);">USD</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">SERVICE PROVIDER</div>
+                  <div class="c-val" style="color: var(--text-dark);">Techvify Software</div>
+                </div>
+              </div>
+
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; letter-spacing: 0.5px;">REQUEST</div>
+              
+              <div class="request-field-view">
+                <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">CLIENT HIGHLIGHTS</div>
+                <div class="c-val" style="color: var(--text-dark); margin-bottom: 16px;" id="val-client-high">TechCorp Solutions is a mid-size financial services firm in New York. Primary contact: John Smith, CTO. Client is evaluating an ODC model for cloud migration and cost optimization.</div>
+              </div>
+              <div class="request-field-edit hidden" style="margin-bottom: 16px;">
+                <label>Client Highlights</label>
+                <textarea class="form-control" rows="3" id="input-client-high">TechCorp Solutions is a mid-size financial services firm in New York. Primary contact: John Smith, CTO. Client is evaluating an ODC model for cloud migration and cost optimization.</textarea>
+              </div>
+
+              <div class="request-field-view">
+                <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">BUSINESS NEED & PAIN POINT</div>
+                <div class="c-val" style="color: var(--text-dark); margin-bottom: 16px;" id="val-pain-point">Legacy on-prem infrastructure limits scalability. Need to reduce operational costs by ~30% while meeting SOC2 and PCI-DSS compliance.</div>
+              </div>
+              <div class="request-field-edit hidden" style="margin-bottom: 16px;">
+                <label>Business Need & Pain Point</label>
+                <textarea class="form-control" rows="3" id="input-pain-point">Legacy on-prem infrastructure limits scalability. Need to reduce operational costs by ~30% while meeting SOC2 and PCI-DSS compliance.</textarea>
+              </div>
+
+              <div class="request-field-view">
+                <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">PROJECT REQUIREMENTS</div>
+                <div class="c-val" style="color: var(--text-dark); margin-bottom: 16px;" id="val-reqs">Migrate core banking APIs to AWS with phased rollout over 6 months. Implement CI/CD, monitoring, and disaster recovery.</div>
+              </div>
+              <div class="request-field-edit hidden" style="margin-bottom: 16px;">
+                <label>Project Requirements</label>
+                <textarea class="form-control" rows="3" id="input-reqs">Migrate core banking APIs to AWS with phased rollout over 6 months. Implement CI/CD, monitoring, and disaster recovery.</textarea>
+              </div>
+
+              <div class="request-field-view">
+                <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">TECH STACK</div>
+                <div class="c-val" style="color: var(--text-dark); margin-bottom: 32px;" id="val-tech">AWS (EKS, RDS, Lambda), Terraform, Kubernetes, Java/Spring Boot microservices, PostgreSQL.</div>
+              </div>
+      <div class="request-field-edit hidden" style="margin-bottom: 32px;">
+                <label>Tech Stack</label>
+                <textarea class="form-control" rows="2" id="input-tech">AWS (EKS, RDS, Lambda), Terraform, Kubernetes, Java/Spring Boot microservices, PostgreSQL.</textarea>
+              </div>
+
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; letter-spacing: 0.5px;">DELIVERABLES SUMMARY</div>
+              <div class="kpi-cards-grid">
+                <div class="kpi-card" style="background: #FAFAFA;">
+                  <div class="kpi-num" id="kpi-deliv-total">0</div>
+                  <div class="kpi-label">Total requests</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-num" id="kpi-deliv-submitted" style="color: var(--state-success);">0</div>
+                  <div class="kpi-label">Submitted</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-num" id="kpi-deliv-pending" style="color: var(--state-warning);">0</div>
+                  <div class="kpi-label">Pending</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-num" id="kpi-deliv-overdue" style="color: var(--state-danger);">0</div>
+                  <div class="kpi-label">Overdue</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DELIVERABLES TAB -->
+            <div class="tab-content" id="deliverables" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 style="font-size: 16px; margin: 0;">Document Requests (Deliverables)</h2>
+                <button class="btn btn-secondary" id="btn-add-deliverable"><i class="ph ph-plus"></i> Add request</button>
+              </div>
+
+              <div class="kpi-cards-grid">
+                <div class="kpi-card" style="background: #FAFAFA;">
+                  <div class="kpi-num">4</div>
+                  <div class="kpi-label">Total requests</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-num" style="color: var(--state-success);">2</div>
+                  <div class="kpi-label">ÄÃ£ ná»™p</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-num" style="color: var(--state-warning);">0</div>
+                  <div class="kpi-label">Chá» ná»™p</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-num" style="color: var(--state-danger);">2</div>
+                  <div class="kpi-label">Overdue</div>
+                </div>
+              </div>
+
+              <div id="deliverables-list" style="display: flex; flex-direction: column; gap: 16px;">
+                <!-- Dynamically injected deliverables will go here -->
+              </div>
+            </div>
+
+            <!-- DISCUSSION TAB -->
+            <div class="tab-content" id="discussion" style="display: none;">
+              <h2 style="font-size: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+                Discussion & Decisions
+                <button class="btn btn-secondary" style="font-size: 12px; padding: 4px 8px;"><i class="ph ph-funnel"></i> Filter</button>
+              </h2>
+
+              <!-- Decision Log (Pinned) -->
+              <div style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;">
+                <div style="font-size: 13px; font-weight: 600; color: #D97706; margin-bottom: 12px; display: flex; align-items: center; gap: 4px;">
+                  <i class="ph ph-push-pin"></i> Decision Log
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;" id="decision-log-container">
+                  <div style="font-size: 13px; color: var(--text-dark); background: #FFF; padding: 8px 12px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                    <span style="font-weight: 600; color: var(--text-muted); margin-right: 8px;">2026-06-20</span> We will propose a hybrid cloud architecture instead of full AWS migration due to client budget constraints. 
+                    <a href="#" style="color: var(--primary-teal); margin-left: 8px; text-decoration: none;">Go to thread</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Comment List -->
+              <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;" id="comment-thread-list">
+                <!-- Example Comment -->
+                <div style="display: flex; gap: 12px;">
+                  <div class="company-avatar" style="width: 32px; height: 32px; font-size: 14px;">AT</div>
+                  <div style="flex: 1;">
+                    <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
+                      <span style="font-weight: 600; font-size: 13px; color: var(--text-dark);">Alex Thompson (Sales)</span>
+                      <span style="font-size: 11px; color: var(--text-light);">2026-06-19 14:30</span>
+                    </div>
+                    <div style="font-size: 13px; color: var(--text-dark); background: #F8FAFC; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 8px;">
+                      <span style="color: var(--primary-teal); font-weight: 500;">@Minh Tran</span>, please review the latest technical specs. The client wants to ensure we can meet the compliance requirements for SOC2. 
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                      <span style="font-size: 12px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 4px;"><i class="ph ph-chat-circle"></i> Reply</span>
+                      <span style="font-size: 12px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 4px;"><i class="ph ph-paperclip"></i> Link file</span>
+                      <span class="btn-mark-decision" style="font-size: 12px; color: #D97706; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500;"><i class="ph ph-check-circle"></i> Mark as Decision</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reply Box -->
+              <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 12px 48px 12px; background: #FFF; position: relative; transition: border-color 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" onfocusin="this.style.borderColor='var(--primary-teal)'" onfocusout="this.style.borderColor='var(--border-color)'">
+                <textarea class="form-control" rows="2" placeholder="Write a comment or type @ to mention a colleague..." style="border: none; padding: 0; outline: none; box-shadow: none; font-size: 13px; resize: none; background: transparent;"></textarea>
+                <div style="position: absolute; bottom: 8px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: center;">
+                  <div style="display: flex; gap: 8px; color: var(--text-muted); font-size: 18px;">
+                    <i class="ph ph-text-b" style="cursor: pointer; padding: 4px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='#F1F5F9'" onmouseout="this.style.background='transparent'"></i>
+                    <i class="ph ph-text-italic" style="cursor: pointer; padding: 4px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='#F1F5F9'" onmouseout="this.style.background='transparent'"></i>
+                    <i class="ph ph-paperclip" style="cursor: pointer; padding: 4px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='#F1F5F9'" onmouseout="this.style.background='transparent'"></i>
+                  </div>
+                  <button class="btn btn-primary" style="padding: 6px 16px; font-size: 13px; font-weight: 600; border-radius: 20px;">Send</button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- TEAM & ACCESS TAB -->
+            <div class="tab-content" id="teamAccess" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 style="font-size: 16px; margin: 0;">Workspace Members</h2>
+                <button class="btn btn-primary" id="btn-add-member" style="padding: 6px 12px; font-size: 13px;"><i class="ph ph-user-plus"></i> Add Member</button>
+              </div>
+
+              <table class="data-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-color); background: #F8FAFC; color: var(--text-muted); font-size: 12px;">
+                    <th style="padding: 12px; font-weight: 600;">Member Name</th>
+                    <th style="padding: 12px; font-weight: 600;">Department</th>
+                    <th style="padding: 12px; font-weight: 600;">Role in BID</th>
+                    <th style="padding: 12px; font-weight: 600;">Permissions</th>
+                    <th style="padding: 12px; font-weight: 600;">Assigned By</th>
+                    <th style="padding: 12px; font-weight: 600; text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="workspace-members-tbody">
+                  <!-- JS injected members will go here -->
+                </tbody>
+              </table>
+              <div class="empty-state" id="workspace-members-empty" style="display: none; text-align: center; padding: 32px 0;">
+                <div style="color: var(--text-muted); font-size: 13px;">No members have been assigned to this BID Workspace yet.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="bid-col-right">
+          <div class="association-card" style="border-radius: var(--radius-md);">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+              <strong>Bid Status</strong>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div class="c-label" style="font-size: 11px; margin-bottom: 8px;">STATUS</div>
+              <div class="request-field-view">
+                <span class="badge bid-review" style="border-radius: 12px; padding: 2px 10px; font-size: 12px; font-weight: 600;">Under Review</span>
+              </div>
+              <div class="request-field-edit hidden">
+                <select class="form-control" style="margin-bottom: 8px;">
+                  <option selected>Under Review</option>
+                  <option>Draft Proposal</option>
+                  <option>Proposal Presented</option>
+                  <option>Done</option>
+                  <option>Bid Win</option>
+                  <option>Bid Lost</option>
+                </select>
+              </div>
+              <div style="font-size: 11px; color: var(--text-light); margin-top: 8px;">Sales view only - TC, Dev, and Bid Manager can update status.</div>
+            </div>
+          </div>
+
+          <div class="association-card" style="border-radius: var(--radius-md); background: rgba(0, 164, 189, 0.05); border: 1px solid rgba(0, 164, 189, 0.2);">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none; color: var(--primary-teal);">
+              <strong><i class="ph ph-users-three"></i> Pre-sales RACI</strong>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Suggested based on Whale Prospect tier.</div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 12px; color: var(--text-dark); font-weight: 500;">Responsible</span>
+                  <select class="form-control" style="width: 140px; padding: 2px 8px; font-size: 12px;">
+                    <option selected>Bid Manager</option>
+                    <option>Sales Manager</option>
+                  </select>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 12px; color: var(--text-dark); font-weight: 500;">Accountable</span>
+                  <select class="form-control" style="width: 140px; padding: 2px 8px; font-size: 12px;">
+                    <option selected>TC Head</option>
+                    <option>Delivery Manager</option>
+                  </select>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 12px; color: var(--text-dark); font-weight: 500;">Consulted</span>
+                  <select class="form-control" style="width: 140px; padding: 2px 8px; font-size: 12px;">
+                    <option selected>Tech Architect</option>
+                    <option>Domain Expert</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="association-card" style="border-radius: var(--radius-md);">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+              <strong>Execution Ownership</strong>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+                <div style="font-weight: 600; font-size: 13px; color: var(--text-dark); margin-bottom: 8px;">Execution Decision</div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">OWNER TYPE</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-type">Delivery + TC</div>
+                  <div class="request-field-edit hidden">
+                    <select class="form-control" id="input-exec-type"><option>Delivery</option><option>TC</option><option selected>Delivery + TC</option></select>
+                  </div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION STATUS</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-status">Decided</div>
+                  <div class="request-field-edit hidden">
+                    <select class="form-control" id="input-exec-status"><option>Pending Decision</option><option selected>Decided</option></select>
+                  </div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION DATE</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-date">2026-06-20</div>
+                  <div class="request-field-edit hidden">
+                    <input type="date" class="form-control" id="input-exec-date" value="2026-06-20">
+                  </div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION BY</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-by">Bid Manager</div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION NOTE</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-note">Delivery owns estimation; TC owns architecture review.</div>
+                  <div class="request-field-edit hidden">
+                    <textarea class="form-control" id="input-exec-note" rows="2">Delivery owns estimation; TC owns architecture review.</textarea>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <div style="font-weight: 600; font-size: 13px; color: var(--text-dark); margin-bottom: 8px;">Responsible Manager</div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DELIVERY MANAGER</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-dm">Hai Nguyen (D1)</div>
+                  <div class="request-field-edit hidden">
+                    <select class="form-control" id="input-dm"><option selected>Hai Nguyen (D1)</option><option>Lan Tran (D2)</option></select>
+                  </div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">TC MANAGER</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-tm">Minh Tran</div>
+                  <div class="request-field-edit hidden">
+                    <select class="form-control" id="input-tm"><option selected>Minh Tran</option><option>Thu Pham</option></select>
+                  </div>
+                </div>
+                <div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">PRIMARY RESPONSIBLE</div>
+                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-pm">Hai Nguyen (D1)</div>
+                  <div class="request-field-edit hidden">
+                    <select class="form-control" id="input-pm"><option selected>Hai Nguyen (D1)</option><option>Minh Tran</option></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="association-card" style="border-radius: var(--radius-md);">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+              <strong>Linked Deal</strong>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <a href="deal.html" style="font-weight: 500; font-size: 13px; color: var(--primary-teal); text-decoration: none; display: block; margin-bottom: 8px;">D-426-0000012 - Enterprise SaaS rollout</a>
+              <div style="font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">$180,000</div>
+              <div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">Solution Design (40%)</div>
+            </div>
+          </div>
+
+          <div class="association-card" style="border-radius: var(--radius-md);" id="card-contacts">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none; display: flex; justify-content: space-between; align-items: center;">
+              <strong>Contacts (0)</strong>
+              <button class="btn btn-secondary btn-add-assoc" data-assoc-type="Contact" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-plus"></i> Add Contact</button>
+            </div>
+            <div class="empty-state" style="padding: 0 16px 16px; border: none; background: transparent;">
+              <div style="font-size: 13px;">No contacts linked.</div>
+            </div>
+          </div>
+
+          <div class="association-card" style="border-radius: var(--radius-md);">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+              <strong>Notes</strong>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div style="margin-bottom: 16px;">
+                <div style="font-weight: 600; font-size: 13px; color: var(--text-dark); margin-bottom: 4px;">John Smith</div>
+                <div style="font-size: 13px; color: var(--text-dark); background: #F9FBFD; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">Client is very interested in the ODC model.</div>
+              </div>
+              <textarea class="form-control" rows="2" placeholder="Click Edit at top of page to add note" style="margin-bottom: 8px;"></textarea>
+              <button class="btn btn-secondary" style="font-size: 12px; padding: 4px 12px;">Add note</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Sticky Edit Footer -->
+  <div class="edit-sticky-footer" id="edit-footer">
+    <button class="btn btn-secondary" id="btn-cancel-edit">Cancel</button>
+    <button class="btn btn-primary" id="btn-save-edit">Save Changes</button>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="main-overlay"></div>
+
+  <!-- Add Deliverable Modal -->
+  <div class="center-modal" id="modal-add-deliverable">
+    <div class="modal-header">
+      <h2>Add document request</h2>
+      <button class="close-drawer" id="close-modal-add-deliverable"><i class="ph ph-x"></i></button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Name / Document Type <span class="required">*</span></label>
+        <input type="text" class="form-control" id="deliv-name">
+      </div>
+      <div class="form-group">
+        <label>Request description <span class="required">*</span></label>
+        <textarea class="form-control" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Expected outcome <span class="required">*</span></label>
+        <textarea class="form-control" rows="2"></textarea>
+      </div>
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Deadline <span class="required">*</span></label>
+          <input type="date" class="form-control">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Assign to <span class="required">*</span></label>
+          <select class="form-control">
+            <option>Minh Tráº§n (TC)</option>
+            <option>Thu Pháº¡m (TC)</option>
+            <option>Huy LÃª (Dev)</option>
+            <option>Minh Tran (TC)</option>
+            <option>Thu Pham (TC)</option>
+            <option>Huy Le (Dev)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 16px;">
+        <label>Accepted file formats</label>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;" id="format-chips-container">
+          <div class="format-chip" onclick="this.classList.toggle('selected')">Word</div>
+          <div class="format-chip selected" onclick="this.classList.toggle('selected')">PDF</div>
+          <div class="format-chip" onclick="this.classList.toggle('selected')">PowerPoint</div>
+          <div class="format-chip" onclick="this.classList.toggle('selected')">Excel</div>
+          <div class="format-chip" onclick="this.classList.toggle('selected')">Excel (legacy)</div>
+          <div class="format-chip" onclick="this.classList.toggle('selected')">ZIP</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="cancel-add-deliverable">Há»§y</button>
+      <button class="btn btn-primary" id="submit-add-deliverable">Create request</button>
+    </div>
+  </div>
+
+  <!-- Add Member Modal -->
+  <div class="center-modal" id="modal-add-member" style="display: none; max-width: 500px;">
+    <div class="modal-header">
+      <h2>Add Workspace Member</h2>
+      <button class="close-drawer" id="close-modal-add-member"><i class="ph ph-x"></i></button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Member Name <span class="required">*</span></label>
+        <select class="form-control" id="member-name-input">
+          <option value="" disabled selected>Select a member...</option>
+          <option>Minh Tran (TC)</option>
+          <option>Thu Pham (TC)</option>
+          <option>Hai Nguyen (D1)</option>
+          <option>Lan Tran (D2)</option>
+          <option>Huy Le (Dev)</option>
+          <option>Anna Lee (Sales)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Department</label>
+        <select class="form-control" id="member-dept-input">
+          <option>TC</option>
+          <option>Delivery</option>
+          <option>Sales</option>
+          <option>DC</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Role in BID</label>
+        <select class="form-control" id="member-role-input">
+          <option>Estimator</option>
+          <option>Solution Owner</option>
+          <option>Reviewer</option>
+          <option>Proposal Contributor</option>
+          <option>Observer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Permissions</label>
+        <select class="form-control" id="member-perm-input">
+          <option>View / Comment / Upload / Update Task</option>
+          <option>View / Comment / Upload</option>
+          <option>View / Comment</option>
+          <option>View Only</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="cancel-add-member">Cancel</button>
+      <button class="btn btn-primary" id="submit-add-member">Add Member</button>
+    </div>
+  </div>
+
+  <!-- Upload Version Modal -->
+  <div class="center-modal" id="modal-upload-version" style="display: none; max-width: 500px;">
+    <div class="modal-header">
+      <h2>Upload New Version</h2>
+      <button class="close-drawer" id="close-modal-upload-version"><i class="ph ph-x"></i></button>
+    </div>
+    
+    <div class="modal-body">
+      <div style="margin-bottom: 16px; font-size: 13px; color: var(--text-muted); background: #F8FAFC; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color);">
+        <i class="ph ph-info" style="color: var(--primary-teal); margin-right: 4px;"></i>
+        Uploading a new file will create a new version. The old version will be kept in the Version History.
+      </div>
+      <div class="form-group">
+        <label>Select File <span class="required">*</span></label>
+        <input type="file" class="form-control" id="upload-file-input">
+      </div>
+      <div class="form-group">
+        <label>Version Note / Change Log (Optional)</label>
+        <textarea class="form-control" id="upload-note-input" rows="3" placeholder="What changed in this version?"></textarea>
+      </div>
+      <input type="hidden" id="upload-target-deliverable-id">
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="cancel-upload-version">Cancel</button>
+      <button class="btn btn-primary" id="submit-upload-version">Upload</button>
+    </div>
+  </div>
+
+  <!-- Version History Modal -->
+  <div class="center-modal" id="modal-version-history" style="display: none; max-width: 700px;">
+    <div class="modal-header">
+      <h2>Version History</h2>
+      <button class="close-drawer" id="close-modal-version-history"><i class="ph ph-x"></i></button>
+    </div>
+    
+    <div class="modal-body" style="padding: 0;">
+      <table class="data-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border-color); background: #F8FAFC; color: var(--text-muted); font-size: 12px;">
+            <th style="padding: 12px; font-weight: 600;">Ver</th>
+            <th style="padding: 12px; font-weight: 600;">File Name</th>
+            <th style="padding: 12px; font-weight: 600;">Uploaded By</th>
+            <th style="padding: 12px; font-weight: 600;">Date</th>
+            <th style="padding: 12px; font-weight: 600;">Note</th>
+            <th style="padding: 12px; font-weight: 600; text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="version-history-tbody">
+          <!-- JS injected versions go here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="cancel-version-history">Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

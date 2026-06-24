@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboards - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Phosphor Icons for premium icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    .dashboard-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 24px;
+      background: #F9FAFC;
+    }
+    .db-tab {
+      padding: 16px 24px;
+      cursor: pointer;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .db-tab:hover {
+      color: var(--primary-teal);
+    }
+    .db-tab.active {
+      color: var(--primary-teal);
+      border-bottom-color: var(--primary-teal);
+      background: white;
+    }
+    .db-content {
+      display: none;
+      padding: 24px;
+    }
+    .db-content.active {
+      display: block;
+    }
+    
+    /* Stats Card specific to Dashboard */
+    .stat-kpi {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 8px 0;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    
+    .chart-placeholder {
+      background: #F8FAFC;
+      border: 1px dashed #CBD5E1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <main class="main-content">
+      <!-- Header -->
+      <header class="page-header" style="padding-bottom: 0;">
+        <div class="page-title-row" style="padding: 24px;">
+          <div class="page-title">
+            <i class="ph ph-chart-pie-slice" style="font-size: 28px; color: var(--primary-teal);"></i>
+            <h1>Advanced Dashboards</h1>
+            <span class="badge b-purple" style="margin-left: 12px;">C-Level View</span>
+          </div>
+          <div class="header-actions">
+            <select class="form-control" style="width: auto;">
+              <option>Q3 2026</option>
+              <option>Q2 2026</option>
+              <option>Q1 2026</option>
+              <option>FY 2026</option>
+            </select>
+            <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Export PDF</button>
+          </div>
+        </div>
+
+        <!-- Dashboard Tabs -->
+        <div class="dashboard-tabs">
+          <div class="db-tab active" data-target="#tab-hunting"><i class="ph ph-target"></i> Hunting</div>
+          <div class="db-tab" data-target="#tab-farming"><i class="ph ph-plant"></i> Farming</div>
+          <div class="db-tab" data-target="#tab-health"><i class="ph ph-heartbeat"></i> Account Health</div>
+          <div class="db-tab" data-target="#tab-pipeline"><i class="ph ph-funnel"></i> Pipeline Economics</div>
+        </div>
+      </header>
+
+      <!-- HUNTING DASHBOARD -->
+      <div class="db-content active" id="tab-hunting">
+        <div class="ai-dashboard">
+          
+          <!-- KPIs -->
+          <div class="ai-card">
+            <div class="stat-label"><i class="ph ph-users" style="color: #3B82F6;"></i> Total Active Prospects</div>
+            <div class="stat-kpi">142</div>
+            <div style="font-size: 13px; color: #10B981;"><i class="ph ph-trend-up"></i> +12 from last quarter</div>
+          </div>
+          
+          <div class="ai-card">
+            <div class="stat-label"><i class="ph ph-crown" style="color: #8B5CF6;"></i> Whale Prospects (>18 points)</div>
+            <div class="stat-kpi">14</div>
+            <div style="font-size: 13px; color: #10B981;"><i class="ph ph-trend-up"></i> +2 from last quarter</div>
+          </div>
+          
+          <div class="ai-card full-width">
+            <div class="ai-card-title">Addressable Wallet (Hunting)</div>
+            <div class="stat-kpi" style="color: var(--primary-teal);">$45,200,000</div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Total value we can capture based on AI Wallet Math</div>
+            
+            <div class="ai-wallet-funnel">
+              <div class="ai-wallet-bar budget">
+                <span>Total Identified IT Budgets</span>
+                <span>$1,250,000,000</span>
+              </div>
+              <div class="ai-wallet-bar outsource" style="--bar-width: 35%;">
+                <span>Outsourceable Wallet (Avg 35%)</span>
+                <span>$437,500,000</span>
+              </div>
+              <div class="ai-wallet-bar addressable" style="--bar-width: 10.3%;">
+                <span style="font-weight: 600;">Addressable Wallet (Avg 10.3% Capture)</span>
+                <span style="font-weight: 700; font-size: 15px;">$45,200,000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ai-card full-width">
+            <div class="ai-card-title">Prospect Tier Distribution</div>
+            <div class="chart-placeholder">
+              [Bar Chart: Minnow (65) | Tuna (42) | Whale (21) | Mega-potential (14)]
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FARMING DASHBOARD -->
+      <div class="db-content" id="tab-farming">
+        <div class="ai-dashboard">
+          
+          <div class="ai-card">
+            <div class="stat-label"><i class="ph ph-money" style="color: #10B981;"></i> Total TTM Revenue</div>
+            <div class="stat-kpi">$18,450,000</div>
+            <div style="font-size: 13px; color: #10B981;"><i class="ph ph-trend-up"></i> +15% YoY</div>
+          </div>
+          
+          <div class="ai-card">
+            <div class="stat-label"><i class="ph ph-star" style="color: #F59E0B;"></i> Active Clients</div>
+            <div class="stat-kpi">48</div>
+            <div style="font-size: 13px; color: var(--text-muted);"><i class="ph ph-minus"></i> No change</div>
+          </div>
+
+          <div class="ai-card full-width">
+            <div class="ai-card-title">Client Tier Migration (YoY)</div>
+            <table class="data-table" style="width: 100%; border: 1px solid #E2E8F0; border-radius: 8px;">
+              <thead style="background: #F8FAFC;">
+                <tr>
+                  <th>Tier</th>
+                  <th>Criteria (TTM Rev)</th>
+                  <th>Current Clients</th>
+                  <th>Change</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600; color: var(--primary-teal);">Apex</td>
+                  <td>> $5M</td>
+                  <td>2</td>
+                  <td style="color: #10B981;">+1 <i class="ph ph-arrow-up-right"></i></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: #6B21A8;">Mega</td>
+                  <td>$1M - $5M</td>
+                  <td>8</td>
+                  <td style="color: #10B981;">+2 <i class="ph ph-arrow-up-right"></i></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: #1E40AF;">Established</td>
+                  <td>$500k - $1M</td>
+                  <td>12</td>
+                  <td style="color: #EF4444;">-1 <i class="ph ph-arrow-down-right"></i></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: #0284C7;">Growth</td>
+                  <td>$100k - $500k</td>
+                  <td>15</td>
+                  <td style="color: var(--text-muted);">-</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: var(--text-muted);">Emerging</td>
+                  <td>< $100k</td>
+                  <td>11</td>
+                  <td style="color: #EF4444;">-2 <i class="ph ph-arrow-down-right"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HEALTH & COVERAGE -->
+      <div class="db-content" id="tab-health">
+        <div class="ai-dashboard">
+          
+          <div class="ai-card">
+            <div class="stat-label"><i class="ph ph-warning-circle" style="color: #EF4444;"></i> Escalated Accounts (Red/Critical)</div>
+            <div class="stat-kpi" style="color: #EF4444;">3</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Requires immediate action</div>
+          </div>
+          
+          <div class="ai-card">
+            <div class="stat-label"><i class="ph ph-calendar-check" style="color: #3B82F6;"></i> QBRs Due This Month</div>
+            <div class="stat-kpi">5</div>
+            <div style="font-size: 13px; color: var(--text-muted);">2 scheduled, 3 pending</div>
+          </div>
+
+          <div class="ai-card full-width">
+            <div class="ai-card-title">At-Risk Accounts Watchlist</div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              
+              <div style="padding: 16px; border: 1px solid #FCA5A5; border-radius: 8px; background: #FEF2F2; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">TechCorp Global <span class="badge b-purple">Mega</span></div>
+                  <div style="font-size: 13px; color: #B91C1C;">Reason: Delivery quality issue in Phase 2. Client sponsor unhappy.</div>
+                </div>
+                <div>
+                  <span class="badge" style="background: #EF4444; color: white;">Critical</span>
+                </div>
+              </div>
+
+              <div style="padding: 16px; border: 1px solid #FCA5A5; border-radius: 8px; background: #FEF2F2; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">FinServe Inc. <span class="badge b-blue">Growth</span></div>
+                  <div style="font-size: 13px; color: #B91C1C;">Reason: Competitor offering lower rates. Risk of churn in upcoming renewal.</div>
+                </div>
+                <div>
+                  <span class="badge" style="background: #EF4444; color: white;">Red</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PIPELINE ECONOMICS -->
+      <div class="db-content" id="tab-pipeline">
+        <div class="ai-dashboard">
+          
+          <div class="ai-card full-width">
+            <div class="ai-card-title">Target vs Locked vs Gap</div>
+            
+            <div style="margin-bottom: 24px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">
+                <span>Locked (Won): $12M</span>
+                <span>Gap: $8M</span>
+                <span>Target: $20M</span>
+              </div>
+              <div style="height: 24px; border-radius: 12px; background: #E2E8F0; display: flex; overflow: hidden;">
+                <div style="width: 60%; background: #10B981; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">60%</div>
+                <div style="width: 40%; background: transparent;"></div>
+              </div>
+            </div>
+
+            <div class="ai-card-title" style="margin-top: 32px;">Pipeline Required to Close Gap</div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+              <div style="background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                <div class="stat-label">Current Pipeline (Unweighted)</div>
+                <div class="stat-kpi" style="color: #3B82F6;">$24,500,000</div>
+              </div>
+              <div style="background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                <div class="stat-label">Required Pipeline (Assuming 30% Win Rate)</div>
+                <div class="stat-kpi" style="color: #8B5CF6;">$26,666,667</div>
+                <div style="font-size: 13px; color: #EF4444; margin-top: 8px;"><i class="ph ph-warning-circle"></i> Shortfall: ~$2.1M pipeline needed</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Tab switching logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('.db-tab');
+      const contents = document.querySelectorAll('.db-content');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+          
+          tab.classList.add('active');
+          const target = document.querySelector(tab.getAttribute('data-target'));
+          if (target) {
+            target.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

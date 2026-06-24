@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revenue Forecast - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Add specific styles for Forecast page */
+    .forecast-layout {
+      padding: 24px 32px;
+    }
+    .tabs-header {
+      display: flex;
+      gap: 32px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+    .tab-link {
+      padding: 12px 0;
+      color: var(--text-muted);
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .tab-link.active {
+      color: var(--primary-teal);
+      border-bottom-color: var(--primary-teal);
+    }
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    
+    /* Table styling for fixed columns */
+    .forecast-table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
+    }
+    .forecast-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1200px;
+    }
+    .forecast-table th, .forecast-table td {
+      padding: 12px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+    .forecast-table th {
+      background: #F8FAFC;
+      font-weight: 600;
+      color: var(--text-dark);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    /* Fixed Left Columns */
+    .forecast-table th:nth-child(1), .forecast-table td:nth-child(1) { position: sticky; left: 0; background: white; z-index: 3; }
+    .forecast-table th:nth-child(2), .forecast-table td:nth-child(2) { position: sticky; left: 150px; background: white; z-index: 3; }
+    .forecast-table th:nth-child(1), .forecast-table th:nth-child(2) { background: #F1F5F9; }
+    
+    .raw-col { background: #E0F2FE !important; }
+    .weighted-col { background: #FEF3C7 !important; }
+    
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .config-table th, .config-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    .config-table th { background: #F8FAFC; font-weight: 600; }
+  </style>
+</head>
+<body>
+  
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+
+      <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <main class="main-content">
+      <div class="forecast-layout">
+        <h1 style="font-size: 24px; font-weight: 600; margin-bottom: 24px; color: var(--text-dark);">Revenue Forecast</h1>
+        
+        <div class="tabs-header">
+          <div class="tab-link active" data-target="tab-data">Forecast Data</div>
+          <div class="tab-link" data-target="tab-analytics">Forecast Analytics</div>
+          <div class="tab-link" data-target="tab-config">Forecast Configuration</div>
+        </div>
+
+        <!-- ================= TAB 1: DATA ================= -->
+        <div id="tab-data" class="tab-pane active">
+          
+          <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
+            <select class="form-control" style="width: 150px;"><option>2026</option><option>2025</option></select>
+            <select class="form-control" style="width: 150px;" id="forecast-quarter-filter">
+              <option value="all">All Quarters</option>
+              <option value="q1">Q1</option>
+              <option value="q2">Q2</option>
+              <option value="q3">Q3</option>
+              <option value="q4">Q4</option>
+            </select>
+            <select class="form-control" style="width: 150px;"><option>All Teams</option></select>
+            <select class="form-control" style="width: 150px;"><option>All Owners</option></select>
+            <select class="form-control" style="width: 150px;"><option>All Stages</option></select>
+            <div style="flex: 1;"></div>
+            
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="display: flex; background: #F1F5F9; border-radius: 6px; padding: 4px;">
+                <button class="btn btn-secondary active" id="btn-view-monthly" style="border: none; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Monthly</button>
+                <button class="btn btn-secondary" id="btn-view-quarterly" style="border: none; background: transparent;">Quarterly</button>
+              </div>
+
+              <div style="display: flex; background: #F1F5F9; border-radius: 6px; padding: 4px;">
+                <button class="btn btn-secondary active" id="btn-view-raw" style="border: none; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Raw</button>
+                <button class="btn btn-secondary" id="btn-view-weighted" style="border: none; background: transparent;">Weighted</button>
+                <button class="btn btn-secondary" id="btn-view-both" style="border: none; background: transparent;">Both</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="forecast-table-container">
+            <table class="forecast-table" id="forecast-data-table">
+              <thead id="forecast-thead-main">
+                <!-- JS Injected -->
+              </thead>
+              <tbody id="forecast-tbody-main">
+                <!-- JS Injected -->
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: 12px; font-size: 13px; color: var(--text-muted);">
+            Note: Read-only data inherited from Deals. To edit Raw Forecast, click "Update Forecast" on a Deal.
+          </div>
+        </div>
+
+        <!-- ================= TAB 2: ANALYTICS ================= -->
+        <div id="tab-analytics" class="tab-pane">
+          <div style="display: flex; gap: 16px; margin-bottom: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+              <select class="form-control" style="width: 120px;" id="analytics-year-filter"><option value="2026">2026</option><option value="2025">2025</option></select>
+              <select class="form-control" style="width: 120px;" id="analytics-quarter-filter"><option value="all">All Quarters</option><option value="q1">Q1</option><option value="q2">Q2</option><option value="q3">Q3</option><option value="q4">Q4</option></select>
+              <select class="form-control" style="width: 140px;" id="analytics-team-filter"><option value="all">All Teams</option><option value="Enterprise Sales">Enterprise Sales</option><option value="SMB Sales">SMB Sales</option><option value="Partner Sales">Partner Sales</option></select>
+              <select class="form-control" style="width: 140px;" id="analytics-owner-filter"><option value="all">All Owners</option><option value="Sarah Smith">Sarah Smith</option><option value="John Doe">John Doe</option><option value="Jane Smith">Jane Smith</option><option value="Mike Johnson">Mike Johnson</option></select>
+              <select class="form-control" style="width: 140px;" id="analytics-market-filter"><option value="all">All Markets</option><option value="US">US</option><option value="UK">UK</option><option value="Singapore">Singapore</option><option value="Vietnam">Vietnam</option><option value="Germany">Germany</option></select>
+              <select class="form-control" style="width: 140px;" id="analytics-stage-filter"><option value="all">All Stages</option><option value="Nurture (0%)">Nurture</option><option value="1st Meeting (10%)">1st Meeting</option><option value="Solution Design (40%)">Solution Design</option><option value="Proposal Presented (Synced)">Proposal Presented</option><option value="Negotiation (90%)">Negotiation</option><option value="Closed Won (100%)">Closed Won</option></select>
+            </div>
+            <div style="display: flex; background: #F1F5F9; border-radius: 6px; padding: 4px;">
+              <button class="btn btn-secondary" id="btn-analytics-raw" style="border: none; background: transparent;">Raw Forecast</button>
+              <button class="btn btn-secondary active" id="btn-analytics-weighted" style="border: none; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Weighted Forecast</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background: white;">
+              <h3 style="margin-top: 0; font-size: 15px; margin-bottom: 20px;">1. Team - Revenue Sales Forecast</h3>
+              <div style="position: relative; height: 250px;">
+                <canvas id="chart-team"></canvas>
+              </div>
+            </div>
+            
+            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background: white;">
+              <h3 style="margin-top: 0; font-size: 15px; margin-bottom: 20px;">2. Revenue Forecast By Sales</h3>
+              <div style="position: relative; height: 250px;">
+                <canvas id="chart-sales"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background: white;">
+              <h3 style="margin-top: 0; font-size: 15px; margin-bottom: 20px;">3. Revenue By Market</h3>
+              <div style="position: relative; height: 250px;">
+                <canvas id="chart-market"></canvas>
+              </div>
+            </div>
+            
+            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background: white;">
+              <h3 style="margin-top: 0; font-size: 15px; margin-bottom: 20px;">4. Revenue By Type Of Project</h3>
+              <div style="position: relative; height: 250px;">
+                <canvas id="chart-project"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background: white;">
+              <h3 style="margin-top: 0; font-size: 15px; margin-bottom: 20px;">5. Revenue Forecast By Deal Stage</h3>
+              <div style="position: relative; height: 250px;">
+                <canvas id="chart-stage"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 3: CONFIGURATION ================= -->
+        <div id="tab-config" class="tab-pane">
+          <div style="max-width: 600px;">
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Configure the probability weights used to calculate Weighted Forecasts. Changes apply instantly to all existing Deal forecasts.</p>
+            
+            <table class="config-table">
+              <thead>
+                <tr>
+                  <th>Deal Stage</th>
+                  <th style="width: 150px;">Weight (%)</th>
+                </tr>
+              </thead>
+              <tbody id="config-weights-tbody">
+                <!-- JS Injected -->
+              </tbody>
+            </table>
+            
+            <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+              <button class="btn btn-primary" id="btn-save-weights">Save Weights</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js?v=2"></script>
+</body>
+</html>

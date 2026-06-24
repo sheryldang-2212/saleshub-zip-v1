@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Companies - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <main class="main-content">
+      <!-- Banner -->
+      <div class="top-banner">
+        <span><i class="ph ph-rocket" style="margin-right: 4px;"></i> Welcome to the new CRM interface! Explore the updated features and improved performance.</span>
+      </div>
+
+      <!-- Header -->
+      <header class="page-header">
+        <div class="page-title-row">
+          <div class="page-title">
+            <i class="ph ph-buildings" style="font-size: 28px; color: var(--primary-teal);"></i>
+            <h1>Companies</h1>
+            <span class="record-count" id="total-companies">Loading...</span>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary" id="btn-export-company" disabled><i class="ph ph-export"></i> Export</button>
+            <button class="btn btn-secondary" id="btn-delete-company" disabled><i class="ph ph-trash"></i> Delete</button>
+            <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Import</button>
+            <button class="btn btn-primary" id="btn-create-company">Create company</button>
+          </div>
+        </div>
+
+        <!-- View Tabs -->
+        <div class="view-tabs">
+          <div class="tab-item active" data-view="all">All companies</div>
+          <div class="tab-item" data-view="my">My companies</div>
+          <div class="tab-item" data-view="unassigned">Unassigned companies</div>
+          
+          <div class="tab-item" style="display: flex; gap: 8px; border: none; align-items: center; cursor: default;">
+            <a href="#" id="link-create-view" style="font-weight: 400;"><i class="ph ph-plus"></i> Create new view</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <i class="ph ph-magnifying-glass search-icon"></i>
+          <input type="text" id="search-companies" placeholder="Search companies...">
+        </div>
+        <button class="btn btn-secondary" style="border-radius: 20px;">Company owner <i class="ph ph-caret-down"></i></button>
+        <button class="btn btn-secondary" style="border-radius: 20px;">Account Motion <i class="ph ph-caret-down"></i></button>
+        <button class="btn btn-secondary" style="border-radius: 20px;">Create date <i class="ph ph-caret-down"></i></button>
+        <button class="btn btn-secondary" style="border-radius: 20px;">Last activity date <i class="ph ph-caret-down"></i></button>
+        <button class="btn btn-secondary" style="border-radius: 20px; color: var(--primary-teal); border-color: transparent;"><i class="ph ph-faders"></i> Advanced filters</button>
+      </div>
+
+      <!-- Main Table -->
+      <div class="table-container" style="position: relative;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 40px;"><input type="checkbox" id="check-all-companies"></th>
+              <th>Company name</th>
+              <th>Company domain</th>
+              <th>Phone number</th>
+              <th>Company owner</th>
+              <th>City</th>
+              <th>Country/Region</th>
+              <th>Industry</th>
+              <th>Account Motion</th>
+              <th>Last activity date</th>
+              <th>Create date</th>
+            </tr>
+          </thead>
+          <tbody id="companies-tbody">
+            <!-- Data injected via JS -->
+          </tbody>
+        </table>
+
+        <!-- Empty State -->
+        <div id="company-empty-state" class="empty-state" style="display: none; position: absolute; top: 100px; left: 50%; transform: translateX(-50%); width: 400px; background: white; z-index: 10;">
+          <h3 style="margin-bottom: 8px; color: var(--text-dark);">No companies found</h3>
+          <p style="margin-bottom: 16px;">Try changing your search or filter criteria.</p>
+          <button class="btn btn-secondary" id="clear-company-filters">Clear all filters</button>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+          <span>Showing 1-10 of 42</span>
+          <button class="btn btn-secondary" disabled><i class="ph ph-caret-left"></i></button>
+          <button class="btn btn-secondary"><i class="ph ph-caret-right"></i></button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="main-overlay"></div>
+
+  <!-- Create Company Drawer -->
+  <div class="drawer" id="drawer-create-company">
+    <div class="drawer-header teal">
+      <h2>Create Company</h2>
+      <button class="close-drawer" id="close-create-company"><i class="ph ph-x"></i></button>
+    </div>
+    <div class="drawer-body">
+      <form id="form-create-company">
+        <div class="form-group">
+          <label>Company domain name</label>
+          <input type="text" class="form-control" placeholder="hubspot.com">
+        </div>
+        <div class="form-group">
+          <label>Company name <span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="HubSpot">
+        </div>
+        <div class="form-group">
+          <label>Company owner <span class="required">*</span></label>
+          <select class="form-control">
+            <option>Duong Dang Thuy</option>
+            <option>John Doe</option>
+            <option>Unassigned</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Phone number</label>
+          <input type="text" class="form-control" placeholder="555-555-5555">
+        </div>
+        <div class="form-group">
+          <label>Industry <span class="required">*</span></label>
+          <select class="form-control">
+            <option>Select...</option>
+            <option>Software</option>
+            <option>Technology</option>
+            <option>Automotive</option>
+            <option>Manufacturing</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <div class="form-group" style="flex: 1;">
+            <label>Country/Region <span class="required">*</span></label>
+            <select class="form-control">
+              <option>Select...</option>
+              <option>United States</option>
+              <option>Vietnam</option>
+              <option>Singapore</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label>City</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Company type</label>
+          <select class="form-control">
+            <option>Select...</option>
+            <option>Prospect</option>
+            <option>Partner</option>
+            <option>Reseller</option>
+            <option>Vendor</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Client segmentation</label>
+          <select class="form-control">
+            <option>Select...</option>
+            <option>Enterprise</option>
+            <option>Mid-Market</option>
+            <option>SMB</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control" rows="3"></textarea>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+        <div class="form-group">
+          <label>Associate Contact</label>
+          <div class="search-box" style="width: 100%;">
+            <i class="ph ph-magnifying-glass search-icon"></i>
+            <input type="text" placeholder="Search contacts">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Associate Deal</label>
+          <div class="search-box" style="width: 100%;">
+            <i class="ph ph-magnifying-glass search-icon"></i>
+            <input type="text" placeholder="Search deals">
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn btn-primary">Create</button>
+      <button class="btn btn-secondary">Create and add another</button>
+      <button class="btn btn-secondary" id="cancel-create-company">Cancel</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

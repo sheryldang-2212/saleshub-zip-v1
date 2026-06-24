@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head><title>Test</title></head>
+<body>
+<div id="test">BEFORE JS</div>
+<script>
+try {
+  // Inline test to see if the issue is in app.js
+  var x = 1;
+  document.getElementById('test').textContent = 'JS WORKS: ' + x;
+} catch(e) {
+  document.getElementById('test').textContent = 'ERROR: ' + e.message;
+}
+</script>
+<script src="app.js"></script>
+<div id="after">AFTER APP.JS</div>
+<script>
+  document.getElementById('after').textContent = 'APP.JS LOADED OK';
+</script>
+</body>
+</html>

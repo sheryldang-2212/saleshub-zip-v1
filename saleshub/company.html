@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Detail - HubSpot - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <main class="main-content detail-wrapper">
+      <div class="detail-layout">
+        
+        <!-- ================= LEFT PANEL ================= -->
+        <div class="detail-col left-panel">
+          <div style="padding: 16px 24px; border-bottom: 1px solid var(--border-color);">
+            <a href="companies.html" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 500; color: var(--text-dark); text-decoration: none;">
+              <i class="ph ph-arrow-left"></i> Companies
+            </a>
+          </div>
+          
+          <div class="profile-card">
+            <div class="avatar" style="font-size: 32px; border-radius: 8px; background: var(--bg-hover); color: var(--text-dark);"><i class="ph ph-buildings"></i></div>
+            <h2 style="margin-bottom: 8px;">HubSpot</h2>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted);">
+              hubspot.com
+              <i class="ph ph-copy" style="cursor: pointer; color: var(--primary-teal);"></i>
+              <i class="ph ph-arrow-square-out" style="cursor: pointer; color: var(--primary-teal);"></i>
+            </div>
+            
+            <div class="quick-actions">
+              <div class="action-icon" title="Note"><i class="ph ph-file-text"></i></div>
+              <div class="action-icon" title="Email"><i class="ph ph-envelope-simple"></i></div>
+              <div class="action-icon" title="Call"><i class="ph ph-phone"></i></div>
+              <div class="action-icon" title="Task"><i class="ph ph-check-square"></i></div>
+              <div class="action-icon" title="Meeting"><i class="ph ph-calendar-blank"></i></div>
+              <div class="action-icon" title="More"><i class="ph ph-dots-three"></i></div>
+            </div>
+          </div>
+
+          <div class="section-wrapper">
+            <div class="section-header" style="cursor: pointer;" onclick="document.getElementById('about-props').classList.toggle('collapsed')">
+              <span>About this company</span>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <span style="color: var(--primary-teal); font-weight: 500; font-size: 13px;">Actions <i class="ph ph-caret-down"></i></span>
+                <i class="ph ph-caret-up"></i>
+              </div>
+            </div>
+            <div id="about-props" class="property-list">
+              <div class="property-item"><div class="property-label">Company name</div><div class="property-value">HubSpot</div></div>
+              <div class="property-item"><div class="property-label">Company domain name</div><div class="property-value">hubspot.com</div></div>
+              <div class="property-item"><div class="property-label">Industry</div><div class="property-value">Software</div></div>
+              <div class="property-item"><div class="property-label">Phone Number</div><div class="property-value">+1 888 482 7768</div></div>
+              <div class="property-item"><div class="property-label">Company owner</div><div class="property-value" style="color: var(--primary-teal);">John Doe</div></div>
+              <div class="property-item"><div class="property-label">City</div><div class="property-value">Cambridge</div></div>
+              <div class="property-item"><div class="property-label">State/Region</div><div class="property-value">MA</div></div>
+              <div class="property-item"><div class="property-label">Country/Region</div><div class="property-value">United States</div></div>
+              <div class="property-item"><div class="property-label">Create Date</div><div class="property-value">Jan 1, 2026</div></div>
+              <div class="property-item"><div class="property-label">Last Activity Date</div><div class="property-value">Yesterday</div></div>
+              <div class="property-item"><div class="property-label">Description</div><div class="property-value">--</div></div>
+            </div>
+            <div style="padding: 0 24px 16px;">
+              <button class="btn btn-secondary" style="width: 100%;">View all properties</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= MIDDLE PANEL ================= -->
+        <div class="detail-col middle-panel">
+          <div class="detail-tabs">
+            <div class="detail-tab active" data-target="#tab-overview">Overview</div>
+            <div class="detail-tab" data-target="#tab-activities">Activities</div>
+            <div class="detail-tab" data-target="#tab-intelligence">Intelligence</div>
+          </div>
+
+          <!-- OVERVIEW TAB -->
+          <div class="tab-content active" id="tab-overview">
+
+            <div class="overview-grid">
+              <div class="overview-box">
+                <div class="box-label">Industry</div>
+                <div class="box-value text-muted">Software</div>
+              </div>
+              <div class="overview-box">
+                <div class="box-label">City</div>
+                <div class="box-value text-muted">Cambridge</div>
+              </div>
+              <div class="overview-box">
+                <div class="box-label">State</div>
+                <div class="box-value text-muted">MA</div>
+              </div>
+              <div class="overview-box">
+                <div class="box-label">Country</div>
+                <div class="box-value text-muted">United States</div>
+              </div>
+            </div>
+
+            <div class="overview-card">
+              <div class="card-title">Company Profile</div>
+              <div class="card-row"><span class="c-label">Domain</span> <span class="c-val" style="color: var(--primary-teal);">hubspot.com</span></div>
+              <div class="card-row"><span class="c-label">Phone</span> <span class="c-val">+1 888 482 7768</span></div>
+              <div class="card-row"><span class="c-label">LinkedIn</span> <span class="c-val">--</span></div>
+            </div>
+
+            <!-- Associations in Overview -->
+            <h3 style="margin: 32px 0 16px; font-size: 16px;">Associations</h3>
+            
+            <div class="association-card">
+              <div class="card-header">
+                <strong>Contacts</strong>
+              </div>
+              <div class="empty-state">
+                <i class="ph ph-users empty-state-icon"></i>
+                <div class="empty-state-title">No Contacts</div>
+                <div class="empty-state-desc">You haven't associated any contacts yet.</div>
+                <button class="btn btn-secondary btn-sm" onclick="app.openDrawer('contact')"><i class="ph ph-plus"></i> Add Contact</button>
+              </div>
+            </div>
+
+            <div class="association-card">
+              <div class="card-header">
+                <strong>Deals (1)</strong>
+              </div>
+              <div style="padding: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <a href="deal.html" style="font-weight: 500; color: var(--primary-teal); text-decoration: none; display: block; margin-bottom: 4px;">HubSpot - CRM Expansion 2026</a>
+                  <div style="font-size: 13px; color: var(--text-muted);">Closed Won &bull; $620,000 &bull; Close Date: Mar 31, 2026</div>
+                </div>
+              </div>
+            </div>
+
+            <h3 style="margin: 32px 0 16px; font-size: 16px;">Pinned activity</h3>
+            <div class="empty-state" style="background: transparent; border-style: solid;">
+              There is no pinned activity on this record.
+            </div>
+
+            <h3 style="margin: 32px 0 16px; font-size: 16px;">Upcoming activities</h3>
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <div class="search-box" style="flex: 1;"><i class="ph ph-magnifying-glass search-icon"></i><input type="text" placeholder="Search activities"></div>
+              <button class="btn btn-secondary">Filter</button>
+            </div>
+            <div class="empty-state" style="background: transparent; border-style: solid;">
+              No activities match the current filters.
+            </div>
+          </div>
+
+          <!-- ACTIVITIES TAB -->
+          <div class="tab-content" id="tab-activities">
+            <div class="sub-tabs">
+              <div class="sub-tab active">All activities</div>
+              <div class="sub-tab">Notes</div>
+              <div class="sub-tab">Emails</div>
+              <div class="sub-tab">Calls</div>
+              <div class="sub-tab">Tasks</div>
+              <div class="sub-tab">Meetings</div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin: 16px 0;">
+              <div class="search-box" style="width: 200px;"><i class="ph ph-magnifying-glass search-icon"></i><input type="text" placeholder="Search activities..."></div>
+              <button class="btn btn-secondary">Activity <i class="ph ph-caret-down"></i></button>
+              <button class="btn btn-secondary">All time <i class="ph ph-caret-down"></i></button>
+              <button class="btn btn-secondary">Activity assigned to <i class="ph ph-caret-down"></i></button>
+            </div>
+
+            <div class="timeline-container">
+              <div class="timeline-month">June 2026</div>
+              
+              <div class="timeline-item">
+                <div class="timeline-icon"><i class="ph ph-user-circle"></i></div>
+                <div class="timeline-content">
+                  <div class="timeline-header">
+                    <strong>Company Updated</strong>
+                    <span class="timeline-time">Yesterday, 02:15 PM</span>
+                  </div>
+                  <div class="timeline-body">
+                    John Doe updated industry to Software. <a href="#">View details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTELLIGENCE TAB -->
+          <div class="tab-content" id="tab-intelligence" style="padding: 0;">
+            <div style="padding: 16px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #F8FAFC;">
+              <h2 style="font-size: 18px; margin: 0; display: flex; align-items: center; gap: 8px;">
+                <i class="ph ph-brain" style="color: var(--primary-teal); font-size: 24px;"></i> 
+                Account Intelligence Dashboard
+              </h2>
+              <button class="btn btn-primary" style="padding: 6px 16px; font-size: 13px;"><i class="ph ph-magic-wand"></i> Auto-fill Insights</button>
+            </div>
+            
+            <div class="ai-dashboard">
+              
+              <!-- Card 0: Account Intelligence Summary (Full Width) -->
+              <div class="ai-card full-width" style="background: linear-gradient(to right, #F8FAFC, #FFFFFF); border-left: 4px solid var(--primary-teal);">
+                <div class="ai-card-title">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-lightning" style="color: #F59E0B;"></i> Account Intelligence Summary</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; font-size: 13px;">
+                  <div>
+                    <div style="color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">Current Motion <i class="ph ph-info" title="Motion is Hunting by default. It automatically changes to Farming when the Account has at least one Closed Won Deal." style="cursor: help;"></i></div>
+                    <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;" id="summary-motion">Hunting</div>
+                    <div style="color: var(--text-muted); font-size: 12px; font-style: italic;" id="summary-motion-reason">No Closed Won Deal yet</div>
+                  </div>
+                  <div>
+                    <div style="color: var(--text-muted); margin-bottom: 4px;">Pursue Recommendation</div>
+                    <div style="font-weight: 600; font-size: 14px; color: #10B981;" id="summary-pursue">Pursue</div>
+                  </div>
+                  <div>
+                    <div style="color: var(--text-muted); margin-bottom: 4px;">Classification / Tier</div>
+                    <div style="font-weight: 600; font-size: 14px; color: #8B5CF6;" id="summary-tier">Whale Prospect</div>
+                  </div>
+                  <div>
+                    <div style="color: var(--text-muted); margin-bottom: 4px;">Addressable Wallet</div>
+                    <div style="font-weight: 600; font-size: 14px;" id="summary-wallet">$0</div>
+                    <div style="color: var(--text-muted); font-size: 12px;" id="summary-wallet-hint"></div>
+                  </div>
+                  <div>
+                    <div style="color: var(--text-muted); margin-bottom: 4px;">Potential Tag</div>
+                    <div style="font-weight: 600; font-size: 14px;" id="summary-tag">None</div>
+                  </div>
+                  <div>
+                    <div style="color: var(--text-muted); margin-bottom: 4px;">Account Health</div>
+                    <div style="font-weight: 600; font-size: 14px;" id="summary-health">N/A</div>
+                    <div style="color: #DC2626; font-size: 12px; display: none;" id="summary-escalation"><i class="ph ph-warning"></i> Escalation Required</div>
+                  </div>
+                  <div style="grid-column: span 2;">
+                    <div style="color: var(--text-muted); margin-bottom: 4px;">Recommended Coverage & Next Action</div>
+                    <div style="font-weight: 600; font-size: 13px;" id="summary-coverage">Weekly + Monthly Steering</div>
+                    <div style="color: var(--primary-teal); font-size: 13px; margin-top: 2px;" id="summary-action">Next: Create/Update Deal or Proceed Discovery</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 1: Hunting Classification & Wallet Math -->
+              <div class="ai-card">
+                <div class="ai-card-title">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-target" style="color: #3B82F6;"></i> Hunting Classification & Wallet Math</span>
+                  <span class="badge b-grey" id="customer-size-tier" style="font-size: 13px; padding: 4px 12px; border-radius: 12px; transition: all 0.3s;">N/A</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+                  <!-- Inputs -->
+                  <div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                      <div class="form-group" style="margin-bottom: 0;">
+                        <label>Annual Revenue ($)</label>
+                        <input type="number" class="form-control" id="ai-customer-revenue" placeholder="e.g. 500,000,000">
+                      </div>
+                      <div class="form-group" style="margin-bottom: 0;">
+                        <label>IT Profile</label>
+                        <select class="form-control" id="ai-it-profile">
+                          <option value="traditional">Traditional IT</option>
+                          <option value="cloud">Cloud-native</option>
+                          <option value="unknown" selected>Unknown</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                      <div class="form-group" style="margin-bottom: 0;">
+                        <label>IT Spend %</label>
+                        <input type="text" class="form-control" value="5%" style="background: #F1F5F9; color: #64748B; cursor: not-allowed;" readonly>
+                      </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                      <div class="form-group" style="margin-bottom: 0;">
+                        <label>Outsourceable %</label>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <input type="range" class="ai-range-slider" id="ai-outsourceable" min="0" max="100" value="30" style="flex: 1;" oninput="this.nextElementSibling.value = this.value + '%'">
+                          <input type="text" class="form-control" value="30%" style="width: 50px; text-align: center; padding: 4px;" readonly>
+                        </div>
+                      </div>
+                      <div class="form-group" style="margin-bottom: 0;">
+                        <label>Capture Rate % <i class="ph ph-info" style="color: var(--text-muted);" title="Calibrated input based on historical/competitive positioning."></i></label>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <input type="range" class="ai-range-slider" id="ai-capture-rate" min="0" max="100" value="10" style="flex: 1;" oninput="this.nextElementSibling.value = this.value + '%'">
+                          <input type="text" class="form-control" value="10%" style="width: 50px; text-align: center; padding: 4px;" readonly>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Visual Funnel -->
+                  <div class="ai-wallet-funnel">
+                    <div class="ai-wallet-bar budget">
+                      <span>Estimated IT Budget</span>
+                      <span id="calc-it-budget">$0</span>
+                    </div>
+                    <div class="ai-wallet-bar outsource" style="margin-left: 20px;">
+                      <span>Outsourceable Wallet</span>
+                      <span id="calc-outsourceable">$0</span>
+                    </div>
+                    <div class="ai-wallet-bar addressable" style="margin-left: 40px; border-color: var(--primary-teal);">
+                      <span style="font-weight: 600;">Addressable Wallet</span>
+                      <span id="calc-addressable" style="font-weight: 700; font-size: 15px;">$0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- Card 2: Prospect Scoring Matrix -->
+              <div class="ai-card">
+                <div class="ai-card-title">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-chart-line-up" style="color: #8B5CF6;"></i> Scoring Matrix</span>
+                  <span class="badge b-grey" id="prospect-total-score" style="font-size: 13px;">Score: 0/24</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">1. Customer Revenue</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">2. Total IT Budget</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">3. Outsourceable Wallet <span style="color: red;">*</span></span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score ai-mandatory" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">4. Addressable Wallet <span style="color: red;">*</span></span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score ai-mandatory" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">5. Sponsor ICP Role <span style="color: red;">*</span></span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score ai-mandatory" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">6. Pain & Critical Event</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">7. Buying Process</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px;">8. Logo Value</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <input type="range" class="ai-range-slider ai-score" min="0" max="4" value="0">
+                      <span style="font-size: 11px; font-weight: 500; width: 80px; text-align: right; color: var(--text-muted);">Not Evaluated</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3: Qualifying Gates -->
+              <div class="ai-card">
+                <div class="ai-card-title">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-shield-check" style="color: #10B981;"></i> Qualifying Gates</span>
+                  <i class="ph ph-info" style="color: var(--text-muted);" title="Select status for each gate"></i>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border-color);">
+                    <span style="font-size: 13px; font-weight: 500;">Service Fit</span>
+                    <select class="form-control ai-gate-select" style="width: 120px; padding: 4px; font-size: 12px; margin: 0;">
+                      <option value="pending" selected>Pending</option><option value="pass">Pass</option><option value="review">Need Review</option><option value="fail">Fail</option>
+                    </select>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border-color);">
+                    <span style="font-size: 13px; font-weight: 500;">Legal & Geographic</span>
+                    <select class="form-control ai-gate-select" style="width: 120px; padding: 4px; font-size: 12px; margin: 0;">
+                      <option value="pending" selected>Pending</option><option value="pass">Pass</option><option value="review">Need Review</option><option value="fail">Fail</option>
+                    </select>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border-color);">
+                    <span style="font-size: 13px; font-weight: 500;">Delivery Capacity</span>
+                    <select class="form-control ai-gate-select" style="width: 120px; padding: 4px; font-size: 12px; margin: 0;">
+                      <option value="pending" selected>Pending</option><option value="pass">Pass</option><option value="review">Need Review</option><option value="fail">Fail</option>
+                    </select>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border-color);">
+                    <span style="font-size: 13px; font-weight: 500;">Financial Viability</span>
+                    <select class="form-control ai-gate-select" style="width: 120px; padding: 4px; font-size: 12px; margin: 0;">
+                      <option value="pending" selected>Pending</option><option value="pass">Pass</option><option value="review">Need Review</option><option value="fail">Fail</option>
+                    </select>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;">
+                    <span style="font-size: 13px; font-weight: 500;">No Client Conflict</span>
+                    <select class="form-control ai-gate-select" style="width: 120px; padding: 4px; font-size: 12px; margin: 0;">
+                      <option value="pending" selected>Pending</option><option value="pass">Pass</option><option value="review">Need Review</option><option value="fail">Fail</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 4: Strategy & Health -->
+              <div class="ai-card">
+                <div class="ai-card-title">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-heartbeat" style="color: #EF4444;"></i> Account Strategy & Health</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label>Account Motion</label>
+                    <div style="padding: 8px 12px; background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 6px; font-weight: 500; color: #475569;" id="ai-account-motion-display">Hunting</div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px;" id="ai-motion-reason">
+                      <i class="ph ph-info"></i> No Closed Won Deal yet
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label>Revenue Confidence</label>
+                    <select class="form-control" id="ai-revenue-confidence">
+                      <option value="A*" selected>A* - Signed & paid (100%)</option>
+                      <option value="A">A - Signed not paid (90%)</option>
+                      <option value="B">B - Verbally confirmed (70%)</option>
+                      <option value="C">C - Insight on demand (40%)</option>
+                      <option value="D">D - Growth plan (10%)</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label>Relationship Health</label>
+                    <select class="form-control" id="ai-account-health">
+                      <option value="Green" selected>Green - Healthy</option>
+                      <option value="Yellow">Yellow - Watch</option>
+                      <option value="Red">Red - At risk</option>
+                      <option value="Critical">Critical - Churn imminent</option>
+                    </select>
+                  </div>
+                  <div class="form-group" id="ai-health-reason-group" style="display: none; margin-bottom: 0;">
+                    <label style="color: #EF4444;">Health Reason <span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder="Explain risk factors..." style="border-color: #FCA5A5; box-shadow: 0 0 0 1px #FEE2E2;">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label>Potential Tag</label>
+                    <select class="form-control" id="ai-potential-tag">
+                      <option value="">None</option>
+                      <option value="Mega-potential">Mega-potential</option>
+                      <option value="Apex-potential">Apex-potential</option>
+                    </select>
+                    <div style="margin-top: 8px;">
+                      <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; font-size: 13px;">
+                        <input type="checkbox" id="ai-whale-flag"> Whale-size Flag (Rev >= $1B)
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label>Next Review Date</label>
+                    <input type="date" class="form-control" id="ai-next-review-date" value="2026-07-31" readonly style="background: #F8FAFC; color: #64748B;">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 5: Farming & Service Line -->
+              <div class="ai-card" style="position: relative;" id="card-farming">
+                <!-- Locked Overlay -->
+                <div id="farming-locked-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(248, 250, 252, 0.9); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px;">
+                  <i class="ph ph-lock-key" style="font-size: 32px; color: #94A3B8; margin-bottom: 8px;"></i>
+                  <div style="font-weight: 500; color: #475569;">Farming Profile Locked</div>
+                  <div style="font-size: 13px; color: #64748B; margin-top: 4px; text-align: center; padding: 0 16px;">This section is locked because the Account Motion is Hunting. It will be available after the first Closed Won Deal.</div>
+                </div>
+                <div class="ai-card-title">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-plant" style="color: #F59E0B;"></i> Farming & Coverage</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                  <div class="form-group" style="margin-bottom: 0; width: 60%;">
+                    <label>TTM Revenue ($)</label>
+                    <input type="number" class="form-control" id="ai-ttm-revenue" placeholder="0">
+                  </div>
+                  <div style="text-align: right;">
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Farming Tier</label>
+                    <div style="font-weight: 700; color: var(--primary-teal); font-size: 18px;" id="ai-farming-tier">Emerging</div>
+                  </div>
+                </div>
+                <table class="data-table" style="font-size: 12px; margin-bottom: 0; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden;">
+                  <thead style="background: #F8FAFC;">
+                    <tr>
+                      <th style="padding: 8px 12px;">Service</th>
+                      <th style="padding: 8px 12px;">Revenue</th>
+                      <th style="padding: 8px 12px;">Tier</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                      <td style="padding: 8px 12px; font-weight: 500;">ODC</td>
+                      <td style="padding: 8px 12px;">$420,000</td>
+                      <td style="padding: 8px 12px;"><span class="badge" style="font-size: 10px; background-color: #DBEAFE; color: #1E40AF; padding: 2px 6px; border-radius: 4px;">Growth</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                      <td style="padding: 8px 12px; font-weight: 500;">Software Engineering</td>
+                      <td style="padding: 8px 12px;">$150,000</td>
+                      <td style="padding: 8px 12px;"><span class="badge" style="font-size: 10px; background-color: #DBEAFE; color: #1E40AF; padding: 2px 6px; border-radius: 4px;">Growth</span></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px 12px; font-weight: 500;">AI / Cloud</td>
+                      <td style="padding: 8px 12px;">$50,000</td>
+                      <td style="padding: 8px 12px;"><span class="badge" style="font-size: 10px; background-color: #F1F5F9; color: #475569; padding: 2px 6px; border-radius: 4px;">Emerging</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= RIGHT PANEL ================= -->
+        <div class="detail-col right-panel">
+          
+          <div class="association-card">
+            <div class="card-header">
+              <strong>Contacts (0)</strong>
+              <button class="btn btn-secondary btn-add-assoc" data-assoc-type="Contact" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-plus"></i> Add Contact</button>
+            </div>
+            <div class="empty-state">
+              <i class="ph ph-users" style="font-size: 24px; margin-bottom: 8px; color: var(--text-light);"></i>
+              <div style="font-size: 13px;">See the people associated with this record.</div>
+            </div>
+          </div>
+
+          <div class="association-card" style="border-bottom: none;">
+            <div class="card-header">
+              <strong>Deals (1)</strong>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary btn-add-assoc" data-assoc-type="Deal" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-plus"></i> Add Deal</button>
+              </div>
+            </div>
+            <div style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <a href="deal.html" style="font-weight: 500; color: var(--primary-teal); text-decoration: none; display: block; margin-bottom: 4px;">HubSpot - CRM Expansion 2026</a>
+                <div style="font-size: 13px; color: var(--text-muted);">Closed Won &bull; $620,000</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="main-overlay"></div>
+
+
+  <script src="app.js"></script>
+</body>
+</html>

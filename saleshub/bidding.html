@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bidding - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="page-header">
+        <div class="page-title-row">
+          <div class="page-title">
+            <i class="ph ph-gavel" style="font-size: 28px; color: var(--primary-teal);"></i>
+            <h1>Bidding</h1>
+            <span class="record-count" id="total-bids">Loading...</span>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary" id="btn-export-bid" disabled><i class="ph ph-export"></i> Export</button>
+            <button class="btn btn-secondary" id="btn-delete-bid" disabled><i class="ph ph-trash"></i> Delete</button>
+            <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Import</button>
+            <button class="btn btn-primary" id="btn-create-bid-main"><i class="ph ph-plus"></i> New bid</button>
+          </div>
+        </div>
+
+        <!-- View Tabs -->
+        <div class="view-tabs" id="bidding-tabs">
+          <div class="tab-item active" data-view="all">All bids</div>
+          <div class="tab-item" data-view="my">My bids</div>
+        </div>
+      </header>
+
+      <!-- Toolbar (Filters) -->
+      <div class="toolbar" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="filters" style="display: flex; gap: 12px; align-items: center;">
+          <div class="view-toggle" id="bid-view-toggle">
+            <button class="btn-toggle active" data-view="table"><i class="ph ph-list-dashes"></i></button>
+            <button class="btn-toggle" data-view="board"><i class="ph ph-kanban"></i></button>
+          </div>
+          
+          <select class="form-control" style="width: auto;" id="filter-bid-status">
+            <option value="all">All statuses</option>
+            <option value="Under Review">Under Review</option>
+            <option value="Draft Proposal">Draft Proposal</option>
+            <option value="Proposal Presented">Proposal Presented</option>
+            <option value="Done">Done</option>
+            <option value="Bid Win">Bid Win</option>
+            <option value="Bid Lost">Bid Lost</option>
+          </select>
+
+          <select class="form-control" style="width: auto;">
+            <option>All owners</option>
+          </select>
+          
+          <select class="form-control" style="width: auto;">
+            <option>All dates</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <a href="#" style="color: var(--primary-teal); font-weight: 500; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+            <i class="ph ph-funnel"></i> Advanced filters
+          </a>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="search-box" style="margin-bottom: 24px; max-width: 400px;">
+        <i class="ph ph-magnifying-glass search-icon"></i>
+        <input type="text" id="search-bids" placeholder="Search bid ID, client or opportunity">
+      </div>
+
+      <!-- Content Area -->
+      <div class="data-container" id="bidding-data-container">
+        <!-- Table View -->
+        <div id="bidding-table-view" class="view-container active">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 40px;"><input type="checkbox" id="bid-select-all"></th>
+                  <th>Bid ID</th>
+                  <th>Client</th>
+                  <th>Opportunity</th>
+                  <th>Status</th>
+                  <th>Estimated value</th>
+                  <th>Submission deadline</th>
+                  <th>Bid owner</th>
+                  <th>Linked deal</th>
+                </tr>
+              </thead>
+              <tbody id="bidding-tbody">
+                <!-- Bids rows injected here -->
+              </tbody>
+            </table>
+            <!-- Empty State Table -->
+            <div class="empty-state hidden" id="bid-table-empty">
+              <i class="ph ph-gavel" style="font-size: 48px; color: var(--border-hover); margin-bottom: 16px;"></i>
+              <h3 style="margin-bottom: 8px;">No bids found</h3>
+              <p style="color: var(--text-muted); margin-bottom: 16px;">No bids match the current filters.</p>
+              <button class="btn btn-secondary" onclick="document.getElementById('search-bids').value=''; document.getElementById('search-bids').dispatchEvent(new Event('input'));">Clear filters</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kanban View -->
+        <div id="bidding-board-view" class="view-container hidden">
+          <div class="kanban-board visual-board">
+            <!-- Under Review -->
+            <div class="kanban-col">
+              <div class="kanban-col-header">
+                <span>UNDER REVIEW</span>
+                <div class="col-badges"><span class="col-count">0</span></div>
+              </div>
+              <div class="kanban-cards kanban-col-body" data-stage="Under Review"></div>
+            </div>
+
+            <!-- Draft Proposal -->
+            <div class="kanban-col">
+              <div class="kanban-col-header">
+                <span>DRAFT PROPOSAL</span>
+                <div class="col-badges"><span class="col-count">0</span></div>
+              </div>
+              <div class="kanban-cards kanban-col-body" data-stage="Draft Proposal"></div>
+            </div>
+
+            <!-- Proposal Presented -->
+            <div class="kanban-col">
+              <div class="kanban-col-header">
+                <span>PROPOSAL PRESENTED</span>
+                <div class="col-badges"><span class="col-count">0</span></div>
+              </div>
+              <div class="kanban-cards kanban-col-body" data-stage="Proposal Presented"></div>
+            </div>
+
+            <!-- Done -->
+            <div class="kanban-col">
+              <div class="kanban-col-header">
+                <span>DONE</span>
+                <div class="col-badges"><span class="col-count">0</span></div>
+              </div>
+              <div class="kanban-cards kanban-col-body" data-stage="Done"></div>
+            </div>
+
+            <!-- Bid Win -->
+            <div class="kanban-col">
+              <div class="kanban-col-header">
+                <span>BID WIN</span>
+                <div class="col-badges"><span class="col-count">0</span></div>
+              </div>
+              <div class="kanban-cards kanban-col-body" data-stage="Bid Win"></div>
+            </div>
+
+            <!-- Bid Lost -->
+            <div class="kanban-col">
+              <div class="kanban-col-header">
+                <span>BID LOST</span>
+                <div class="col-badges"><span class="col-count">0</span></div>
+              </div>
+              <div class="kanban-cards kanban-col-body" data-stage="Bid Lost"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="main-overlay"></div>
+
+  <!-- Create Bid Modal -->
+  <div class="center-modal" id="modal-create-bid">
+    <div class="modal-header">
+      <h2>Create bid</h2>
+      <button class="close-drawer" id="close-modal-create-bid"><i class="ph ph-x"></i></button>
+    </div>
+    
+    <div class="modal-body">
+      <div style="background: rgba(0, 164, 189, 0.05); border: 1px solid var(--primary-teal); color: var(--text-dark); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 24px; font-size: 13px;">
+        Associate bid with a deal in Solution Design stage to create a bid.
+      </div>
+
+      <h3 style="font-size: 12px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.5px;">General Information</h3>
+      
+      <div class="form-group">
+        <label>Associate with Deal <span class="required">*</span></label>
+        <select class="form-control" id="create-bid-deal">
+          <option value="">Choose deal...</option>
+          <option value="D-426-0000012">D-426-0000012 - Enterprise SaaS rollout (Solution Design)</option>
+          <option value="D-1125-0000001">D-1125-0000001 - Won - Retail SG (Closed Won)</option>
+        </select>
+        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Link bid to an existing deal from the Deals module.</div>
+      </div>
+
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Client name <span class="required">*</span></label>
+          <input type="text" class="form-control" id="create-bid-client">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Opportunity title <span class="required">*</span></label>
+          <input type="text" class="form-control" id="create-bid-opp">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Estimated value</label>
+          <input type="text" class="form-control" id="create-bid-value">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Currency <span class="required">*</span></label>
+          <select class="form-control"><option>USD</option></select>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Submission deadline <span class="required">*</span></label>
+          <input type="date" class="form-control">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Location <span class="required">*</span></label>
+          <input type="text" class="form-control" id="create-bid-location">
+        </div>
+      </div>
+
+      <h3 style="font-size: 12px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin: 32px 0 16px; letter-spacing: 0.5px;">Send Notification To</h3>
+      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Select notification groups configured by Admin, or search and add individual users. Each person receives one notification even if selected via group and individually.
+      </div>
+      
+      <div style="font-size: 13px; font-weight: 500;">1 unique recipient(s) will be notified.</div>
+      
+      <div style="font-size: 12px; font-weight: 600; margin-top: 16px; margin-bottom: 8px;">NOTIFICATION GROUPS</div>
+      <div class="notification-groups">
+        <div class="notif-card selected" onclick="this.classList.toggle('selected')">
+          <input type="checkbox" checked onclick="event.stopPropagation()">
+          <div class="group-name">Bidding Manager <span style="color: var(--primary-teal); font-size: 10px; margin-left: 4px;">DEFAULT</span></div>
+          <div class="group-desc">Bid desk and proposal coordination Â· Lan Nguyá»…n</div>
+        </div>
+        <div class="notif-card" onclick="this.classList.toggle('selected')">
+          <input type="checkbox" onclick="event.stopPropagation()">
+          <div class="group-name">BOD</div>
+          <div class="group-desc">Board of Directors - Sarah Chen, James Wong</div>
+        </div>
+        <div class="notif-card" onclick="this.classList.toggle('selected')">
+          <input type="checkbox" onclick="event.stopPropagation()">
+          <div class="group-name">TC Team</div>
+          <div class="group-desc">Technical consultants - Minh Tráº§n, Thu Pháº¡m</div>
+        </div>
+        <div class="notif-card" onclick="this.classList.toggle('selected')">
+          <input type="checkbox" onclick="event.stopPropagation()">
+          <div class="group-name">Delivery Lead</div>
+          <div class="group-desc">Delivery and development leads - Huy LÃª, David Park</div>
+        </div>
+      </div>
+
+      <div style="font-size: 12px; font-weight: 600; margin-top: 24px; margin-bottom: 8px;">INDIVIDUAL RECIPIENTS</div>
+      <div class="search-box">
+        <i class="ph ph-magnifying-glass search-icon"></i>
+        <input type="text" placeholder="Search by name or role">
+      </div>
+      <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">No individual users added.</div>
+
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="cancel-modal-create-bid">Cancel</button>
+      <button class="btn btn-primary" id="submit-create-bid">Create bid</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
