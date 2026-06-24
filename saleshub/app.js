@@ -76,12 +76,99 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   window.mockCompanies = [
-    { id: "company-hubspot", name: "HubSpot", domain: "hubspot.com", phone: "+1 888 482 7768", owner: "John Doe", city: "Cambridge", country: "United States", industry: "Software", motion: "Hunting", activity: "Yesterday", created: "Jan 1, 2026", isMy: true },
-    { id: "COM-002", name: "Google", domain: "google.com", phone: "--", owner: "Unassigned", city: "Mountain View", country: "United States", industry: "Technology", motion: "Farming", activity: "3 days ago", created: "Feb 15, 2026", isMy: false },
-    { id: "COM-003", name: "Tesla", domain: "tesla.com", phone: "--", owner: "Jane Smith", city: "Austin", country: "United States", industry: "Automotive", motion: "Hunting", activity: "1 hr ago", created: "Mar 10, 2026", isMy: false },
-    { id: "COM-004", name: "Microsoft", domain: "microsoft.com", phone: "--", owner: "Unassigned", city: "Redmond", country: "United States", industry: "Technology", motion: "Farming", activity: "Just now", created: "Apr 5, 2026", isMy: false },
-    { id: "COM-005", name: "Apple", domain: "apple.com", phone: "+1 408 996 1010", owner: "John Doe", city: "Cupertino", country: "United States", industry: "Technology", motion: "Hunting", activity: "2 weeks ago", created: "May 20, 2026", isMy: true }
+    { id: "company-hubspot", name: "HubSpot", domain: "hubspot.com", phone: "+1 888 482 7768", owner: "John Doe", city: "Cambridge", country: "United States", industry: "Software", motion: "Hunting", activity: "Yesterday", created: "Jan 1, 2026", isMy: true,
+      annualRevenue: 500000000, itSpendPercent: 5, outsourceablePercent: 30, captureRatePercent: 10,
+      potentialTag: "Mega-potential", whaleFlag: false, health: { revenueConfidence: 'A*', relationshipHealth: 'Green', reason: '' },
+      gates: { serviceFit: 'pass', legal: 'pass', capacity: 'pass', financial: 'pass', conflict: 'pass' }, matrixScores: [3, 2, 4, 3, 3, 2, 2, 1] },
+    { id: "COM-002", name: "Google", domain: "google.com", phone: "--", owner: "Unassigned", city: "Mountain View", country: "United States", industry: "Technology", motion: "Farming", activity: "3 days ago", created: "Feb 15, 2026", isMy: false,
+      annualRevenue: 200000000000, itSpendPercent: 5, outsourceablePercent: 20, captureRatePercent: 5,
+      potentialTag: "Apex-potential", whaleFlag: true, health: { revenueConfidence: 'B', relationshipHealth: 'Yellow', reason: 'Competitor pressure' },
+      gates: { serviceFit: 'pass', legal: 'pass', capacity: 'pass', financial: 'pass', conflict: 'pass' }, matrixScores: [4, 4, 4, 4, 4, 3, 3, 4] },
+    { id: "COM-003", name: "Tesla", domain: "tesla.com", phone: "--", owner: "Jane Smith", city: "Austin", country: "United States", industry: "Automotive", motion: "Hunting", activity: "1 hr ago", created: "Mar 10, 2026", isMy: false,
+      annualRevenue: 80000000000, itSpendPercent: 5, outsourceablePercent: 25, captureRatePercent: 10,
+      potentialTag: "None", whaleFlag: true, health: { revenueConfidence: 'D', relationshipHealth: 'Red', reason: 'No executive sponsor' },
+      gates: { serviceFit: 'pending', legal: 'pending', capacity: 'pending', financial: 'pending', conflict: 'pending' }, matrixScores: [0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: "COM-004", name: "Microsoft", domain: "microsoft.com", phone: "--", owner: "Unassigned", city: "Redmond", country: "United States", industry: "Technology", motion: "Farming", activity: "Just now", created: "Apr 5, 2026", isMy: false,
+      annualRevenue: 150000000000, itSpendPercent: 5, outsourceablePercent: 15, captureRatePercent: 5,
+      potentialTag: "Apex-potential", whaleFlag: true, health: { revenueConfidence: 'A', relationshipHealth: 'Green', reason: '' },
+      gates: { serviceFit: 'pass', legal: 'pass', capacity: 'pass', financial: 'pass', conflict: 'pass' }, matrixScores: [4, 4, 4, 4, 4, 4, 4, 4] },
+    { id: "COM-005", name: "Apple", domain: "apple.com", phone: "+1 408 996 1010", owner: "John Doe", city: "Cupertino", country: "United States", industry: "Technology", motion: "Hunting", activity: "2 weeks ago", created: "May 20, 2026", isMy: true,
+      annualRevenue: 300000000000, itSpendPercent: 5, outsourceablePercent: 25, captureRatePercent: 10,
+      potentialTag: "Mega-potential", whaleFlag: true, health: { revenueConfidence: 'C', relationshipHealth: 'Yellow', reason: 'Delayed rollout' },
+      gates: { serviceFit: 'review', legal: 'pass', capacity: 'pass', financial: 'pass', conflict: 'pass' }, matrixScores: [4, 4, 4, 4, 3, 2, 2, 4] }
   ];
+  
+  // --- INTELLIGENCE CALCULATION ENGINE ---
+  window.calculateCompanyIntelligence = function(companyId) {
+    const comp = window.mockCompanies.find(c => c.id === companyId);
+    if (!comp) return null;
+    
+    // 1. Account Motion & TTM Revenue
+    const wonDeals = window.mockDeals.filter(d => 
+        (d.companyId === companyId || d.company === comp.name) && 
+        (d.stage === 'Closed Won' || d.stage === 'Closed Won (100%)' || d.dealStage === 'Closed Won')
+    );
+    comp.ttmRevenue = wonDeals.reduce((sum, d) => sum + window.parseAmount(d.amount || d.val || 0), 0);
+    comp.motion = wonDeals.length > 0 ? 'Farming' : 'Hunting';
+    
+    // 2. Account Tier (Farming)
+    if (comp.motion === 'Farming') {
+      if (comp.ttmRevenue >= 5000000) comp.accountTier = 'Apex Account';
+      else if (comp.ttmRevenue >= 1000000) comp.accountTier = 'Mega Account';
+      else if (comp.ttmRevenue >= 500000) comp.accountTier = 'Established';
+      else if (comp.ttmRevenue >= 100000) comp.accountTier = 'Growth';
+      else comp.accountTier = 'Emerging';
+    } else {
+      comp.accountTier = 'N/A';
+    }
+    
+    // 3. Wallet Math
+    if (comp.annualRevenue) {
+      comp.estItBudget = comp.annualRevenue * (comp.itSpendPercent / 100);
+      comp.outsourceableWallet = comp.estItBudget * (comp.outsourceablePercent / 100);
+      comp.addressableWallet = comp.outsourceableWallet * (comp.captureRatePercent / 100);
+    } else {
+      comp.estItBudget = 0;
+      comp.outsourceableWallet = 0;
+      comp.addressableWallet = 0;
+    }
+    
+    // 4. Qualifying Gates
+    if (comp.gates) {
+      const gVals = Object.values(comp.gates);
+      if (gVals.includes('fail')) comp.pursueRecommendation = 'Do Not Pursue';
+      else if (gVals.includes('pending') || gVals.includes('review')) comp.pursueRecommendation = 'Need Qualification';
+      else comp.pursueRecommendation = 'Pursue';
+    } else {
+      comp.pursueRecommendation = 'Need Qualification';
+    }
+    
+    // 5. Matrix Score
+    if (comp.matrixScores && comp.matrixScores.length > 0) {
+      comp.totalScore = comp.matrixScores.reduce((a,b) => a+b, 0);
+      if (comp.matrixScores[2] === 0 || comp.matrixScores[3] === 0 || comp.matrixScores[4] === 0) {
+        comp.prospectClassification = 'Not Evaluated';
+      } else {
+        if (comp.totalScore >= 18) comp.prospectClassification = 'Whale Prospect';
+        else if (comp.totalScore >= 12) comp.prospectClassification = 'Tuna Prospect';
+        else comp.prospectClassification = 'Minnow Prospect';
+      }
+    } else {
+      comp.totalScore = 0;
+      comp.prospectClassification = 'Not Evaluated';
+    }
+    
+    // 6. Action
+    if (comp.health?.relationshipHealth === 'Critical') comp.nextAction = 'CEO Escalation Required';
+    else if (comp.health?.relationshipHealth === 'Red') comp.nextAction = 'Weekly Review with Commercial Director';
+    else if (comp.health?.relationshipHealth === 'Yellow') comp.nextAction = 'Bi-weekly Review with Sales Director';
+    else comp.nextAction = 'Create/Update Deal or Proceed Discovery';
+    
+    return comp;
+  };
+
+  // Run initial calculations for all companies
+  window.mockCompanies.forEach(c => window.calculateCompanyIntelligence(c.id));
 
   window.mockBids = [
     { id: 'BID-00800', client: 'TechCorp Solutions', opp: 'Digital Dynamics', status: 'Under Review', val: '$180,000', deadline: '2023-11-15', owner: 'Alex Thompson', deal: 'D-426-0000012 - Enterprise SaaS rollout', isMy: false },
@@ -1062,16 +1149,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><input type="checkbox" class="comp-cb"></td>
-          <td><a href="company.html" style="font-weight: 500;">${c.name}</a></td>
-          <td>${c.domain}</td>
-          <td>${c.phone}</td>
+          <td><a href="company.html?id=${c.id}" style="font-weight: 500;">${c.name}</a></td>
+          <td><span class="badge ${c.motion === 'Farming' ? 'b-blue' : 'b-grey'}" style="font-size: 12px; padding: 2px 8px; border-radius: 12px;">${c.motion || 'Hunting'}</span></td>
+          <td><span style="font-weight: 500; color: #8B5CF6;">${c.motion === 'Farming' ? (c.accountTier || 'Emerging') : (c.prospectClassification || 'Not Evaluated')}</span></td>
+          <td>${c.potentialTag || 'None'}</td>
+          <td><span class="badge" style="background-color: ${c.health && c.health.relationshipHealth === 'Red' ? '#FEE2E2' : c.health && c.health.relationshipHealth === 'Yellow' ? '#FEF3C7' : c.health && c.health.relationshipHealth === 'Critical' ? '#991B1B' : '#D1FAE5'}; color: ${c.health && c.health.relationshipHealth === 'Red' ? '#EF4444' : c.health && c.health.relationshipHealth === 'Yellow' ? '#D97706' : c.health && c.health.relationshipHealth === 'Critical' ? '#FEF2F2' : '#10B981'}; font-size: 11px;">${c.health ? c.health.relationshipHealth : 'N/A'}</span></td>
           <td>${c.owner}</td>
-          <td>${c.city}</td>
-          <td>${c.country}</td>
           <td>${c.industry}</td>
-          <td><span class="badge ${c.motion === 'Farming' ? 'b-blue' : 'b-grey'}" style="font-size: 12px; padding: 2px 8px; border-radius: 12px;">${c.motion}</span></td>
+          <td>${c.domain}</td>
           <td>${c.activity}</td>
-          <td>${c.created}</td>
         `;
         compTbody.appendChild(tr);
       });
@@ -1741,6 +1827,28 @@ document.addEventListener('DOMContentLoaded', () => {
         
         stageDeals.forEach(d => {
           let badgesHtml = (d.badges || []).map(b => `<span class="badge b-grey">${b}</span>`).join('');
+          let compData = null;
+          if (d.companyId) {
+             compData = window.calculateCompanyIntelligence(d.companyId);
+          } else if (d.company) {
+             const cMatch = window.mockCompanies.find(c => c.name === d.company);
+             if (cMatch) compData = window.calculateCompanyIntelligence(cMatch.id);
+          }
+          if (compData) {
+             if (compData.pursueRecommendation !== 'Pursue') {
+                 badgesHtml += `<span title="${compData.pursueRecommendation}" style="color: #EF4444; font-size: 14px; margin-left: 4px; vertical-align: middle;"><i class="ph-fill ph-warning-circle"></i></span>`;
+             }
+             if (compData.potentialTag && compData.potentialTag !== 'None') {
+                badgesHtml += `<span class="badge" style="background: #FEF3C7; color: #D97706; font-size: 10px; margin-left: 4px;">${compData.potentialTag}</span>`;
+             }
+             if (compData.health && compData.health.relationshipHealth) {
+                let bg = '#F3F4F6', col = '#4B5563';
+                if (compData.health.relationshipHealth === 'Red' || compData.health.relationshipHealth === 'Critical') { bg = '#FEE2E2'; col = '#EF4444'; }
+                else if (compData.health.relationshipHealth === 'Yellow') { bg = '#FEF3C7'; col = '#D97706'; }
+                else if (compData.health.relationshipHealth === 'Green') { bg = '#D1FAE5'; col = '#10B981'; }
+                badgesHtml += `<span class="badge" style="background: ${bg}; color: ${col}; font-size: 10px; margin-left: 4px;" title="${compData.health.reason || ''}">${compData.health.relationshipHealth}</span>`;
+             }
+          }
           colHtml += `
             <div class="deal-card visual-card" draggable="true" data-id="${d.id}">
               <div class="card-top">
@@ -4089,6 +4197,220 @@ document.addEventListener('DOMContentLoaded', () => {
       window.renderAllProperties();
     });
   });
+
+  // --- COMPANY INTELLIGENCE UI BINDING ---
+  window.initCompanyIntelligenceUI = function() {
+    const motionEl = document.getElementById('summary-motion');
+    if (!motionEl) return; // Not on company.html
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    let compId = urlParams.get('id') || "company-hubspot";
+    let comp = window.mockCompanies.find(c => c.id === compId);
+    if(!comp) return;
+
+    // Update Company Name in Header if possible
+    const headerTitle = document.querySelector('.page-title h1');
+    if (headerTitle) {
+      headerTitle.innerHTML = `<i class="ph ph-buildings" style="margin-right: 8px;"></i> ${comp.name}`;
+      const domainSpan = document.querySelector('.page-title span');
+      if (domainSpan && domainSpan.textContent.includes('hubspot.com')) {
+         domainSpan.textContent = comp.domain;
+      }
+    }
+
+    function render() {
+      comp = window.calculateCompanyIntelligence(compId);
+      
+      // Update Summary
+      if(document.getElementById('summary-motion')) document.getElementById('summary-motion').textContent = comp.motion;
+      if(document.getElementById('summary-motion-reason')) document.getElementById('summary-motion-reason').textContent = comp.motion === 'Farming' ? "Closed Won deals exist" : "No Closed Won deals yet";
+      if(document.getElementById('summary-pursue')) document.getElementById('summary-pursue').textContent = comp.pursueRecommendation;
+      if(document.getElementById('summary-tier')) document.getElementById('summary-tier').textContent = comp.motion === 'Farming' ? comp.accountTier : comp.prospectClassification;
+      if(document.getElementById('summary-wallet')) document.getElementById('summary-wallet').textContent = window.formatCurrency(comp.addressableWallet || 0);
+      if(document.getElementById('summary-tag')) document.getElementById('summary-tag').textContent = comp.potentialTag || "None";
+      if(document.getElementById('summary-health')) document.getElementById('summary-health').textContent = comp.health ? `${comp.health.revenueConfidence} - ${comp.health.relationshipHealth}` : "N/A";
+      if(document.getElementById('summary-coverage')) document.getElementById('summary-coverage').textContent = comp.accountTier === 'Mega Account' ? 'Weekly + QBR' : 'Monthly';
+      if(document.getElementById('summary-action')) document.getElementById('summary-action').textContent = comp.nextAction;
+      
+      const escalationEl = document.getElementById('summary-escalation');
+      if(escalationEl) {
+        if (comp.health?.relationshipHealth === 'Critical' || comp.health?.relationshipHealth === 'Red') {
+          escalationEl.style.display = 'block';
+        } else {
+          escalationEl.style.display = 'none';
+        }
+      }
+      
+      // Update Hunting Math
+      if(document.getElementById('customer-size-tier')) document.getElementById('customer-size-tier').textContent = comp.prospectClassification;
+      if(document.getElementById('ai-customer-revenue')) document.getElementById('ai-customer-revenue').value = comp.annualRevenue || '';
+      if(document.getElementById('calc-it-budget')) document.getElementById('calc-it-budget').textContent = window.formatCurrency(comp.estItBudget || 0);
+      if(document.getElementById('calc-outsourceable')) document.getElementById('calc-outsourceable').textContent = window.formatCurrency(comp.outsourceableWallet || 0);
+      if(document.getElementById('calc-addressable')) document.getElementById('calc-addressable').textContent = window.formatCurrency(comp.addressableWallet || 0);
+      
+      // Matrix Score
+      if(document.getElementById('prospect-total-score')) document.getElementById('prospect-total-score').textContent = `Score: ${comp.totalScore}/24`;
+      const scoreSliders = document.querySelectorAll('.ai-score');
+      if (comp.matrixScores && scoreSliders.length > 0) {
+        scoreSliders.forEach((slider, i) => {
+          if(comp.matrixScores[i] !== undefined) {
+            slider.value = comp.matrixScores[i];
+            slider.nextElementSibling.textContent = comp.matrixScores[i];
+          }
+        });
+      }
+
+      // Strategy & Health fields
+      const healthReasonGrp = document.getElementById('ai-health-reason-group');
+      const healthSelect = document.getElementById('ai-account-health');
+      if (healthSelect && comp.health) {
+        healthSelect.value = comp.health.relationshipHealth;
+        if (comp.health.relationshipHealth === 'Red' || comp.health.relationshipHealth === 'Critical') {
+           if(healthReasonGrp) healthReasonGrp.style.display = 'block';
+           const reasonInput = healthReasonGrp.querySelector('input');
+           if(reasonInput) reasonInput.value = comp.health.reason || '';
+        } else {
+           if(healthReasonGrp) healthReasonGrp.style.display = 'none';
+        }
+      }
+      if(document.getElementById('ai-revenue-confidence') && comp.health) document.getElementById('ai-revenue-confidence').value = comp.health.revenueConfidence;
+      if(document.getElementById('ai-potential-tag')) document.getElementById('ai-potential-tag').value = comp.potentialTag || "";
+      if(document.getElementById('ai-whale-flag')) document.getElementById('ai-whale-flag').checked = comp.whaleFlag;
+
+      // Farming panel lock
+      const lockOverlay = document.getElementById('farming-locked-overlay');
+      if (comp.motion === 'Hunting') {
+        if(lockOverlay) lockOverlay.style.display = 'flex';
+      } else {
+        if(lockOverlay) lockOverlay.style.display = 'none';
+        if(document.getElementById('ai-ttm-revenue')) document.getElementById('ai-ttm-revenue').value = comp.ttmRevenue;
+        if(document.getElementById('ai-farming-tier')) document.getElementById('ai-farming-tier').textContent = comp.accountTier;
+      }
+    }
+
+    // Bind listeners
+    const revInput = document.getElementById('ai-customer-revenue');
+    if(revInput) {
+      revInput.addEventListener('input', (e) => {
+        comp.annualRevenue = window.parseAmount(e.target.value);
+        render();
+      });
+    }
+    
+    const outInput = document.getElementById('ai-outsourceable');
+    if(outInput) {
+      outInput.addEventListener('input', (e) => {
+        comp.outsourceablePercent = parseInt(e.target.value);
+        render();
+      });
+    }
+    
+    const capInput = document.getElementById('ai-capture-rate');
+    if(capInput) {
+      capInput.addEventListener('input', (e) => {
+        comp.captureRatePercent = parseInt(e.target.value);
+        render();
+      });
+    }
+
+    const scoreSliders = document.querySelectorAll('.ai-score');
+    scoreSliders.forEach((slider, i) => {
+      slider.addEventListener('input', (e) => {
+        if (!comp.matrixScores) comp.matrixScores = [0,0,0,0,0,0,0,0];
+        comp.matrixScores[i] = parseInt(e.target.value);
+        render();
+      });
+    });
+
+    const healthSelect = document.getElementById('ai-account-health');
+    if(healthSelect) {
+      healthSelect.addEventListener('change', (e) => {
+        if(!comp.health) comp.health = {};
+        comp.health.relationshipHealth = e.target.value;
+        render();
+      });
+    }
+
+    const healthReasonGrp = document.getElementById('ai-health-reason-group');
+    if(healthReasonGrp) {
+        const reasonInput = healthReasonGrp.querySelector('input');
+        if(reasonInput) {
+            reasonInput.addEventListener('input', (e) => {
+                if(!comp.health) comp.health = {};
+                comp.health.reason = e.target.value;
+            });
+            reasonInput.addEventListener('blur', render);
+        }
+    }
+
+    const revConfSelect = document.getElementById('ai-revenue-confidence');
+    if(revConfSelect) {
+        revConfSelect.addEventListener('change', (e) => {
+            if(!comp.health) comp.health = {};
+            comp.health.revenueConfidence = e.target.value;
+            render();
+        });
+    }
+
+    const potentialTagSelect = document.getElementById('ai-potential-tag');
+    if(potentialTagSelect) {
+        potentialTagSelect.addEventListener('change', (e) => {
+            comp.potentialTag = e.target.value;
+            render();
+        });
+    }
+
+    const whaleFlagCb = document.getElementById('ai-whale-flag');
+    if(whaleFlagCb) {
+        whaleFlagCb.addEventListener('change', (e) => {
+            comp.whaleFlag = e.target.checked;
+            render();
+        });
+    }
+
+    render();
+  };
+  setTimeout(window.initCompanyIntelligenceUI, 200);
+
+  // --- DEAL INTELLIGENCE UI BINDING ---
+  window.initDealIntelligenceUI = function() {
+    const motionEl = document.getElementById('deal-comp-motion');
+    if (!motionEl) return; // Not on deal.html
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const dealId = urlParams.get('id') || "D-626-0000037"; // mock default
+    const deal = window.mockDeals.find(d => d.id === dealId);
+    
+    let compId = "company-hubspot";
+    if (deal) {
+        if (deal.companyId) compId = deal.companyId;
+        else if (deal.company) {
+            const cMatch = window.mockCompanies.find(c => c.name === deal.company);
+            if (cMatch) compId = cMatch.id;
+        }
+    }
+
+    const comp = window.calculateCompanyIntelligence(compId);
+    if (!comp) return;
+
+    if(document.getElementById('deal-comp-motion')) document.getElementById('deal-comp-motion').textContent = comp.motion;
+    if(document.getElementById('deal-comp-tier')) document.getElementById('deal-comp-tier').textContent = comp.motion === 'Farming' ? comp.accountTier : comp.prospectClassification;
+    if(document.getElementById('deal-comp-tag')) document.getElementById('deal-comp-tag').textContent = comp.potentialTag || "None";
+    
+    const healthEl = document.getElementById('deal-comp-health');
+    if(healthEl && comp.health) {
+        healthEl.innerHTML = `<i class="ph-fill ph-warning-circle" style="margin-right: 4px;"></i> ${comp.health.relationshipHealth}`;
+        if(comp.health.relationshipHealth === 'Red' || comp.health.relationshipHealth === 'Critical') {
+            healthEl.style.color = '#DC2626';
+        } else if (comp.health.relationshipHealth === 'Yellow') {
+            healthEl.style.color = '#D97706';
+        } else {
+            healthEl.style.color = '#10B981';
+        }
+    }
+    if(document.getElementById('deal-comp-pursue')) document.getElementById('deal-comp-pursue').textContent = comp.pursueRecommendation;
+  };
+  setTimeout(window.initDealIntelligenceUI, 200);
 
   setTimeout(initAssociationManager, 100);
   setTimeout(initForecastRegistration, 100);
