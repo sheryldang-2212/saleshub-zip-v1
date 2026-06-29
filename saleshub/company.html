@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -169,10 +169,10 @@
               <button class="btn btn-primary" style="padding: 6px 16px; font-size: 13px;"><i class="ph ph-magic-wand"></i> Auto-fill Insights</button>
             </div>
             
-            <div class="ai-dashboard">
+            <div class="ai-dashboard" style="display: flex; flex-direction: column; gap: 24px;">
               
               <!-- Card 0: Account Intelligence Summary (Full Width) -->
-              <div class="ai-card full-width" style="background: linear-gradient(to right, #F8FAFC, #FFFFFF); border-left: 4px solid var(--primary-teal);">
+              <div class="ai-card full-width" id="card-summary" style="order: 1; background: linear-gradient(to right, #F8FAFC, #FFFFFF); border-left: 4px solid var(--primary-teal);">
                 <div class="ai-card-title">
                   <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-lightning" style="color: #F59E0B;"></i> Account Intelligence Summary</span>
                 </div>
@@ -204,19 +204,15 @@
                     <div style="font-weight: 600; font-size: 14px;" id="summary-health">N/A</div>
                     <div style="color: #DC2626; font-size: 12px; display: none;" id="summary-escalation"><i class="ph ph-warning"></i> Escalation Required</div>
                   </div>
-                  <div style="grid-column: span 2;">
-                    <div style="color: var(--text-muted); margin-bottom: 4px;">Recommended Coverage & Next Action</div>
-                    <div style="font-weight: 600; font-size: 13px;" id="summary-coverage">Weekly + Monthly Steering</div>
-                    <div style="color: var(--primary-teal); font-size: 13px; margin-top: 2px;" id="summary-action">Next: Create/Update Deal or Proceed Discovery</div>
-                  </div>
+
                 </div>
               </div>
 
               <!-- Card 1: Hunting Classification & Wallet Math -->
-              <div class="ai-card">
+              <div class="ai-card" id="card-hunting" style="order: 3;">
                 <div class="ai-card-title">
                   <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-target" style="color: #3B82F6;"></i> Hunting Classification & Wallet Math</span>
-                  <span class="badge b-grey" id="customer-size-tier" style="font-size: 13px; padding: 4px 12px; border-radius: 12px; transition: all 0.3s;">N/A</span>
+                  <span class="badge b-grey" id="customer-size-tier" style="font-size: 13px; padding: 4px 12px; border-radius: 12px; transition: all 0.3s;">Value tier: N/A</span>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
                   <!-- Inputs -->
@@ -278,10 +274,13 @@
 
 
               <!-- Card 2: Prospect Scoring Matrix -->
-              <div class="ai-card">
+              <div class="ai-card" id="card-scoring" style="order: 4;">
                 <div class="ai-card-title">
                   <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-chart-line-up" style="color: #8B5CF6;"></i> Scoring Matrix</span>
-                  <span class="badge b-grey" id="prospect-total-score" style="font-size: 13px;">Score: 0/24</span>
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span id="prospect-classification-badge" style="font-weight: 600; font-size: 13px; color: #8B5CF6; text-transform: uppercase;">Not Evaluated</span>
+                    <span class="badge b-grey" id="prospect-total-score" style="font-size: 13px;">Score: 0/24</span>
+                  </div>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                   <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -344,10 +343,9 @@
               </div>
 
               <!-- Card 3: Qualifying Gates -->
-              <div class="ai-card">
+              <div class="ai-card" id="card-gates" style="order: 2;">
                 <div class="ai-card-title">
-                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-shield-check" style="color: #10B981;"></i> Qualifying Gates</span>
-                  <i class="ph ph-info" style="color: var(--text-muted);" title="Select status for each gate"></i>
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-shield-check" style="color: #10B981;"></i> Qualifying Gates <i class="ph ph-info" style="color: var(--text-muted); cursor: help; font-size: 16px; margin-left: 4px;" title="Hard pass/fail filters — an account that fails ANY gate is not pursued, regardless of size"></i></span>
                 </div>
                 <div style="display: flex; flex-direction: column;">
                   <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border-color);">
@@ -384,27 +382,17 @@
               </div>
 
               <!-- Card 4: Strategy & Health -->
-              <div class="ai-card">
+              <div class="ai-card" id="card-strategy" style="order: 6;">
                 <div class="ai-card-title">
                   <span style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-heartbeat" style="color: #EF4444;"></i> Account Strategy & Health</span>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px;">
                   <div class="form-group" style="margin-bottom: 0;">
                     <label>Account Motion</label>
                     <div style="padding: 8px 12px; background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 6px; font-weight: 500; color: #475569;" id="ai-account-motion-display">Hunting</div>
                     <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px;" id="ai-motion-reason">
                       <i class="ph ph-info"></i> No Closed Won Deal yet
                     </div>
-                  </div>
-                  <div class="form-group" style="margin-bottom: 0;">
-                    <label>Revenue Confidence</label>
-                    <select class="form-control" id="ai-revenue-confidence">
-                      <option value="A*" selected>A* - Signed & paid (100%)</option>
-                      <option value="A">A - Signed not paid (90%)</option>
-                      <option value="B">B - Verbally confirmed (70%)</option>
-                      <option value="C">C - Insight on demand (40%)</option>
-                      <option value="D">D - Growth plan (10%)</option>
-                    </select>
                   </div>
                 </div>
                 
@@ -432,21 +420,16 @@
                       <option value="Mega-potential">Mega-potential</option>
                       <option value="Apex-potential">Apex-potential</option>
                     </select>
-                    <div style="margin-top: 8px;">
-                      <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; font-size: 13px;">
-                        <input type="checkbox" id="ai-whale-flag"> Whale-size Flag (Rev >= $1B)
-                      </label>
-                    </div>
                   </div>
                   <div class="form-group" style="margin-bottom: 0;">
                     <label>Next Review Date</label>
-                    <input type="date" class="form-control" id="ai-next-review-date" value="2026-07-31" readonly style="background: #F8FAFC; color: #64748B;">
+                    <input type="date" class="form-control" id="ai-next-review-date" value="2026-07-31">
                   </div>
                 </div>
               </div>
 
               <!-- Card 5: Farming & Service Line -->
-              <div class="ai-card" style="position: relative;" id="card-farming">
+              <div class="ai-card" style="position: relative; order: 5;" id="card-farming">
                 <!-- Locked Overlay -->
                 <div id="farming-locked-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(248, 250, 252, 0.9); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px;">
                   <i class="ph ph-lock-key" style="font-size: 32px; color: #94A3B8; margin-bottom: 8px;"></i>
@@ -462,33 +445,25 @@
                     <input type="number" class="form-control" id="ai-ttm-revenue" placeholder="0">
                   </div>
                   <div style="text-align: right;">
-                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Farming Tier</label>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Value Tier <span style="font-size: 10px; font-weight: normal;">(based on TTM Revenue)</span></label>
                     <div style="font-weight: 700; color: var(--primary-teal); font-size: 18px;" id="ai-farming-tier">Emerging</div>
                   </div>
                 </div>
                 <table class="data-table" style="font-size: 12px; margin-bottom: 0; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden;">
                   <thead style="background: #F8FAFC;">
                     <tr>
-                      <th style="padding: 8px 12px;">Service</th>
+                      <th style="padding: 8px 12px;">Deal ID</th>
+                      <th style="padding: 8px 12px;">Deal Name</th>
                       <th style="padding: 8px 12px;">Revenue</th>
-                      <th style="padding: 8px 12px;">Tier</th>
+                      <th style="padding: 8px 12px;">Historical Tier</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="border-bottom: 1px solid #E2E8F0;">
-                      <td style="padding: 8px 12px; font-weight: 500;">ODC</td>
-                      <td style="padding: 8px 12px;">$420,000</td>
-                      <td style="padding: 8px 12px;"><span class="badge" style="font-size: 10px; background-color: #DBEAFE; color: #1E40AF; padding: 2px 6px; border-radius: 4px;">Growth</span></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #E2E8F0;">
-                      <td style="padding: 8px 12px; font-weight: 500;">Software Engineering</td>
-                      <td style="padding: 8px 12px;">$150,000</td>
-                      <td style="padding: 8px 12px;"><span class="badge" style="font-size: 10px; background-color: #DBEAFE; color: #1E40AF; padding: 2px 6px; border-radius: 4px;">Growth</span></td>
-                    </tr>
                     <tr>
-                      <td style="padding: 8px 12px; font-weight: 500;">AI / Cloud</td>
-                      <td style="padding: 8px 12px;">$50,000</td>
-                      <td style="padding: 8px 12px;"><span class="badge" style="font-size: 10px; background-color: #F1F5F9; color: #475569; padding: 2px 6px; border-radius: 4px;">Emerging</span></td>
+                      <td style="padding: 8px 12px; font-weight: 500;"><a href="deal.html" style="color: var(--primary-teal); text-decoration: none;">DEAL-2026-042</a></td>
+                      <td style="padding: 8px 12px; font-weight: 500;">HubSpot - CRM Expansion 2026</td>
+                      <td style="padding: 8px 12px;">$620,000</td>
+                      <td style="padding: 8px 12px;"><span class="badge" style="font-size: 10px; background-color: #DBEAFE; color: #1E40AF; padding: 2px 6px; border-radius: 4px;">Established</span></td>
                     </tr>
                   </tbody>
                 </table>

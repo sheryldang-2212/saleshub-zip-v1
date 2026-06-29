@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- MOCK DATA ---
   window.mockContacts = [
-    { name: "Brian Halligan", email: "brian@hubspot.com", phone: "+1 888 482 7768", owner: "John Doe", company: "HubSpot", activity: "Yesterday", status: "Subscribed", created: "Jan 1, 2026", isMy: true },
-    { name: "Sundar Pichai", email: "sundar@google.com", phone: "--", owner: "Unassigned", company: "Google", activity: "3 days ago", status: "Unsubscribed", created: "Feb 15, 2026", isMy: false },
-    { name: "Elon Musk", email: "elon@tesla.com", phone: "--", owner: "Jane Smith", company: "Tesla", activity: "1 hr ago", status: "Subscribed", created: "Mar 10, 2026", isMy: false },
-    { name: "Satya Nadella", email: "satya@microsoft.com", phone: "--", owner: "Unassigned", company: "Microsoft", activity: "Just now", status: "Non-marketing", created: "Apr 5, 2026", isMy: false },
-    { name: "Tim Cook", email: "tim@apple.com", phone: "+1 408 996 1010", owner: "John Doe", company: "Apple", activity: "2 weeks ago", status: "Subscribed", created: "May 20, 2026", isMy: true }
+    { id: "C-0001", name: "Brian Halligan", email: "brian@hubspot.com", phone: "+1 888 482 7768", owner: "John Doe", company: "HubSpot", activity: "Yesterday", status: "Subscribed", created: "Jan 1, 2026", isMy: true },
+    { id: "C-0002", name: "Sundar Pichai", email: "sundar@google.com", phone: "--", owner: "Unassigned", company: "Google", activity: "3 days ago", status: "Unsubscribed", created: "Feb 15, 2026", isMy: false },
+    { id: "C-0003", name: "Elon Musk", email: "elon@tesla.com", phone: "--", owner: "Jane Smith", company: "Tesla", activity: "1 hr ago", status: "Subscribed", created: "Mar 10, 2026", isMy: false },
+    { id: "C-0004", name: "Satya Nadella", email: "satya@microsoft.com", phone: "--", owner: "Unassigned", company: "Microsoft", activity: "Just now", status: "Non-marketing", created: "Apr 5, 2026", isMy: false },
+    { id: "C-0005", name: "Tim Cook", email: "tim@apple.com", phone: "+1 408 996 1010", owner: "John Doe", company: "Apple", activity: "2 weeks ago", status: "Subscribed", created: "May 20, 2026", isMy: true }
   ];
 
   window.mockDeals = [
@@ -350,9 +350,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     tbody.innerHTML = '';
     filtered.forEach(c => {
+      const contactId = c.id || `C-${Math.floor(10000 + Math.random() * 90000)}`;
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><input type="checkbox" class="contact-cb"></td>
+        <td style="font-family: monospace; color: var(--text-muted);">${contactId}</td>
         <td><a href="contact.html" style="font-weight: 500;">${c.name}</a></td>
         <td>${c.email}</td>
         <td>${c.phone}</td>
@@ -1149,6 +1151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><input type="checkbox" class="comp-cb"></td>
+          <td style="font-family: monospace; color: var(--text-muted);">${c.id}</td>
           <td><a href="company.html?id=${c.id}" style="font-weight: 500;">${c.name}</a></td>
           <td><span class="badge ${c.motion === 'Farming' ? 'b-blue' : 'b-grey'}" style="font-size: 12px; padding: 2px 8px; border-radius: 12px;">${c.motion || 'Hunting'}</span></td>
           <td><span style="font-weight: 500; color: #8B5CF6;">${c.motion === 'Farming' ? (c.accountTier || 'Emerging') : (c.prospectClassification || 'Not Evaluated')}</span></td>
@@ -2606,13 +2609,13 @@ document.addEventListener('DOMContentLoaded', () => {
       addressableBar.style.setProperty('--bar-width', `${Math.min(100, Math.max(5, addrWidth))}%`);
     }
 
-    // Size Tier
+    // Value Tier
     let tier = 'N/A';
-    if (rev >= 5000000000) { tier = 'Mega-cap'; sizeTierBadge.className = 'badge b-purple'; }
-    else if (rev >= 1000000000) { tier = 'Whale'; sizeTierBadge.className = 'badge b-purple'; }
-    else if (rev >= 50000000) { tier = 'Tuna'; sizeTierBadge.className = 'badge b-blue'; }
-    else if (rev > 0) { tier = 'Minnow'; sizeTierBadge.className = 'badge b-grey'; }
-    sizeTierBadge.textContent = tier;
+    if (addressable >= 5000000) { tier = 'Apex'; sizeTierBadge.className = 'badge b-purple'; }
+    else if (addressable >= 1000000) { tier = 'Mega'; sizeTierBadge.className = 'badge b-blue'; }
+    else if (addressable >= 100000) { tier = 'Growth'; sizeTierBadge.className = 'badge b-grey'; }
+    else if (itBudget > 0) { tier = 'Emerging'; sizeTierBadge.className = 'badge b-grey'; }
+    sizeTierBadge.textContent = `Value tier: ${tier}`;
     
     // Summary Update
     updateAccountSummary();
@@ -2636,6 +2639,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Scoring Matrix
   const scoreInputs = document.querySelectorAll('.ai-score');
   const totalScoreBadge = document.getElementById('prospect-total-score');
+  const classBadge = document.getElementById('prospect-classification-badge');
   
   const calcScore = () => {
     if (scoreInputs.length === 0) return;
@@ -2658,8 +2662,11 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (mandatoryFail && total >= 12) { tierLabel = 'Tier Unconfirmed'; badgeClass = 'b-outline-red'; }
     
     if (totalScoreBadge) {
-      totalScoreBadge.textContent = `Score: ${total}/32 (${tierLabel})`;
-      totalScoreBadge.className = `badge ${badgeClass}`;
+      totalScoreBadge.textContent = `Score: ${total}/32`;
+    }
+    if (classBadge) {
+      classBadge.textContent = tierLabel;
+      classBadge.style.color = badgeClass === 'b-purple' ? '#8B5CF6' : badgeClass === 'b-blue' ? '#3B82F6' : '#64748B';
     }
     
     updateAccountSummary();
@@ -2675,10 +2682,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const healthSelect = document.getElementById('ai-account-health');
   const tagSelect = document.getElementById('ai-potential-tag');
-  const whaleFlag = document.getElementById('ai-whale-flag');
   if (healthSelect) healthSelect.addEventListener('change', () => updateAccountSummary());
   if (tagSelect) tagSelect.addEventListener('change', () => updateAccountSummary());
-  if (whaleFlag) whaleFlag.addEventListener('change', () => updateAccountSummary());
 
   const updateAccountSummary = () => {
     const sMotion = document.getElementById('summary-motion');
@@ -2723,10 +2728,10 @@ document.addEventListener('DOMContentLoaded', () => {
         sTier.textContent = 'Farming: ' + (farmingTier ? farmingTier.textContent : 'Emerging');
         sTier.style.color = '#0F172A';
       } else {
-        const scoreText = totalScoreBadge ? totalScoreBadge.textContent : '';
-        const tierPart = scoreText.includes('(') ? scoreText.split('(')[1].replace(')','') : 'Not Evaluated';
+        const classBadge = document.getElementById('prospect-classification-badge');
+        const tierPart = classBadge ? classBadge.textContent : 'Not Evaluated';
         sTier.textContent = tierPart;
-        sTier.style.color = totalScoreBadge && totalScoreBadge.classList.contains('b-outline-red') ? '#DC2626' : '#8B5CF6';
+        sTier.style.color = classBadge && classBadge.textContent === 'Tier Unconfirmed' ? '#DC2626' : '#8B5CF6';
       }
     }
 
@@ -2743,7 +2748,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tags
     let tags = [];
     if (tagSelect && tagSelect.value) tags.push(tagSelect.value);
-    if (whaleFlag && whaleFlag.checked) tags.push('Whale-size');
     sTag.textContent = tags.length > 0 ? tags.join(', ') : 'None';
 
     // Health
@@ -2767,17 +2771,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Coverage & Action
-    if (sTier.textContent.includes('Whale')) {
-      sCoverage.textContent = 'Weekly + Monthly Steering';
-    } else if (sTier.textContent.includes('Tuna')) {
-      sCoverage.textContent = 'Bi-weekly';
-    } else {
-      sCoverage.textContent = 'Monthly Check-in';
+    if (sCoverage) {
+      if (sTier.textContent.includes('Whale')) {
+        sCoverage.textContent = 'Weekly + Monthly Steering';
+      } else if (sTier.textContent.includes('Tuna')) {
+        sCoverage.textContent = 'Bi-weekly';
+      } else {
+        sCoverage.textContent = 'Monthly Check-in';
+      }
     }
 
-    if (gateFail) sAction.textContent = 'Next: Stop pursuit or Request Override';
-    else if (gateReview) sAction.textContent = 'Next: Clear Pending/Review Gates';
-    else sAction.textContent = 'Next: Proceed Discovery / Create Deal';
+    if (sAction) {
+      if (gateFail) sAction.textContent = 'Next: Stop pursuit or Request Override';
+      else if (gateReview) sAction.textContent = 'Next: Clear Pending/Review Gates';
+      else sAction.textContent = 'Next: Proceed Discovery / Create Deal';
+    }
   };
 
   // --- Account Motion & Farming Logic ---

@@ -320,24 +320,22 @@
 
         <div class="header-filters">
           <div class="filter-group">
-            <span class="filter-label">Period</span>
-            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
-              <option>FY 2026</option>
-              <option>Q3 2026</option>
-              <option>Q2 2026</option>
-              <option>YTD</option>
+            <span class="filter-label">Time</span>
+            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;" onchange="document.getElementById('custom-time-container').style.display = this.value === 'Custom' ? 'inline-flex' : 'none'">
+              <option>This week</option>
+              <option>Last week</option>
+              <option>This month</option>
+              <option>Last month</option>
+              <option value="Custom">Custom</option>
             </select>
+            <div id="custom-time-container" style="display: none; align-items: center; gap: 8px;">
+              <input type="date" class="form-control" style="height: 32px; padding: 0 8px; border: 1px solid #ccc; border-radius: 4px;">
+              <span style="color: #64748B;">-</span>
+              <input type="date" class="form-control" style="height: 32px; padding: 0 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
           </div>
           <div class="filter-group">
-            <span class="filter-label">Currency</span>
-            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
-              <option>USD ($)</option>
-              <option>EUR (€)</option>
-              <option>VND (₫)</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <span class="filter-label">Region</span>
+            <span class="filter-label">Market</span>
             <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
               <option>Global</option>
               <option>APAC</option>
@@ -346,7 +344,7 @@
             </select>
           </div>
           <div class="filter-group">
-            <span class="filter-label">Owner/Team</span>
+            <span class="filter-label">Teams</span>
             <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
               <option>All Teams</option>
               <option>Enterprise Sales</option>
@@ -354,21 +352,38 @@
             </select>
           </div>
           <div class="filter-group">
-            <span class="filter-label">Segment</span>
+            <span class="filter-label">Sale</span>
+            <input type="text" class="form-control" list="sale-list" placeholder="Search sale..." style="width: 150px; height: 32px; padding: 0 12px; border: 1px solid #ccc; border-radius: 4px;">
+            <datalist id="sale-list">
+              <option value="John Doe"></option>
+              <option value="Jane Smith"></option>
+              <option value="Michael Chang"></option>
+              <option value="Sarah Jenkins"></option>
+            </datalist>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Account Action</span>
             <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
-              <option>All Segments</option>
-              <option>Strategic</option>
-              <option>Key Accounts</option>
+              <option>All</option>
+              <option>Farming</option>
+              <option>Hunting</option>
             </select>
           </div>
           <div class="filter-group">
-            <span class="filter-label">Service Line</span>
-            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
-              <option>All Services</option>
-              <option>Cloud Migration</option>
-              <option>AI Solutions</option>
-              <option>Managed Services</option>
-            </select>
+            <span class="filter-label">Industry</span>
+            <input type="text" class="form-control" list="industry-list" placeholder="Search industry..." style="width: 150px; height: 32px; padding: 0 12px; border: 1px solid #ccc; border-radius: 4px;">
+            <datalist id="industry-list">
+              <option value="Technology"></option>
+              <option value="Finance"></option>
+              <option value="Healthcare"></option>
+              <option value="Retail"></option>
+              <option value="Manufacturing"></option>
+            </datalist>
+          </div>
+          <div class="filter-group">
+            <button style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 16px; background-color: var(--techvify-blue); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">
+              <i class="ph ph-magnifying-glass" style="font-size: 16px;"></i> Search
+            </button>
           </div>
         </div>
       </header>
@@ -439,16 +454,6 @@
               <div class="chart-box">
                 <div class="chart-title">Target vs Actual vs Forecast <i class="ph ph-info info-icon" data-tooltip="Compares quarterly revenue targets against actual closed-won deals and current pipeline forecast."></i></div>
                 <div class="chart-container"><canvas id="chart-target-actual"></canvas></div>
-              </div>
-              <div class="chart-box">
-                <div class="chart-title">Revenue Waterfall <i class="ph ph-info info-icon" data-tooltip="Visualizes how the pipeline evolved over the period (Starting + New - Won - Lost = Ending)."></i></div>
-                <div class="chart-container"><canvas id="chart-waterfall"></canvas></div>
-              </div>
-            </div>
-            <div class="grid-2">
-              <div class="chart-box">
-                <div class="chart-title">Forecast Confidence Breakdown (A*/A/B/C/D) <i class="ph ph-info info-icon" data-tooltip="Pipeline value segmented by regional confidence levels (Commit, High, Medium, Low)."></i></div>
-                <div class="chart-container"><canvas id="chart-confidence"></canvas></div>
               </div>
               <div class="chart-box">
                 <div class="chart-title">Monthly/Quarterly Forecast Trend <i class="ph ph-info info-icon" data-tooltip="Shows the rolling 6-month historical trend of forecast accuracy and pipeline growth."></i></div>
@@ -561,10 +566,6 @@
                 <div class="chart-title">Health Matrix (Rev Confidence x Rel Health) <i class="ph ph-info info-icon" data-tooltip="Plots accounts by relationship health vs revenue confidence. Red zone requires immediate action."></i></div>
                 <div class="chart-container"><canvas id="chart-health-matrix"></canvas></div>
               </div>
-              <div class="chart-box">
-                <div class="chart-title">Escalation Aging <i class="ph ph-info info-icon" data-tooltip="Tracks how long critical account escalations have been open across different regions."></i></div>
-                <div class="chart-container"><canvas id="chart-escalation"></canvas></div>
-              </div>
             </div>
             <div class="table-container">
               <table class="exec-table">
@@ -599,11 +600,7 @@
 
           <section id="pipeline-economics" class="db-section">
             <div class="db-section-title"><i class="ph ph-funnel"></i> Pipeline Economics</div>
-            <div class="grid-3">
-              <div class="chart-box">
-                <div class="chart-title">Coverage Cost vs Gross Profit <i class="ph ph-info info-icon" data-tooltip="Compares the cost of sales against the overall gross profit margin over time."></i></div>
-                <div class="chart-container"><canvas id="chart-coverage"></canvas></div>
-              </div>
+            <div class="grid-2">
               <div class="chart-box">
                 <div class="chart-title">Pipeline by Stage <i class="ph ph-info info-icon" data-tooltip="The volume of active opportunities distributed across each stage of the sales cycle."></i></div>
                 <div class="chart-container"><canvas id="chart-pipeline-stage"></canvas></div>
@@ -713,40 +710,7 @@
         options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v + 'M' } } } }
       });
 
-      // 2. Revenue Waterfall
-      new Chart(document.getElementById('chart-waterfall'), {
-        type: 'bar',
-        data: {
-          labels: ['Starting Pipeline', 'New Created', 'Won', 'Lost/Slipped', 'Ending Pipeline'],
-          datasets: [{
-            label: 'Amount ($M)',
-            data: [
-              [0, 45],     // Starting
-              [45, 65],    // New
-              [55, 65],    // Won (subtracts, visual hack)
-              [40, 55],    // Lost (subtracts)
-              [0, 40]      // Ending
-            ],
-            backgroundColor: [techvifyLight, colorSuccess, techvifyBlue, colorDanger, techvifyLight]
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => '$' + v + 'M' } } } }
-      });
 
-      // 3. Forecast Confidence (Stacked Bar)
-      new Chart(document.getElementById('chart-confidence'), {
-        type: 'bar',
-        data: {
-          labels: ['EMEA', 'NA', 'APAC', 'LATAM'],
-          datasets: [
-            { label: 'A* (Commit)', data: [2.1, 4.5, 1.2, 0.8], backgroundColor: techvifyBlue },
-            { label: 'A (High)', data: [1.5, 3.0, 1.8, 0.5], backgroundColor: '#3B82F6' },
-            { label: 'B (Medium)', data: [3.2, 2.1, 2.5, 1.1], backgroundColor: '#93C5FD' },
-            { label: 'C (Low)', data: [1.1, 1.5, 0.8, 0.4], backgroundColor: '#E0E7FF' }
-          ]
-        },
-        options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true, ticks: { callback: v => '$' + v + 'M' } } } }
-      });
 
       // 4. Monthly/Quarterly Forecast Trend
       new Chart(document.getElementById('chart-trend'), {
@@ -791,17 +755,17 @@
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
       });
 
-      // 8. Service-line Expansion Heatmap (Mocked with Radar)
+      // 8. Service-line Expansion Heatmap (Changed to Bar chart for readability)
       new Chart(document.getElementById('chart-heatmap'), {
-        type: 'radar',
+        type: 'bar',
         data: {
           labels: ['Cloud', 'Data/AI', 'Security', 'Managed IT', 'Consulting'],
           datasets: [
-            { label: 'Current Penetration', data: [80, 40, 60, 90, 50], backgroundColor: 'rgba(0, 86, 210, 0.2)', borderColor: techvifyBlue },
-            { label: 'Upsell Potential', data: [95, 85, 90, 95, 75], backgroundColor: 'rgba(16, 185, 129, 0.2)', borderColor: colorSuccess }
+            { label: 'Current Penetration', data: [80, 40, 60, 90, 50], backgroundColor: techvifyBlue },
+            { label: 'Upsell Potential', data: [95, 85, 90, 95, 75], backgroundColor: colorSuccess }
           ]
         },
-        options: { responsive: true, maintainAspectRatio: false }
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100 } } }
       });
 
       // 9. Health Matrix (Scatter)
@@ -830,38 +794,7 @@
         }
       });
 
-      // 10. Escalation Aging
-      new Chart(document.getElementById('chart-escalation'), {
-        type: 'bar',
-        data: {
-          labels: ['EMEA', 'NA', 'APAC'],
-          datasets: [
-            { label: '< 7 Days', data: [5, 2, 4], backgroundColor: colorSuccess },
-            { label: '7-14 Days', data: [2, 3, 1], backgroundColor: colorWarning },
-            { label: '> 14 Days', data: [1, 0, 2], backgroundColor: colorDanger }
-          ]
-        },
-        options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } } }
-      });
 
-      // 11. Coverage Cost vs Gross Profit (Dual Axis)
-      new Chart(document.getElementById('chart-coverage'), {
-        type: 'line',
-        data: {
-          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-          datasets: [
-            { label: 'Gross Profit %', data: [42, 45, 44, 48], yAxisID: 'y', borderColor: colorSuccess, tension: 0.4 },
-            { label: 'Cost of Sales ($M)', data: [1.2, 1.5, 1.4, 1.8], yAxisID: 'y1', type: 'bar', backgroundColor: techvifyLight }
-          ]
-        },
-        options: { 
-          responsive: true, maintainAspectRatio: false,
-          scales: {
-            y: { type: 'linear', position: 'left', ticks: { callback: v => v + '%' } },
-            y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: v => '$' + v + 'M' } }
-          }
-        }
-      });
 
       // 12. Pipeline by Stage (Horizontal)
       new Chart(document.getElementById('chart-pipeline-stage'), {
