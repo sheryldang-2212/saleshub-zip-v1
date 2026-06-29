@@ -3,75 +3,297 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboards - SalesHub CRM</title>
+  <title>C-Level Intelligence - SalesHub CRM</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Phosphor Icons for premium icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .dashboard-tabs {
-      display: flex;
-      border-bottom: 1px solid var(--border-color);
-      padding: 0 24px;
-      background: #F9FAFC;
+    :root {
+      --techvify-blue: #0056D2;
+      --techvify-light: #E6F0FB;
     }
-    .db-tab {
-      padding: 16px 24px;
-      cursor: pointer;
-      font-weight: 500;
-      border-bottom: 2px solid transparent;
+    
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .db-layout {
+      display: flex;
+      height: calc(100vh - 145px);
+      overflow: hidden;
+      background: #F1F5F9;
+    }
+    
+    .db-nav {
+      width: 250px;
+      background: white;
+      border-right: 1px solid var(--border-color);
+      overflow-y: auto;
+      padding: 24px 0;
+      flex-shrink: 0;
+    }
+    
+    .db-nav-title {
+      font-size: 12px;
+      font-weight: 700;
       color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 24px;
+      margin-bottom: 12px;
+    }
+    
+    .db-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 500;
+      border-left: 3px solid transparent;
       transition: all 0.2s;
+    }
+    
+    .db-nav-link:hover, .db-nav-link.active {
+      color: var(--techvify-blue);
+      background: var(--techvify-light);
+      border-left-color: var(--techvify-blue);
+    }
+    
+    .db-main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 48px;
+      scroll-behavior: smooth;
+    }
+    
+    .db-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 40px;
+    }
+    
+    .db-section-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #E2E8F0;
+    }
+    
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    
+    .kpi-card {
+      background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+      border-color: var(--techvify-blue);
+    }
+    
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--techvify-blue);
+    }
+    
+    .kpi-title {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    
+    .kpi-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    
+    .kpi-trend {
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .trend-up { color: #10B981; }
+    .trend-down { color: #EF4444; }
+    .trend-neutral { color: var(--text-muted); }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .chart-box {
+      background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .chart-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .info-icon {
+      color: var(--text-muted);
+      cursor: help;
+      font-size: 16px;
+      position: relative;
+    }
+    
+    .info-icon:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 130%;
+      right: 0;
+      width: 250px;
+      white-space: normal;
+      background: #1E293B;
+      color: white;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+      z-index: 100;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      pointer-events: none;
+    }
+    
+    .chart-container {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+    
+    .header-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 16px 32px;
+      background: white;
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+    }
+    
+    .filter-group {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .db-tab:hover {
-      color: var(--primary-teal);
-    }
-    .db-tab.active {
-      color: var(--primary-teal);
-      border-bottom-color: var(--primary-teal);
-      background: white;
-    }
-    .db-content {
-      display: none;
-      padding: 24px;
-    }
-    .db-content.active {
-      display: block;
-    }
-    
-    /* Stats Card specific to Dashboard */
-    .stat-kpi {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin: 8px 0;
-    }
-    .stat-label {
-      font-size: 13px;
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 600;
     }
     
-    .chart-placeholder {
-      background: #F8FAFC;
-      border: 1px dashed #CBD5E1;
+    .table-container {
+      background: white;
+      border: 1px solid #E2E8F0;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 200px;
-      color: var(--text-muted);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      overflow: hidden;
+    }
+    .exec-table {
+      width: 100%;
+      border-collapse: collapse;
       font-size: 13px;
+    }
+    .exec-table th {
+      background: #F8FAFC;
+      text-align: left;
+      padding: 14px 20px;
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid #E2E8F0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .exec-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid #E2E8F0;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+    .exec-table tr:last-child td {
+      border-bottom: none;
+    }
+    .exec-table tbody tr:hover {
+      background: #F1F5F9;
+    }
+    
+    .action-btn {
+      padding: 6px 12px;
+      border-radius: 4px;
+      background: var(--techvify-light);
+      color: var(--techvify-blue);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      border-color: var(--techvify-blue);
+      background: white;
+    }
+    
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px;
     }
   </style>
 </head>
 <body>
   <div class="app-container">
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
       
@@ -84,252 +306,584 @@
       <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
     </aside>
 
-    <main class="main-content">
-      <!-- Header -->
-      <header class="page-header" style="padding-bottom: 0;">
-        <div class="page-title-row" style="padding: 24px;">
+    <main class="main-content" style="padding: 0; display: flex; flex-direction: column;">
+      <header class="page-header" style="padding-bottom: 0; border-bottom: none;">
+        <div class="page-title-row" style="padding: 24px 32px;">
           <div class="page-title">
-            <i class="ph ph-chart-pie-slice" style="font-size: 28px; color: var(--primary-teal);"></i>
-            <h1>Advanced Dashboards</h1>
-            <span class="badge b-purple" style="margin-left: 12px;">C-Level View</span>
+            <i class="ph ph-chart-line-up" style="font-size: 28px; color: var(--techvify-blue);"></i>
+            <h1>C-Level Revenue Intelligence</h1>
           </div>
           <div class="header-actions">
-            <select class="form-control" style="width: auto;">
-              <option>Q3 2026</option>
-              <option>Q2 2026</option>
-              <option>Q1 2026</option>
-              <option>FY 2026</option>
-            </select>
-            <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Export PDF</button>
+            <button class="btn btn-secondary" style="border-color: var(--techvify-blue); color: var(--techvify-blue);"><i class="ph ph-download-simple"></i> Export PDF</button>
           </div>
         </div>
 
-        <!-- Dashboard Tabs -->
-        <div class="dashboard-tabs">
-          <div class="db-tab active" data-target="#tab-hunting"><i class="ph ph-target"></i> Hunting</div>
-          <div class="db-tab" data-target="#tab-farming"><i class="ph ph-plant"></i> Farming</div>
-          <div class="db-tab" data-target="#tab-health"><i class="ph ph-heartbeat"></i> Account Health</div>
-          <div class="db-tab" data-target="#tab-pipeline"><i class="ph ph-funnel"></i> Pipeline Economics</div>
+        <div class="header-filters">
+          <div class="filter-group">
+            <span class="filter-label">Period</span>
+            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
+              <option>FY 2026</option>
+              <option>Q3 2026</option>
+              <option>Q2 2026</option>
+              <option>YTD</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Currency</span>
+            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
+              <option>USD ($)</option>
+              <option>EUR (€)</option>
+              <option>VND (₫)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Region</span>
+            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
+              <option>Global</option>
+              <option>APAC</option>
+              <option>North America</option>
+              <option>EMEA</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Owner/Team</span>
+            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
+              <option>All Teams</option>
+              <option>Enterprise Sales</option>
+              <option>Mid-Market</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Segment</span>
+            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
+              <option>All Segments</option>
+              <option>Strategic</option>
+              <option>Key Accounts</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Service Line</span>
+            <select class="form-control" style="width: auto; height: 32px; padding: 0 12px;">
+              <option>All Services</option>
+              <option>Cloud Migration</option>
+              <option>AI Solutions</option>
+              <option>Managed Services</option>
+            </select>
+          </div>
         </div>
       </header>
 
-      <!-- HUNTING DASHBOARD -->
-      <div class="db-content active" id="tab-hunting">
-        <div class="ai-dashboard">
+      <div class="db-layout">
+        <nav class="db-nav">
+          <div class="db-nav-title">Intelligence Views</div>
+          <a href="#kpi-summary" class="db-nav-link active"><i class="ph ph-squares-four"></i> Executive KPI Summary</a>
+          <a href="#revenue-forecast" class="db-nav-link"><i class="ph ph-chart-bar"></i> Revenue Target & Forecast</a>
+          <a href="#hunting" class="db-nav-link"><i class="ph ph-target"></i> Hunting (Net New)</a>
+          <a href="#farming" class="db-nav-link"><i class="ph ph-plant"></i> Farming (Expansion)</a>
+          <a href="#account-health" class="db-nav-link"><i class="ph ph-heartbeat"></i> Account Health & Risk</a>
+          <a href="#pipeline-economics" class="db-nav-link"><i class="ph ph-funnel"></i> Pipeline Economics</a>
+          <a href="#action-required" class="db-nav-link"><i class="ph ph-warning-circle"></i> C-Level Action Required</a>
+        </nav>
+
+        <div class="db-main" id="db-scroll-area">
           
-          <!-- KPIs -->
-          <div class="ai-card">
-            <div class="stat-label"><i class="ph ph-users" style="color: #3B82F6;"></i> Total Active Prospects</div>
-            <div class="stat-kpi">142</div>
-            <div style="font-size: 13px; color: #10B981;"><i class="ph ph-trend-up"></i> +12 from last quarter</div>
-          </div>
-          
-          <div class="ai-card">
-            <div class="stat-label"><i class="ph ph-crown" style="color: #8B5CF6;"></i> Whale Prospects (>18 points)</div>
-            <div class="stat-kpi">14</div>
-            <div style="font-size: 13px; color: #10B981;"><i class="ph ph-trend-up"></i> +2 from last quarter</div>
-          </div>
-          
-          <div class="ai-card full-width">
-            <div class="ai-card-title">Addressable Wallet (Hunting)</div>
-            <div class="stat-kpi" style="color: var(--primary-teal);">$45,200,000</div>
-            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Total value we can capture based on AI Wallet Math</div>
-            
-            <div class="ai-wallet-funnel">
-              <div class="ai-wallet-bar budget">
-                <span>Total Identified IT Budgets</span>
-                <span>$1,250,000,000</span>
+          <section id="kpi-summary" class="db-section">
+            <div class="db-section-title"><i class="ph ph-squares-four"></i> Executive KPI Summary</div>
+            <div class="kpi-grid">
+              <div class="kpi-card" onclick="alert('Drill-down: Target Achievement Details')">
+                <div class="kpi-title">Target Achievement</div>
+                <div class="kpi-value">84.2%</div>
+                <div class="kpi-trend trend-up"><i class="ph ph-trend-up"></i> +4.5% vs Q2</div>
               </div>
-              <div class="ai-wallet-bar outsource" style="--bar-width: 35%;">
-                <span>Outsourceable Wallet (Avg 35%)</span>
-                <span>$437,500,000</span>
+              <div class="kpi-card" onclick="alert('Drill-down: Locked Revenue')">
+                <div class="kpi-title">Locked Revenue / A*</div>
+                <div class="kpi-value">$16.8M</div>
+                <div class="kpi-trend trend-neutral"><i class="ph ph-minus"></i> On Track</div>
               </div>
-              <div class="ai-wallet-bar addressable" style="--bar-width: 10.3%;">
-                <span style="font-weight: 600;">Addressable Wallet (Avg 10.3% Capture)</span>
-                <span style="font-weight: 700; font-size: 15px;">$45,200,000</span>
+              <div class="kpi-card" onclick="alert('Drill-down: Weighted Forecast')">
+                <div class="kpi-title">Weighted Forecast</div>
+                <div class="kpi-value">$21.4M</div>
+                <div class="kpi-trend trend-up"><i class="ph ph-trend-up"></i> 107% of Target</div>
+              </div>
+              <div class="kpi-card" onclick="alert('Drill-down: Gap to Target')">
+                <div class="kpi-title">Gap to Target</div>
+                <div class="kpi-value">$3.2M</div>
+                <div class="kpi-trend trend-down"><i class="ph ph-warning-circle"></i> Requires 3 Mega Deals</div>
+              </div>
+              <div class="kpi-card" onclick="alert('Drill-down: Total Pipeline Value')">
+                <div class="kpi-title">Total Pipeline Value</div>
+                <div class="kpi-value">$85.6M</div>
+                <div class="kpi-trend trend-up"><i class="ph ph-trend-up"></i> 4.2x Coverage</div>
+              </div>
+              <div class="kpi-card" onclick="alert('Drill-down: New Whale Logos')">
+                <div class="kpi-title">New Whale Logos</div>
+                <div class="kpi-value">4</div>
+                <div class="kpi-trend trend-up"><i class="ph ph-trend-up"></i> Target: 3</div>
+              </div>
+              <div class="kpi-card" style="border-left: 4px solid #EF4444;" onclick="alert('Drill-down: Revenue at Risk')">
+                <div class="kpi-title">Revenue at Risk</div>
+                <div class="kpi-value" style="color: #EF4444;">$1.2M</div>
+                <div class="kpi-trend trend-down"><i class="ph ph-trend-down"></i> +$400k this month</div>
+              </div>
+              <div class="kpi-card" style="border-left: 4px solid #EF4444;" onclick="alert('Drill-down: Critical Escalations')">
+                <div class="kpi-title">Critical Escalations</div>
+                <div class="kpi-value" style="color: #EF4444;">3</div>
+                <div class="kpi-trend trend-down"><i class="ph ph-warning"></i> 2 Red Accounts</div>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div class="ai-card full-width">
-            <div class="ai-card-title">Prospect Tier Distribution</div>
-            <div class="chart-placeholder">
-              [Bar Chart: Minnow (65) | Tuna (42) | Whale (21) | Mega-potential (14)]
+          <section id="revenue-forecast" class="db-section">
+            <div class="db-section-title"><i class="ph ph-chart-bar"></i> Revenue Target & Forecast</div>
+            <div class="grid-2">
+              <div class="chart-box">
+                <div class="chart-title">Target vs Actual vs Forecast <i class="ph ph-info info-icon" data-tooltip="Compares quarterly revenue targets against actual closed-won deals and current pipeline forecast."></i></div>
+                <div class="chart-container"><canvas id="chart-target-actual"></canvas></div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Revenue Waterfall <i class="ph ph-info info-icon" data-tooltip="Visualizes how the pipeline evolved over the period (Starting + New - Won - Lost = Ending)."></i></div>
+                <div class="chart-container"><canvas id="chart-waterfall"></canvas></div>
+              </div>
             </div>
-          </div>
+            <div class="grid-2">
+              <div class="chart-box">
+                <div class="chart-title">Forecast Confidence Breakdown (A*/A/B/C/D) <i class="ph ph-info info-icon" data-tooltip="Pipeline value segmented by regional confidence levels (Commit, High, Medium, Low)."></i></div>
+                <div class="chart-container"><canvas id="chart-confidence"></canvas></div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Monthly/Quarterly Forecast Trend <i class="ph ph-info info-icon" data-tooltip="Shows the rolling 6-month historical trend of forecast accuracy and pipeline growth."></i></div>
+                <div class="chart-container"><canvas id="chart-trend"></canvas></div>
+              </div>
+            </div>
+          </section>
 
+          <section id="hunting" class="db-section">
+            <div class="db-section-title"><i class="ph ph-target"></i> Hunting (Net New)</div>
+            <div class="grid-3">
+              <div class="chart-box">
+                <div class="chart-title">Active Prospects <i class="ph ph-info info-icon" data-tooltip="Total count of active net-new logo opportunities currently in the hunting pipeline."></i></div>
+                <div style="font-size: 36px; font-weight: 700; color: var(--techvify-blue); text-align: center; margin: auto;">142</div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Prospect Distribution <i class="ph ph-info info-icon" data-tooltip="Categorizes active prospects into Whales (>$1M), Tunas ($100k-$1M), and Minnows (<$100k)."></i></div>
+                <div class="chart-container"><canvas id="chart-prospect-dist"></canvas></div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Addressable Wallet math <i class="ph ph-info info-icon" data-tooltip="The conversion funnel from total addressable market to qualified pipeline and committed deals."></i></div>
+                <div class="chart-container"><canvas id="chart-wallet"></canvas></div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="exec-table">
+                <thead>
+                  <tr>
+                    <th>Top Strategic Prospects</th>
+                    <th>Est. Value</th>
+                    <th>Stage</th>
+                    <th>Probability</th>
+                    <th>Next Step</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 600;">Global Logistics Corp <span class="badge b-purple" style="margin-left: 8px;">Whale</span></td>
+                    <td>$2,400,000</td>
+                    <td>Proposal</td>
+                    <td>60% (B)</td>
+                    <td>C-Level Alignment Call (Oct 12)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">FinServe International <span class="badge b-purple" style="margin-left: 8px;">Whale</span></td>
+                    <td>$1,850,000</td>
+                    <td>Shortlisted</td>
+                    <td>40% (C)</td>
+                    <td>Submit revised SLA (Oct 15)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">TechPioneers Inc <span class="badge b-blue" style="margin-left: 8px;">Tuna</span></td>
+                    <td>$850,000</td>
+                    <td>Negotiation</td>
+                    <td>80% (A)</td>
+                    <td>Procurement review (Oct 10)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="farming" class="db-section">
+            <div class="db-section-title"><i class="ph ph-plant"></i> Farming (Expansion)</div>
+            <div class="grid-2">
+              <div class="chart-box">
+                <div class="chart-title">Account Tier Distribution <i class="ph ph-info info-icon" data-tooltip="Breakdown of existing client base by their growth stage and strategic importance."></i></div>
+                <div class="chart-container"><canvas id="chart-tier-dist"></canvas></div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Service-line Expansion Heatmap <i class="ph ph-info info-icon" data-tooltip="Identifies cross-sell potential by comparing current service penetration vs upsell opportunities."></i></div>
+                <div class="chart-container"><canvas id="chart-heatmap"></canvas></div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="exec-table">
+                <thead>
+                  <tr>
+                    <th>Top Farming Opportunities</th>
+                    <th>Current Tier</th>
+                    <th>Potential Tag</th>
+                    <th>Expansion Value</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 600;">MegaRetail Inc.</td>
+                    <td><span class="badge b-purple">Mega</span></td>
+                    <td>Apex-Potential</td>
+                    <td>+$1,200,000</td>
+                    <td>Proposing Cloud Migration</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">SecureBank</td>
+                    <td><span class="badge b-blue">Established</span></td>
+                    <td>Mega-Potential</td>
+                    <td>+$800,000</td>
+                    <td>Evaluating AI Solutions</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="account-health" class="db-section">
+            <div class="db-section-title"><i class="ph ph-heartbeat"></i> Account Health & Risk</div>
+            <div class="grid-2">
+              <div class="chart-box">
+                <div class="chart-title">Health Matrix (Rev Confidence x Rel Health) <i class="ph ph-info info-icon" data-tooltip="Plots accounts by relationship health vs revenue confidence. Red zone requires immediate action."></i></div>
+                <div class="chart-container"><canvas id="chart-health-matrix"></canvas></div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Escalation Aging <i class="ph ph-info info-icon" data-tooltip="Tracks how long critical account escalations have been open across different regions."></i></div>
+                <div class="chart-container"><canvas id="chart-escalation"></canvas></div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="exec-table">
+                <thead>
+                  <tr>
+                    <th>Accounts Requiring Executive Attention</th>
+                    <th>Risk Level</th>
+                    <th>Revenue at Risk</th>
+                    <th>Escalation Reason</th>
+                    <th>Action Plan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 600;">TechCorp Global</td>
+                    <td><span class="badge" style="background: #EF4444; color: white;">Critical</span></td>
+                    <td>$850,000</td>
+                    <td>Delivery quality issue in Phase 2</td>
+                    <td>CTO to join steering committee call (Oct 10)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">FinServe Inc.</td>
+                    <td><span class="badge" style="background: #F97316; color: white;">High (Red)</span></td>
+                    <td>$350,000</td>
+                    <td>Competitor offering lower rates</td>
+                    <td>Price matching approval pending</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="pipeline-economics" class="db-section">
+            <div class="db-section-title"><i class="ph ph-funnel"></i> Pipeline Economics</div>
+            <div class="grid-3">
+              <div class="chart-box">
+                <div class="chart-title">Coverage Cost vs Gross Profit <i class="ph ph-info info-icon" data-tooltip="Compares the cost of sales against the overall gross profit margin over time."></i></div>
+                <div class="chart-container"><canvas id="chart-coverage"></canvas></div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Pipeline by Stage <i class="ph ph-info info-icon" data-tooltip="The volume of active opportunities distributed across each stage of the sales cycle."></i></div>
+                <div class="chart-container"><canvas id="chart-pipeline-stage"></canvas></div>
+              </div>
+              <div class="chart-box">
+                <div class="chart-title">Win Rate & Avg Deal Size <i class="ph ph-info info-icon" data-tooltip="Tracks the historical win rate percentage for the selected period."></i></div>
+                <div class="chart-container"><canvas id="chart-win-rate"></canvas></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="action-required" class="db-section">
+            <div class="db-section-title"><i class="ph ph-warning-circle"></i> C-Level Action Required</div>
+            <div class="table-container">
+              <table class="exec-table">
+                <thead>
+                  <tr>
+                    <th>Priority</th>
+                    <th>Type</th>
+                    <th>Account / Deal</th>
+                    <th>Reason</th>
+                    <th>Owner</th>
+                    <th>Due Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="status-dot" style="background: #EF4444;"></span> P0</td>
+                    <td><span class="badge b-gray">Escalation</span></td>
+                    <td style="font-weight: 600;">TechCorp Global</td>
+                    <td>Sponsor threatening to cancel Phase 3</td>
+                    <td>Sarah Jenkins</td>
+                    <td style="color: #EF4444; font-weight: 600;">Oct 09, 2026</td>
+                    <td><a href="#" class="action-btn">Approve Discount</a></td>
+                  </tr>
+                  <tr>
+                    <td><span class="status-dot" style="background: #F97316;"></span> P1</td>
+                    <td><span class="badge b-gray">Deal Support</span></td>
+                    <td style="font-weight: 600;">Global Logistics Corp</td>
+                    <td>Whale deal requires Exec Sponsor for final pitch</td>
+                    <td>Michael Chang</td>
+                    <td>Oct 11, 2026</td>
+                    <td><a href="#" class="action-btn">Schedule Review</a></td>
+                  </tr>
+                  <tr>
+                    <td><span class="status-dot" style="background: #F59E0B;"></span> P2</td>
+                    <td><span class="badge b-gray">Pipeline</span></td>
+                    <td style="font-weight: 600;">EMEA Region</td>
+                    <td>Coverage ratio dropped below 3.0x</td>
+                    <td>David Miller</td>
+                    <td>Oct 15, 2026</td>
+                    <td><a href="#" class="action-btn">View Strategy</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          
         </div>
       </div>
-
-      <!-- FARMING DASHBOARD -->
-      <div class="db-content" id="tab-farming">
-        <div class="ai-dashboard">
-          
-          <div class="ai-card">
-            <div class="stat-label"><i class="ph ph-money" style="color: #10B981;"></i> Total TTM Revenue</div>
-            <div class="stat-kpi">$18,450,000</div>
-            <div style="font-size: 13px; color: #10B981;"><i class="ph ph-trend-up"></i> +15% YoY</div>
-          </div>
-          
-          <div class="ai-card">
-            <div class="stat-label"><i class="ph ph-star" style="color: #F59E0B;"></i> Active Clients</div>
-            <div class="stat-kpi">48</div>
-            <div style="font-size: 13px; color: var(--text-muted);"><i class="ph ph-minus"></i> No change</div>
-          </div>
-
-          <div class="ai-card full-width">
-            <div class="ai-card-title">Client Tier Migration (YoY)</div>
-            <table class="data-table" style="width: 100%; border: 1px solid #E2E8F0; border-radius: 8px;">
-              <thead style="background: #F8FAFC;">
-                <tr>
-                  <th>Tier</th>
-                  <th>Criteria (TTM Rev)</th>
-                  <th>Current Clients</th>
-                  <th>Change</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="font-weight: 600; color: var(--primary-teal);">Apex</td>
-                  <td>> $5M</td>
-                  <td>2</td>
-                  <td style="color: #10B981;">+1 <i class="ph ph-arrow-up-right"></i></td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 600; color: #6B21A8;">Mega</td>
-                  <td>$1M - $5M</td>
-                  <td>8</td>
-                  <td style="color: #10B981;">+2 <i class="ph ph-arrow-up-right"></i></td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 600; color: #1E40AF;">Established</td>
-                  <td>$500k - $1M</td>
-                  <td>12</td>
-                  <td style="color: #EF4444;">-1 <i class="ph ph-arrow-down-right"></i></td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 600; color: #0284C7;">Growth</td>
-                  <td>$100k - $500k</td>
-                  <td>15</td>
-                  <td style="color: var(--text-muted);">-</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 600; color: var(--text-muted);">Emerging</td>
-                  <td>< $100k</td>
-                  <td>11</td>
-                  <td style="color: #EF4444;">-2 <i class="ph ph-arrow-down-right"></i></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- HEALTH & COVERAGE -->
-      <div class="db-content" id="tab-health">
-        <div class="ai-dashboard">
-          
-          <div class="ai-card">
-            <div class="stat-label"><i class="ph ph-warning-circle" style="color: #EF4444;"></i> Escalated Accounts (Red/Critical)</div>
-            <div class="stat-kpi" style="color: #EF4444;">3</div>
-            <div style="font-size: 13px; color: var(--text-muted);">Requires immediate action</div>
-          </div>
-          
-          <div class="ai-card">
-            <div class="stat-label"><i class="ph ph-calendar-check" style="color: #3B82F6;"></i> QBRs Due This Month</div>
-            <div class="stat-kpi">5</div>
-            <div style="font-size: 13px; color: var(--text-muted);">2 scheduled, 3 pending</div>
-          </div>
-
-          <div class="ai-card full-width">
-            <div class="ai-card-title">At-Risk Accounts Watchlist</div>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-              
-              <div style="padding: 16px; border: 1px solid #FCA5A5; border-radius: 8px; background: #FEF2F2; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">TechCorp Global <span class="badge b-purple">Mega</span></div>
-                  <div style="font-size: 13px; color: #B91C1C;">Reason: Delivery quality issue in Phase 2. Client sponsor unhappy.</div>
-                </div>
-                <div>
-                  <span class="badge" style="background: #EF4444; color: white;">Critical</span>
-                </div>
-              </div>
-
-              <div style="padding: 16px; border: 1px solid #FCA5A5; border-radius: 8px; background: #FEF2F2; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">FinServe Inc. <span class="badge b-blue">Growth</span></div>
-                  <div style="font-size: 13px; color: #B91C1C;">Reason: Competitor offering lower rates. Risk of churn in upcoming renewal.</div>
-                </div>
-                <div>
-                  <span class="badge" style="background: #EF4444; color: white;">Red</span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- PIPELINE ECONOMICS -->
-      <div class="db-content" id="tab-pipeline">
-        <div class="ai-dashboard">
-          
-          <div class="ai-card full-width">
-            <div class="ai-card-title">Target vs Locked vs Gap</div>
-            
-            <div style="margin-bottom: 24px;">
-              <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">
-                <span>Locked (Won): $12M</span>
-                <span>Gap: $8M</span>
-                <span>Target: $20M</span>
-              </div>
-              <div style="height: 24px; border-radius: 12px; background: #E2E8F0; display: flex; overflow: hidden;">
-                <div style="width: 60%; background: #10B981; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">60%</div>
-                <div style="width: 40%; background: transparent;"></div>
-              </div>
-            </div>
-
-            <div class="ai-card-title" style="margin-top: 32px;">Pipeline Required to Close Gap</div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-              <div style="background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid #E2E8F0;">
-                <div class="stat-label">Current Pipeline (Unweighted)</div>
-                <div class="stat-kpi" style="color: #3B82F6;">$24,500,000</div>
-              </div>
-              <div style="background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid #E2E8F0;">
-                <div class="stat-label">Required Pipeline (Assuming 30% Win Rate)</div>
-                <div class="stat-kpi" style="color: #8B5CF6;">$26,666,667</div>
-                <div style="font-size: 13px; color: #EF4444; margin-top: 8px;"><i class="ph ph-warning-circle"></i> Shortfall: ~$2.1M pipeline needed</div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
     </main>
   </div>
 
   <script>
-    // Tab switching logic
     document.addEventListener('DOMContentLoaded', () => {
-      const tabs = document.querySelectorAll('.db-tab');
-      const contents = document.querySelectorAll('.db-content');
-
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          tabs.forEach(t => t.classList.remove('active'));
-          contents.forEach(c => c.classList.remove('active'));
-          
-          tab.classList.add('active');
-          const target = document.querySelector(tab.getAttribute('data-target'));
-          if (target) {
-            target.classList.add('active');
+      const sections = document.querySelectorAll('.db-section');
+      const navLinks = document.querySelectorAll('.db-nav-link');
+      const scrollArea = document.getElementById('db-scroll-area');
+      
+      scrollArea.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (scrollArea.scrollTop >= (sectionTop - 100)) {
+            current = section.getAttribute('id');
           }
         });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === current) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+      // Chart Configurations
+      const techvifyBlue = '#0056D2';
+      const techvifyLight = '#E6F0FB';
+      const colorWarning = '#F59E0B';
+      const colorDanger = '#EF4444';
+      const colorSuccess = '#10B981';
+      const colorPurple = '#8B5CF6';
+
+      // 1. Target vs Actual vs Forecast
+      new Chart(document.getElementById('chart-target-actual'), {
+        type: 'bar',
+        data: {
+          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+          datasets: [
+            { label: 'Actual', data: [4.2, 5.1, 3.8, 0], backgroundColor: techvifyBlue },
+            { label: 'Forecast', data: [0, 0, 1.2, 5.8], backgroundColor: techvifyLight, borderColor: techvifyBlue, borderWidth: 1 },
+            { label: 'Target', data: [4.5, 4.5, 5.5, 5.5], type: 'line', borderColor: colorWarning, backgroundColor: 'transparent', borderDash: [5, 5] }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v + 'M' } } } }
+      });
+
+      // 2. Revenue Waterfall
+      new Chart(document.getElementById('chart-waterfall'), {
+        type: 'bar',
+        data: {
+          labels: ['Starting Pipeline', 'New Created', 'Won', 'Lost/Slipped', 'Ending Pipeline'],
+          datasets: [{
+            label: 'Amount ($M)',
+            data: [
+              [0, 45],     // Starting
+              [45, 65],    // New
+              [55, 65],    // Won (subtracts, visual hack)
+              [40, 55],    // Lost (subtracts)
+              [0, 40]      // Ending
+            ],
+            backgroundColor: [techvifyLight, colorSuccess, techvifyBlue, colorDanger, techvifyLight]
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => '$' + v + 'M' } } } }
+      });
+
+      // 3. Forecast Confidence (Stacked Bar)
+      new Chart(document.getElementById('chart-confidence'), {
+        type: 'bar',
+        data: {
+          labels: ['EMEA', 'NA', 'APAC', 'LATAM'],
+          datasets: [
+            { label: 'A* (Commit)', data: [2.1, 4.5, 1.2, 0.8], backgroundColor: techvifyBlue },
+            { label: 'A (High)', data: [1.5, 3.0, 1.8, 0.5], backgroundColor: '#3B82F6' },
+            { label: 'B (Medium)', data: [3.2, 2.1, 2.5, 1.1], backgroundColor: '#93C5FD' },
+            { label: 'C (Low)', data: [1.1, 1.5, 0.8, 0.4], backgroundColor: '#E0E7FF' }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true, ticks: { callback: v => '$' + v + 'M' } } } }
+      });
+
+      // 4. Monthly/Quarterly Forecast Trend
+      new Chart(document.getElementById('chart-trend'), {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [
+            { label: 'Rolling Forecast', data: [12, 14, 13.5, 16, 15.2, 18], borderColor: techvifyBlue, tension: 0.4, fill: true, backgroundColor: 'rgba(0, 86, 210, 0.1)' }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v + 'M' } } } }
+      });
+
+      // 5. Prospect Distribution
+      new Chart(document.getElementById('chart-prospect-dist'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Whale (>$1M)', 'Tuna ($100k-$1M)', 'Minnow (<$100k)'],
+          datasets: [{ data: [15, 45, 82], backgroundColor: [colorPurple, techvifyBlue, '#94A3B8'] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '70%' }
+      });
+
+      // 6. Addressable Wallet Math
+      new Chart(document.getElementById('chart-wallet'), {
+        type: 'bar',
+        indexAxis: 'y',
+        data: {
+          labels: ['Total Addressable', 'Serviceable', 'Qualified Pipeline', 'Committed'],
+          datasets: [{ label: 'Wallet ($M)', data: [120, 80, 45, 12], backgroundColor: [techvifyLight, '#93C5FD', techvifyBlue, colorSuccess] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => '$' + v + 'M' } } } }
+      });
+
+      // 7. Account Tier Distribution
+      new Chart(document.getElementById('chart-tier-dist'), {
+        type: 'bar',
+        data: {
+          labels: ['Emerging', 'Growth', 'Established', 'Mega', 'Apex'],
+          datasets: [{ label: 'Accounts', data: [120, 85, 40, 15, 3], backgroundColor: techvifyBlue }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      });
+
+      // 8. Service-line Expansion Heatmap (Mocked with Radar)
+      new Chart(document.getElementById('chart-heatmap'), {
+        type: 'radar',
+        data: {
+          labels: ['Cloud', 'Data/AI', 'Security', 'Managed IT', 'Consulting'],
+          datasets: [
+            { label: 'Current Penetration', data: [80, 40, 60, 90, 50], backgroundColor: 'rgba(0, 86, 210, 0.2)', borderColor: techvifyBlue },
+            { label: 'Upsell Potential', data: [95, 85, 90, 95, 75], backgroundColor: 'rgba(16, 185, 129, 0.2)', borderColor: colorSuccess }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      // 9. Health Matrix (Scatter)
+      new Chart(document.getElementById('chart-health-matrix'), {
+        type: 'scatter',
+        data: {
+          datasets: [{
+            label: 'Accounts',
+            data: [
+              { x: 80, y: 90, r: 15 }, { x: 40, y: 30, r: 10 }, { x: 60, y: 50, r: 8 },
+              { x: 20, y: 80, r: 12 }, { x: 90, y: 20, r: 20 }, { x: 75, y: 65, r: 18 }
+            ],
+            backgroundColor: ctx => {
+              const v = ctx.raw;
+              if (!v) return techvifyBlue;
+              if (v.x < 50 && v.y < 50) return colorDanger;
+              if (v.x > 70 && v.y > 70) return colorSuccess;
+              return colorWarning;
+            }
+          }]
+        },
+        options: { 
+          responsive: true, maintainAspectRatio: false, 
+          scales: { x: { title: { display: true, text: 'Relationship Health (0-100)' } }, y: { title: { display: true, text: 'Revenue Confidence (0-100)' } } },
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // 10. Escalation Aging
+      new Chart(document.getElementById('chart-escalation'), {
+        type: 'bar',
+        data: {
+          labels: ['EMEA', 'NA', 'APAC'],
+          datasets: [
+            { label: '< 7 Days', data: [5, 2, 4], backgroundColor: colorSuccess },
+            { label: '7-14 Days', data: [2, 3, 1], backgroundColor: colorWarning },
+            { label: '> 14 Days', data: [1, 0, 2], backgroundColor: colorDanger }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } } }
+      });
+
+      // 11. Coverage Cost vs Gross Profit (Dual Axis)
+      new Chart(document.getElementById('chart-coverage'), {
+        type: 'line',
+        data: {
+          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+          datasets: [
+            { label: 'Gross Profit %', data: [42, 45, 44, 48], yAxisID: 'y', borderColor: colorSuccess, tension: 0.4 },
+            { label: 'Cost of Sales ($M)', data: [1.2, 1.5, 1.4, 1.8], yAxisID: 'y1', type: 'bar', backgroundColor: techvifyLight }
+          ]
+        },
+        options: { 
+          responsive: true, maintainAspectRatio: false,
+          scales: {
+            y: { type: 'linear', position: 'left', ticks: { callback: v => v + '%' } },
+            y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: v => '$' + v + 'M' } }
+          }
+        }
+      });
+
+      // 12. Pipeline by Stage (Horizontal)
+      new Chart(document.getElementById('chart-pipeline-stage'), {
+        type: 'bar',
+        indexAxis: 'y',
+        data: {
+          labels: ['Lead', 'Discovery', 'Proposal', 'Negotiation', 'Closed Won'],
+          datasets: [{ label: 'Deals', data: [120, 85, 45, 15, 8], backgroundColor: [techvifyLight, '#93C5FD', '#60A5FA', '#3B82F6', techvifyBlue] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      });
+
+      // 13. Win Rate & Avg Deal Size
+      new Chart(document.getElementById('chart-win-rate'), {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [
+            { label: 'Win Rate (%)', data: [22, 25, 24, 28, 30, 32], borderColor: techvifyBlue, tension: 0.3 }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => v + '%' } } } }
       });
     });
   </script>
