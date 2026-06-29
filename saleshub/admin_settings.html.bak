@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    .settings-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .settings-tab {
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 500;
+      border-radius: 8px;
+      color: var(--text-dark);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid transparent;
+    }
+    .settings-tab:hover {
+      background: #F8FAFC;
+    }
+    .settings-tab.active {
+      background: rgba(0, 164, 189, 0.05);
+      color: var(--primary-teal);
+      border-color: rgba(0, 164, 189, 0.2);
+    }
+    .settings-content {
+      display: none;
+    }
+    .settings-content.active {
+      display: block;
+    }
+    
+    .config-card {
+      background: white;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .config-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    
+    .audit-log-row:hover {
+      background: #F8FAFC;
+    }
+    .audit-log-time {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .audit-log-user {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      
+      <div style="margin-top: auto; color: white; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div class="page-title-row">
+          <div class="page-title">
+            <i class="ph ph-gear" style="font-size: 28px; color: var(--primary-teal);"></i>
+            <h1>Admin Settings</h1>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary"><i class="ph ph-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+      </header>
+
+      <div style="display: grid; grid-template-columns: 250px 1fr; gap: 32px; padding: 24px;">
+        
+        <!-- Left Nav -->
+        <div class="settings-tabs">
+          <div class="settings-tab active" data-target="#tab-intel"><i class="ph ph-brain"></i> Intelligence Config</div>
+          <div class="settings-tab" data-target="#tab-raci"><i class="ph ph-users-three"></i> RACI Matrix Rules</div>
+          <div class="settings-tab" data-target="#tab-forecast">
+            <i class="ph ph-trend-up"></i> Forecast Configuration
+          </div>
+          <div class="settings-tab" data-target="#tab-audit">
+            <i class="ph ph-file-text"></i> Audit Logs
+          </div>
+        </div>
+
+        <!-- Right Content -->
+        <div>
+          
+          <!-- INTELLIGENCE CONFIG -->
+          <div class="settings-content active" id="tab-intel">
+            
+            <div class="config-card">
+              <div class="config-title">
+                Customer Segmentation Rules
+                <i class="ph ph-info" style="color: var(--text-muted); font-size: 18px;" title="Set revenue thresholds for auto-classifying companies"></i>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tier Name</th>
+                    <th>Min Revenue ($)</th>
+                    <th>Max Revenue ($)</th>
+                    <th>Color Badge</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Whale Prospect</strong></td>
+                    <td><input type="text" class="form-control" value="500,000,000" style="padding: 4px; height: 30px;"></td>
+                    <td><input type="text" class="form-control" value="No limit" style="padding: 4px; height: 30px;" disabled></td>
+                    <td><span class="badge b-blue">Blue</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Tuna Prospect</strong></td>
+                    <td><input type="text" class="form-control" value="100,000,000" style="padding: 4px; height: 30px;"></td>
+                    <td><input type="text" class="form-control" value="499,999,999" style="padding: 4px; height: 30px;"></td>
+                    <td><span class="badge b-purple">Purple</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Minnow Prospect</strong></td>
+                    <td><input type="text" class="form-control" value="0" style="padding: 4px; height: 30px;"></td>
+                    <td><input type="text" class="form-control" value="99,999,999" style="padding: 4px; height: 30px;"></td>
+                    <td><span class="badge b-grey">Grey</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="config-card">
+              <div class="config-title">
+                Wallet Math Default Multipliers
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div class="form-group">
+                  <label>Average IT Profile Spend (%)</label>
+                  <input type="number" class="form-control" value="5" step="0.1">
+                  <span style="font-size: 12px; color: var(--text-muted);">Default % of revenue spent on IT</span>
+                </div>
+                <div class="form-group">
+                  <label>Default Outsourceable (%)</label>
+                  <input type="number" class="form-control" value="30">
+                  <span style="font-size: 12px; color: var(--text-muted);">How much of the IT budget can be outsourced</span>
+                </div>
+                <div class="form-group">
+                  <label>Default Capture Rate (%)</label>
+                  <input type="number" class="form-control" value="10">
+                  <span style="font-size: 12px; color: var(--text-muted);">Realistic share of wallet we can win</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RACI MATRIX -->
+          <div class="settings-content" id="tab-raci">
+            <div class="config-card">
+              <div class="config-title">
+                Pre-sales RACI Assignments
+                <button class="btn btn-secondary" style="font-size: 12px; padding: 4px 8px;"><i class="ph ph-plus"></i> Add Rule</button>
+              </div>
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure auto-suggestions for BID RACI based on Account Tier.</div>
+              
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Condition (Tier)</th>
+                    <th>Responsible (Delivery)</th>
+                    <th>Accountable (Owner)</th>
+                    <th>Consulted (Experts)</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge b-blue">Whale Prospect</span></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Manager</option></select></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>TC Head / VP</option></select></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Principal Architect</option></select></td>
+                    <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge b-purple">Tuna Prospect</span></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Lead</option></select></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Manager</option></select></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Solution Architect</option></select></td>
+                    <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge b-grey">Minnow Prospect</span></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Senior Dev</option></select></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Lead</option></select></td>
+                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Tech Lead</option></select></td>
+                    <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- FORECAST CONFIG -->
+          <div class="settings-content" id="tab-forecast">
+            <div class="config-card">
+              <div class="config-title">
+                Forecast Weights by Stage
+                <i class="ph ph-info" style="color: var(--text-muted); font-size: 18px;" title="Set probability weights for calculating Weighted Forecast from Raw Forecast"></i>
+              </div>
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                Weighted Forecast = Raw Forecast * (Probability Weight / 100). Applies globally across all Teams and Owners.
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50%;">Deal Stage</th>
+                    <th style="width: 50%;">Probability Weight (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="config-weights-tbody">
+                  <!-- Javascript will populate this based on window.forecastWeights in app.js -->
+                </tbody>
+              </table>
+              <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                <button class="btn btn-primary" id="btn-save-weights">Save Weights</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- AUDIT LOGS -->
+          <div class="settings-content" id="tab-audit">
+            <div class="config-card">
+              <div class="config-title">
+                System Audit Logs
+                <div class="search-box" style="width: 250px; margin: 0;">
+                  <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                  <input type="text" placeholder="Search logs..." style="height: 32px;">
+                </div>
+              </div>
+              <table class="data-table" style="font-size: 13px;">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Module</th>
+                    <th>Action / Event</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="audit-log-row">
+                    <td class="audit-log-time">2026-06-22 14:32:10</td>
+                    <td><span class="audit-log-user">Alex Thompson</span></td>
+                    <td>Company (ID: C-002)</td>
+                    <td>Changed Account Health from <strong>Green</strong> to <strong style="color: #EF4444;">Red</strong>. Reason: "Delivery quality issue in Phase 2"</td>
+                  </tr>
+                  <tr class="audit-log-row">
+                    <td class="audit-log-time">2026-06-21 09:15:00</td>
+                    <td><span class="audit-log-user">System Admin</span></td>
+                    <td>Admin Settings</td>
+                    <td>Updated Whale Prospect Revenue Threshold from $250M to $500M</td>
+                  </tr>
+                  <tr class="audit-log-row">
+                    <td class="audit-log-time">2026-06-20 16:45:22</td>
+                    <td><span class="audit-log-user">Sarah Connor</span></td>
+                    <td>Deal (ID: D-112)</td>
+                    <td>Overrode Qualifying Gate "Financial Viability" to <strong>Pass</strong></td>
+                  </tr>
+                  <tr class="audit-log-row">
+                    <td class="audit-log-time">2026-06-19 11:10:05</td>
+                    <td><span class="audit-log-user">John Doe</span></td>
+                    <td>BID (ID: BID-001)</td>
+                    <td>Marked a comment as <strong>Decision</strong> in Discussion Log.</td>
+                  </tr>
+                  <tr class="audit-log-row">
+                    <td class="audit-log-time">2026-06-18 08:30:00</td>
+                    <td><span class="audit-log-user">Alex Thompson</span></td>
+                    <td>Company (ID: C-045)</td>
+                    <td>Updated TTM Revenue. Farming Tier changed to <strong>Growth</strong>.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                <button class="btn btn-secondary">Load More</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('.settings-tab');
+      const contents = document.querySelectorAll('.settings-content');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+          
+          tab.classList.add('active');
+          const target = document.querySelector(tab.getAttribute('data-target'));
+          if (target) {
+            target.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

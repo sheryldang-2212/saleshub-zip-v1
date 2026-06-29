@@ -47,7 +47,7 @@
     .forecast-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1200px;
+      min-width: 2500px;
     }
     .forecast-table th, .forecast-table td {
       padding: 12px 16px;
@@ -63,11 +63,14 @@
       position: sticky;
       top: 0;
       z-index: 2;
+      cursor: pointer;
     }
+    .forecast-table th:hover { background: #E2E8F0; }
     /* Fixed Left Columns */
     .forecast-table th:nth-child(1), .forecast-table td:nth-child(1) { position: sticky; left: 0; background: white; z-index: 3; }
-    .forecast-table th:nth-child(2), .forecast-table td:nth-child(2) { position: sticky; left: 150px; background: white; z-index: 3; }
-    .forecast-table th:nth-child(1), .forecast-table th:nth-child(2) { background: #F1F5F9; }
+    .forecast-table th:nth-child(2), .forecast-table td:nth-child(2) { position: sticky; left: 120px; background: white; z-index: 3; }
+    .forecast-table th:nth-child(3), .forecast-table td:nth-child(3) { position: sticky; left: 270px; background: white; z-index: 3; }
+    .forecast-table th:nth-child(1), .forecast-table th:nth-child(2), .forecast-table th:nth-child(3) { background: #F1F5F9; z-index: 4; }
     
     .raw-col { background: #E0F2FE !important; }
     .weighted-col { background: #FEF3C7 !important; }
@@ -114,7 +117,6 @@
         <div class="tabs-header">
           <div class="tab-link active" data-target="tab-data">Forecast Data</div>
           <div class="tab-link" data-target="tab-analytics">Forecast Analytics</div>
-          <div class="tab-link" data-target="tab-config">Forecast Configuration</div>
         </div>
 
         <!-- ================= TAB 1: DATA ================= -->
@@ -129,12 +131,46 @@
               <option value="q3">Q3</option>
               <option value="q4">Q4</option>
             </select>
-            <select class="form-control" style="width: 150px;"><option>All Teams</option></select>
-            <select class="form-control" style="width: 150px;"><option>All Owners</option></select>
-            <select class="form-control" style="width: 150px;"><option>All Stages</option></select>
+            <select class="form-control" style="width: 150px;" id="forecast-team-filter"><option value="all">All Teams</option></select>
+            <select class="form-control" style="width: 150px;" id="forecast-owner-filter"><option value="all">All Owners</option></select>
+            <select class="form-control" style="width: 150px;" id="forecast-stage-filter"><option value="all">All Stages</option></select>
+            
+            <select class="form-control" style="width: 150px;" id="forecast-type-filter">
+              <option value="all">All Deal Types</option>
+              <option value="New Business">New Business</option>
+              <option value="Existing Business">Existing Business</option>
+              <option value="Renewal">Renewal</option>
+            </select>
+            <select class="form-control" style="width: 150px;" id="forecast-country-filter">
+              <option value="all">All Countries</option>
+              <option value="United States">United States</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Vietnam">Vietnam</option>
+              <option value="Germany">Germany</option>
+              <option value="--">Not Available</option>
+            </select>
+            <select class="form-control" style="width: 150px;" id="forecast-motion-filter">
+              <option value="all">All Motions</option>
+              <option value="Hunting">Hunting</option>
+              <option value="Farming">Farming</option>
+            </select>
+            <select class="form-control" style="width: 150px;" id="forecast-tier-filter">
+              <option value="all">All Tiers</option>
+              <option value="Whale Prospect">Whale Prospect</option>
+              <option value="Tuna Prospect">Tuna Prospect</option>
+              <option value="Minnow Prospect">Minnow Prospect</option>
+              <option value="Apex Account">Apex Account</option>
+              <option value="Mega Account">Mega Account</option>
+              <option value="Established">Established</option>
+              <option value="Growth">Growth</option>
+              <option value="Emerging">Emerging</option>
+              <option value="Not Evaluated">Not Evaluated</option>
+            </select>
+
             <div style="flex: 1;"></div>
             
-            <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
               <div style="display: flex; background: #F1F5F9; border-radius: 6px; padding: 4px;">
                 <button class="btn btn-secondary active" id="btn-view-monthly" style="border: none; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Monthly</button>
                 <button class="btn btn-secondary" id="btn-view-quarterly" style="border: none; background: transparent;">Quarterly</button>
@@ -145,6 +181,8 @@
                 <button class="btn btn-secondary" id="btn-view-weighted" style="border: none; background: transparent;">Weighted</button>
                 <button class="btn btn-secondary" id="btn-view-both" style="border: none; background: transparent;">Both</button>
               </div>
+
+              <button class="btn btn-secondary" id="btn-export-forecast"><i class="ph ph-export"></i> Export</button>
             </div>
           </div>
 
@@ -222,28 +260,7 @@
           </div>
         </div>
 
-        <!-- ================= TAB 3: CONFIGURATION ================= -->
-        <div id="tab-config" class="tab-pane">
-          <div style="max-width: 600px;">
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Configure the probability weights used to calculate Weighted Forecasts. Changes apply instantly to all existing Deal forecasts.</p>
-            
-            <table class="config-table">
-              <thead>
-                <tr>
-                  <th>Deal Stage</th>
-                  <th style="width: 150px;">Weight (%)</th>
-                </tr>
-              </thead>
-              <tbody id="config-weights-tbody">
-                <!-- JS Injected -->
-              </tbody>
-            </table>
-            
-            <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
-              <button class="btn btn-primary" id="btn-save-weights">Save Weights</button>
-            </div>
-          </div>
-        </div>
+
 
       </div>
     </main>

@@ -39,6 +39,36 @@
       display: block;
     }
     
+    .sub-tabs {
+      display: flex;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .sub-tab {
+      padding: 12px 4px;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .sub-tab:hover {
+      color: var(--text-dark);
+    }
+    .sub-tab.active {
+      color: var(--primary-teal);
+      border-bottom-color: var(--primary-teal);
+    }
+    .sub-content {
+      display: none;
+    }
+    .sub-content.active {
+      display: block;
+    }
+
     .config-card {
       background: white;
       border-radius: 8px;
@@ -67,6 +97,14 @@
     }
     .audit-log-user {
       font-weight: 500;
+    }
+    .placeholder-content {
+      padding: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      background: #F8FAFC;
+      border-radius: 8px;
+      border: 1px dashed var(--border-color);
     }
   </style>
 </head>
@@ -101,181 +139,1839 @@
 
       <div style="display: grid; grid-template-columns: 250px 1fr; gap: 32px; padding: 24px;">
         
-        <!-- Left Nav -->
+        <!-- Left Nav Layer 1: Modules -->
         <div class="settings-tabs">
-          <div class="settings-tab active" data-target="#tab-intel"><i class="ph ph-brain"></i> Intelligence Config</div>
-          <div class="settings-tab" data-target="#tab-raci"><i class="ph ph-users-three"></i> RACI Matrix Rules</div>
-          <div class="settings-tab" data-target="#tab-audit"><i class="ph ph-clock-counter-clockwise"></i> Audit Logs</div>
+          <div class="settings-tab active" data-target="#mod-general"><i class="ph ph-gear"></i> General Settings</div>
+          <div class="settings-tab" data-target="#mod-contact"><i class="ph ph-address-book"></i> Contact Settings</div>
+          <div class="settings-tab" data-target="#mod-company"><i class="ph ph-buildings"></i> Company Settings</div>
+          <div class="settings-tab" data-target="#mod-deal"><i class="ph ph-currency-dollar"></i> Deal Settings</div>
+          <div class="settings-tab" data-target="#mod-bidding"><i class="ph ph-gavel"></i> Bidding Settings</div>
+          <div class="settings-tab" data-target="#mod-forecast"><i class="ph ph-trend-up"></i> Forecast Settings</div>
         </div>
 
         <!-- Right Content -->
         <div>
           
-          <!-- INTELLIGENCE CONFIG -->
-          <div class="settings-content active" id="tab-intel">
+          <!-- GENERAL SETTINGS -->
+          <div class="settings-content active" id="mod-general">
+            <div class="sub-tabs">
+              <div class="sub-tab" data-subtarget="#general-user">User & Role</div>
+              <div class="sub-tab" data-subtarget="#general-master">Master Data</div>
+              <div class="sub-tab" data-subtarget="#general-activity">Activity Type</div>
+              <div class="sub-tab active" data-subtarget="#general-audit">Audit Logs</div>
+            </div>
+
+            <div class="sub-content" id="general-user">
+              <div class="config-card">
+                <div class="config-title">
+                  User Management
+                  <div style="display: flex; gap: 12px;">
+                    <div class="search-box" style="width: 200px; margin: 0;">
+                      <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                      <input type="text" placeholder="Search user..." style="height: 32px;">
+                    </div>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add User</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Manage users, roles, teams and data access scope.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>User Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Team</th>
+                      <th>Access Scope</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Alex Thompson</td>
+                      <td style="color: var(--text-muted);">alex@techvify.com</td>
+                      <td>Sales Manager</td>
+                      <td>Sales Team A</td>
+                      <td>Team only</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td>
+                        <i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i>
+                        <i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Sarah Connor</td>
+                      <td style="color: var(--text-muted);">sarah@techvify.com</td>
+                      <td>Sales</td>
+                      <td>Sales Team A</td>
+                      <td>Owned only</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td>
+                        <i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i>
+                        <i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">John Doe</td>
+                      <td style="color: var(--text-muted);">john@techvify.com</td>
+                      <td>Bid Manager</td>
+                      <td>Bidding Team</td>
+                      <td>Team only</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td>
+                        <i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i>
+                        <i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">System Admin</td>
+                      <td style="color: var(--text-muted);">admin@techvify.com</td>
+                      <td>Admin</td>
+                      <td>Admin</td>
+                      <td>Everything</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td>
+                        <i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="sub-content" id="general-master">
+              <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px;">
+                <div class="config-card" style="padding: 16px;">
+                  <div style="font-weight: 600; margin-bottom: 12px;">Master Data Types</div>
+                  <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <div style="padding: 8px; background: rgba(0, 164, 189, 0.1); color: var(--primary-teal); border-radius: 4px; font-weight: 500; cursor: pointer;">Industry</div>
+                    <div style="padding: 8px; color: var(--text-muted); cursor: pointer;">Country</div>
+                    <div style="padding: 8px; color: var(--text-muted); cursor: pointer;">Service Line</div>
+                    <div style="padding: 8px; color: var(--text-muted); cursor: pointer;">Project Type</div>
+                    <div style="padding: 8px; color: var(--text-muted); cursor: pointer;">Currency</div>
+                    <div style="padding: 8px; color: var(--text-muted); cursor: pointer;">Deal Type</div>
+                    <div style="padding: 8px; color: var(--text-muted); cursor: pointer;">Reason Lost</div>
+                  </div>
+                </div>
+                <div class="config-card">
+                  <div class="config-title">
+                    Industry Options
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-plus"></i> Add Option</button>
+                  </div>
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>Label</th>
+                        <th>Status</th>
+                        <th>Display Order</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><span style="font-family: monospace;">FIN</span></td>
+                        <td>Finance & Banking</td>
+                        <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                        <td>1</td>
+                        <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                      </tr>
+                      <tr>
+                        <td><span style="font-family: monospace;">RET</span></td>
+                        <td>Retail</td>
+                        <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                        <td>2</td>
+                        <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                      </tr>
+                      <tr>
+                        <td><span style="font-family: monospace;">HEALTH</span></td>
+                        <td>Healthcare</td>
+                        <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                        <td>3</td>
+                        <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                      </tr>
+                      <tr>
+                        <td><span style="font-family: monospace;">EDU</span></td>
+                        <td>Education</td>
+                        <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                        <td>4</td>
+                        <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="sub-content" id="general-activity">
+              <div class="config-card">
+                <div class="config-title">
+                  Activity Type Configuration
+                  <button class="btn btn-secondary btn-sm"><i class="ph ph-plus"></i> Add Type</button>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure activity types available across Contact, Company, Deal, and Bid records.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Activity Type</th>
+                      <th>Icon</th>
+                      <th>Applies To</th>
+                      <th>Can Create Task</th>
+                      <th>Timeline Visible</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Call</td>
+                      <td><i class="ph ph-phone"></i></td>
+                      <td>Contact, Company, Deal</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td>Email</td>
+                      <td><i class="ph ph-envelope-simple"></i></td>
+                      <td>Contact, Company, Deal</td>
+                      <td>No</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td>Meeting</td>
+                      <td><i class="ph ph-calendar"></i></td>
+                      <td>Contact, Company, Deal</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td>Note</td>
+                      <td><i class="ph ph-note"></i></td>
+                      <td>Contact, Company, Deal, Bid</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td>Document Upload</td>
+                      <td><i class="ph ph-file-pdf"></i></td>
+                      <td>Bid, Deal</td>
+                      <td>No</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td>Status Change</td>
+                      <td><i class="ph ph-arrows-left-right"></i></td>
+                      <td>Deal, Bid, Forecast</td>
+                      <td>No</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="sub-content active" id="general-audit">
+              <div class="config-card">
+                <div class="config-title">
+                  System Audit Logs
+                  <div class="search-box" style="width: 250px; margin: 0;">
+                    <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                    <input type="text" placeholder="Search logs..." style="height: 32px;">
+                  </div>
+                </div>
+                <table class="data-table" style="font-size: 13px;">
+                  <thead>
+                    <tr>
+                      <th>Timestamp</th>
+                      <th>User</th>
+                      <th>Module</th>
+                      <th>Action / Event</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="audit-log-row">
+                      <td class="audit-log-time">2026-06-22 14:32:10</td>
+                      <td><span class="audit-log-user">Alex Thompson</span></td>
+                      <td>Company (ID: C-002)</td>
+                      <td>Changed Account Health from <strong>Green</strong> to <strong style="color: #EF4444;">Red</strong>. Reason: "Delivery quality issue in Phase 2"</td>
+                    </tr>
+                    <tr class="audit-log-row">
+                      <td class="audit-log-time">2026-06-21 09:15:00</td>
+                      <td><span class="audit-log-user">System Admin</span></td>
+                      <td>Admin Settings</td>
+                      <td>Updated Whale Prospect Revenue Threshold from $250M to $500M</td>
+                    </tr>
+                    <tr class="audit-log-row">
+                      <td class="audit-log-time">2026-06-20 16:45:22</td>
+                      <td><span class="audit-log-user">Sarah Connor</span></td>
+                      <td>Deal (ID: D-112)</td>
+                      <td>Overrode Qualifying Gate "Financial Viability" to <strong>Pass</strong></td>
+                    </tr>
+                    <tr class="audit-log-row">
+                      <td class="audit-log-time">2026-06-19 11:10:05</td>
+                      <td><span class="audit-log-user">John Doe</span></td>
+                      <td>BID (ID: BID-001)</td>
+                      <td>Marked a comment as <strong>Decision</strong> in Discussion Log.</td>
+                    </tr>
+                    <tr class="audit-log-row">
+                      <td class="audit-log-time">2026-06-18 08:30:00</td>
+                      <td><span class="audit-log-user">Alex Thompson</span></td>
+                      <td>Company (ID: C-045)</td>
+                      <td>Updated TTM Revenue. Farming Tier changed to <strong>Growth</strong>.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                  <button class="btn btn-secondary">Load More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTACT SETTINGS -->
+          <div class="settings-content" id="mod-contact">
+            <div class="sub-tabs">
+              <div class="sub-tab active" data-subtarget="#contact-properties">Properties</div>
+              <div class="sub-tab" data-subtarget="#contact-form">Form Layout</div>
+              <div class="sub-tab" data-subtarget="#contact-detail">Detail Layout</div>
+              <div class="sub-tab" data-subtarget="#contact-list">List View</div>
+              <div class="sub-tab" data-subtarget="#contact-validation">Validation Rules</div>
+              <div class="sub-tab" data-subtarget="#contact-permission">Permission & Visibility</div>
+            </div>
             
-            <div class="config-card">
-              <div class="config-title">
-                Customer Segmentation Rules
-                <i class="ph ph-info" style="color: var(--text-muted); font-size: 18px;" title="Set revenue thresholds for auto-classifying companies"></i>
+            <div class="sub-content active" id="contact-properties">
+              <div class="config-card">
+                <div class="config-title">
+                  Contact Properties
+                  <div style="display: flex; gap: 12px;">
+                    <div class="search-box" style="width: 200px; margin: 0;">
+                      <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                      <input type="text" placeholder="Search property..." style="height: 32px;">
+                    </div>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Property</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure data fields for Contact records.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Property Label</th>
+                      <th>Internal Name</th>
+                      <th>Data Type</th>
+                      <th>Required</th>
+                      <th>Unique</th>
+                      <th>System Field</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Contact ID</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">contact_id</td>
+                      <td>Auto ID</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-eye" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">First Name</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">first_name</td>
+                      <td>Text</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Email</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">email</td>
+                      <td>Email</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Preferred Channel</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">preferred_channel</td>
+                      <td>Dropdown</td>
+                      <td>No</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #DBEAFE; color: #1E40AF;">No</span></td>
+                      <td>
+                        <i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i>
+                        <i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Tier Name</th>
-                    <th>Min Revenue ($)</th>
-                    <th>Max Revenue ($)</th>
-                    <th>Color Badge</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Whale Prospect</strong></td>
-                    <td><input type="text" class="form-control" value="500,000,000" style="padding: 4px; height: 30px;"></td>
-                    <td><input type="text" class="form-control" value="No limit" style="padding: 4px; height: 30px;" disabled></td>
-                    <td><span class="badge b-blue">Blue</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Tuna Prospect</strong></td>
-                    <td><input type="text" class="form-control" value="100,000,000" style="padding: 4px; height: 30px;"></td>
-                    <td><input type="text" class="form-control" value="499,999,999" style="padding: 4px; height: 30px;"></td>
-                    <td><span class="badge b-purple">Purple</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Minnow Prospect</strong></td>
-                    <td><input type="text" class="form-control" value="0" style="padding: 4px; height: 30px;"></td>
-                    <td><input type="text" class="form-control" value="99,999,999" style="padding: 4px; height: 30px;"></td>
-                    <td><span class="badge b-grey">Grey</span></td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
 
-            <div class="config-card">
-              <div class="config-title">
-                Wallet Math Default Multipliers
+            <div class="sub-content" id="contact-form">
+              <div class="config-card">
+                <div class="config-title">
+                  Contact Form Layout
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-eye"></i> Preview</button>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Section</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure sections and fields on the Create/Edit Contact form.</div>
+                
+                <div style="border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 16px;">
+                  <div style="background: #F8FAFC; padding: 12px 16px; border-bottom: 1px solid var(--border-color); font-weight: 600; display: flex; justify-content: space-between;">
+                    <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Basic Information</div>
+                    <div style="color: var(--primary-teal); font-size: 13px; cursor: pointer;"><i class="ph ph-plus"></i> Add Field</div>
+                  </div>
+                  <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 4px;">
+                      <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> First Name <span style="color: #EF4444;">*</span></div>
+                      <div><i class="ph ph-gear" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: var(--text-muted);"></i></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 4px;">
+                      <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Last Name <span style="color: #EF4444;">*</span></div>
+                      <div><i class="ph ph-gear" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: var(--text-muted);"></i></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 4px;">
+                      <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Email <span style="color: #EF4444;">*</span></div>
+                      <div><i class="ph ph-gear" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: var(--text-muted);"></i></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="border: 1px solid var(--border-color); border-radius: 8px;">
+                  <div style="background: #F8FAFC; padding: 12px 16px; border-bottom: 1px solid var(--border-color); font-weight: 600; display: flex; justify-content: space-between;">
+                    <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Additional Information</div>
+                    <div style="color: var(--primary-teal); font-size: 13px; cursor: pointer;"><i class="ph ph-plus"></i> Add Field</div>
+                  </div>
+                  <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 4px;">
+                      <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> LinkedIn URL</div>
+                      <div><i class="ph ph-gear" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: var(--text-muted);"></i></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                <div class="form-group">
-                  <label>Average IT Profile Spend (%)</label>
-                  <input type="number" class="form-control" value="5" step="0.1">
-                  <span style="font-size: 12px; color: var(--text-muted);">Default % of revenue spent on IT</span>
+            </div>
+
+            <div class="sub-content" id="contact-detail">
+              <div class="config-card">
+                <div class="config-title">
+                  Contact Detail Layout
                 </div>
-                <div class="form-group">
-                  <label>Default Outsourceable (%)</label>
-                  <input type="number" class="form-control" value="30">
-                  <span style="font-size: 12px; color: var(--text-muted);">How much of the IT budget can be outsourced</span>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure sections displayed on the Contact detail view. Note: "View all properties" is for data viewing only, not property configuration.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Section</th>
+                      <th>Default Visible</th>
+                      <th>Fields / Content</th>
+                      <th>Role Visibility</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Overview</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td>Name, Email, Phone, Owner</td>
+                      <td>All roles</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Activities</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Call, Email, Meeting, Note</td>
+                      <td>All roles</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Associated Company</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Company Name, Domain</td>
+                      <td>All roles</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">History Log</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Change History</td>
+                      <td>Admin, Manager</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="contact-list">
+              <div class="config-card">
+                <div class="config-title">
+                  Contact List View
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-eye"></i> Preview</button>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Column</button>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label>Default Capture Rate (%)</label>
-                  <input type="number" class="form-control" value="10">
-                  <span style="font-size: 12px; color: var(--text-muted);">Realistic share of wallet we can win</span>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure default columns visible on the Contact List.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Column Label</th>
+                      <th>Source Field</th>
+                      <th>Default Visible</th>
+                      <th>Searchable</th>
+                      <th>Filterable</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Contact ID</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">contact_id</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Name</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">full_name</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Email</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">email</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Owner</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">contact_owner</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>No</td>
+                      <td>Yes</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="contact-validation">
+              <div class="config-card">
+                <div class="config-title">
+                  Contact Validation Rules
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Rule</button>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure data validation rules for Contacts.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Rule Name</th>
+                      <th>Field</th>
+                      <th>Condition</th>
+                      <th>Error Message</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Email Required</td>
+                      <td>Email</td>
+                      <td>Is empty</td>
+                      <td>Email is required</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Email Format</td>
+                      <td>Email</td>
+                      <td>Invalid email format</td>
+                      <td>Email is not valid</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Unique Email</td>
+                      <td>Email</td>
+                      <td>Duplicate value</td>
+                      <td>Email already exists</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="contact-permission">
+              <div class="config-card">
+                <div class="config-title">
+                  Contact Permission & Visibility
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure role-based access for Contacts.</div>
+                <div style="overflow-x: auto;">
+                  <table class="data-table" style="min-width: 800px;">
+                    <thead>
+                      <tr>
+                        <th>Permission</th>
+                        <th>Sales</th>
+                        <th>Sales Manager</th>
+                        <th>BOD</th>
+                        <th>Admin</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-weight: 500;">View Contact</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Owned only</option><option>Team</option><option>Everything</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Owned only</option><option selected>Team</option><option>Everything</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Owned only</option><option>Team</option><option selected>Everything</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Owned only</option><option>Team</option><option selected>Everything</option><option>No</option></select></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 500;">Create Contact</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option><option selected>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option><option>No</option></select></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 500;">Edit Own Contact</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option><option selected>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option><option>No</option></select></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 500;">Delete Contact</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option><option selected>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Limited</option><option>Yes</option><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option><option selected>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option><option>No</option></select></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COMPANY SETTINGS -->
+          <div class="settings-content" id="mod-company">
+            <div class="sub-tabs">
+              <div class="sub-tab" data-subtarget="#company-properties">Properties</div>
+              <div class="sub-tab" data-subtarget="#company-form">Form Layout</div>
+              <div class="sub-tab" data-subtarget="#company-detail">Detail Layout</div>
+              <div class="sub-tab" data-subtarget="#company-list">List View</div>
+              <div class="sub-tab active" data-subtarget="#company-segmentation">Customer Segmentation</div>
+              <div class="sub-tab" data-subtarget="#company-wallet">Wallet Math</div>
+              <div class="sub-tab" data-subtarget="#company-validation">Validation Rules</div>
+              <div class="sub-tab" data-subtarget="#company-permission">Permission & Visibility</div>
+            </div>
+            
+            <div class="sub-content active" id="company-properties">
+              <div class="config-card">
+                <div class="config-title">
+                  Company Properties
+                  <div style="display: flex; gap: 12px;">
+                    <div class="search-box" style="width: 200px; margin: 0;">
+                      <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                      <input type="text" placeholder="Search property..." style="height: 32px;">
+                    </div>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Property</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure data fields for Company records.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Property Label</th>
+                      <th>Internal Name</th>
+                      <th>Data Type</th>
+                      <th>Required</th>
+                      <th>Unique</th>
+                      <th>System Field</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Company ID</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">company_id</td>
+                      <td>Auto ID</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-eye" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Company Name</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">company_name</td>
+                      <td>Text</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Company Domain</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">company_domain</td>
+                      <td>Domain</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">TTM Revenue</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">ttm_revenue</td>
+                      <td>Currency</td>
+                      <td>No</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #DBEAFE; color: #1E40AF;">No</span></td>
+                      <td>
+                        <i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i>
+                        <i class="ph ph-prohibit" style="cursor: pointer; color: #EF4444;"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="company-form">
+              <div class="config-card">
+                <div class="config-title">
+                  Company Form Layout
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-eye"></i> Preview</button>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Section</button>
+                  </div>
+                </div>
+                <div style="border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 16px;">
+                  <div style="background: #F8FAFC; padding: 12px 16px; border-bottom: 1px solid var(--border-color); font-weight: 600; display: flex; justify-content: space-between;">
+                    <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Basic Information</div>
+                    <div style="color: var(--primary-teal); font-size: 13px; cursor: pointer;"><i class="ph ph-plus"></i> Add Field</div>
+                  </div>
+                  <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 4px;">
+                      <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Company Name <span style="color: #EF4444;">*</span></div>
+                      <div><i class="ph ph-gear" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: var(--text-muted);"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sub-content" id="company-detail">
+              <div class="config-card">
+                <div class="config-title">Company Detail Layout</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Section</th>
+                      <th>Default Visible</th>
+                      <th>Fields / Content</th>
+                      <th>Role Visibility</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Overview</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td>Name, Domain, Owner, Industry</td>
+                      <td>All roles</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Account Intelligence</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Tier, Revenue, Wallet, Health</td>
+                      <td>Manager, BOD, Admin</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="company-list">
+              <div class="config-card">
+                <div class="config-title">Company List View</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Column Label</th>
+                      <th>Source Field</th>
+                      <th>Default Visible</th>
+                      <th>Searchable</th>
+                      <th>Filterable</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Company ID</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">company_id</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Company Name</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">company_name</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="company-segmentation">
+              <div class="config-card">
+                <div class="config-title">
+                  Customer Segmentation Rules
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Tier</button>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Tier Name</th>
+                      <th>Min Revenue ($)</th>
+                      <th>Max Revenue ($)</th>
+                      <th>Color Badge</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="text" class="form-control" value="Whale Prospect" style="padding: 4px; height: 30px;"></td>
+                      <td><input type="text" class="form-control" value="500,000,000" style="padding: 4px; height: 30px;"></td>
+                      <td><input type="text" class="form-control" value="No limit" style="padding: 4px; height: 30px;" disabled></td>
+                      <td><select class="form-control" style="padding: 4px; height: 30px;"><option selected>Blue</option><option>Purple</option></select></td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-trash" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="form-control" value="Tuna Prospect" style="padding: 4px; height: 30px;"></td>
+                      <td><input type="text" class="form-control" value="100,000,000" style="padding: 4px; height: 30px;"></td>
+                      <td><input type="text" class="form-control" value="499,999,999" style="padding: 4px; height: 30px;"></td>
+                      <td><select class="form-control" style="padding: 4px; height: 30px;"><option>Blue</option><option selected>Purple</option></select></td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-trash" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="form-control" value="Minnow Prospect" style="padding: 4px; height: 30px;"></td>
+                      <td><input type="text" class="form-control" value="0" style="padding: 4px; height: 30px;"></td>
+                      <td><input type="text" class="form-control" value="99,999,999" style="padding: 4px; height: 30px;"></td>
+                      <td><select class="form-control" style="padding: 4px; height: 30px;"><option>Blue</option><option selected>Grey</option></select></td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-trash" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="company-wallet">
+              <div class="config-card">
+                <div class="config-title">
+                  Wallet Math Configuration
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-arrow-counter-clockwise"></i> Reset Default</button>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-floppy-disk"></i> Save Multipliers</button>
+                  </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                  <div class="form-group">
+                    <label>Average IT Profile Spend (%)</label>
+                    <input type="number" class="form-control" value="5" step="0.1">
+                    <span style="font-size: 12px; color: var(--text-muted);">Default % of revenue spent on IT</span>
+                  </div>
+                  <div class="form-group">
+                    <label>Default Outsourceable (%)</label>
+                    <input type="number" class="form-control" value="30">
+                    <span style="font-size: 12px; color: var(--text-muted);">How much of the IT budget can be outsourced</span>
+                  </div>
+                  <div class="form-group">
+                    <label>Default Capture Rate (%)</label>
+                    <input type="number" class="form-control" value="10">
+                    <span style="font-size: 12px; color: var(--text-muted);">Realistic share of wallet we can win</span>
+                  </div>
+                </div>
+                
+                <h4 style="margin: 32px 0 16px; font-size: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Preview Calculation</h4>
+                <div style="display: flex; gap: 16px; align-items: flex-end;">
+                  <div class="form-group" style="width: 250px;">
+                    <label>Sample Company Revenue ($)</label>
+                    <input type="number" class="form-control" value="100000000">
+                  </div>
+                  <div style="flex: 1; padding: 16px; background: #F8FAFC; border-radius: 8px; border: 1px dashed var(--border-color); font-size: 13px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>IT Budget:</span> <strong>$5,000,000</strong></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Outsourceable Budget:</span> <strong>$1,500,000</strong></div>
+                    <div style="display: flex; justify-content: space-between; color: var(--primary-teal); font-size: 14px;"><span>Wallet Potential:</span> <strong>$150,000</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sub-content" id="company-validation">
+              <div class="config-card">
+                <div class="config-title">
+                  Company Validation Rules
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Rule</button>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Rule Name</th>
+                      <th>Field</th>
+                      <th>Condition</th>
+                      <th>Error Message</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Company Name Required</td>
+                      <td>Company Name</td>
+                      <td>Is empty</td>
+                      <td>Company name is required</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="company-permission">
+              <div class="config-card">
+                <div class="config-title">Company Permission & Visibility</div>
+                <div style="overflow-x: auto;">
+                  <table class="data-table" style="min-width: 800px;">
+                    <thead>
+                      <tr>
+                        <th>Permission</th>
+                        <th>Sales</th>
+                        <th>Sales Manager</th>
+                        <th>BOD</th>
+                        <th>Delivery/TC</th>
+                        <th>Admin</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-weight: 500;">View Company</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Owned/Assoc.</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Team</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Limited</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 500;">View Revenue</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No/Limited</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Yes</option></select></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
 
           </div>
 
-          <!-- RACI MATRIX -->
-          <div class="settings-content" id="tab-raci">
-            <div class="config-card">
-              <div class="config-title">
-                Pre-sales RACI Assignments
-                <button class="btn btn-secondary" style="font-size: 12px; padding: 4px 8px;"><i class="ph ph-plus"></i> Add Rule</button>
+          <!-- DEAL SETTINGS -->
+          <div class="settings-content" id="mod-deal">
+            <div class="sub-tabs">
+              <div class="sub-tab active" data-subtarget="#deal-properties">Properties</div>
+              <div class="sub-tab" data-subtarget="#deal-pipeline">Pipeline & Stage</div>
+              <div class="sub-tab" data-subtarget="#deal-form">Form Layout</div>
+              <div class="sub-tab" data-subtarget="#deal-detail">Detail Layout</div>
+              <div class="sub-tab" data-subtarget="#deal-list">List/Kanban View</div>
+              <div class="sub-tab" data-subtarget="#deal-validation">Validation Rules</div>
+              <div class="sub-tab" data-subtarget="#deal-permission">Permission & Visibility</div>
+            </div>
+
+            <div class="sub-content active" id="deal-properties">
+              <div class="config-card">
+                <div class="config-title">
+                  Deal Properties
+                  <div style="display: flex; gap: 12px;">
+                    <div class="search-box" style="width: 200px; margin: 0;">
+                      <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                      <input type="text" placeholder="Search property..." style="height: 32px;">
+                    </div>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Property</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure data fields for Deal records.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Property Label</th>
+                      <th>Internal Name</th>
+                      <th>Data Type</th>
+                      <th>Required</th>
+                      <th>Unique</th>
+                      <th>System Field</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Deal ID</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">deal_id</td>
+                      <td>Auto ID</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-eye" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Deal Name</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">deal_name</td>
+                      <td>Text</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Amount</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">amount</td>
+                      <td>Currency</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Close Date</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">close_date</td>
+                      <td>Date</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure auto-suggestions for BID RACI based on Account Tier.</div>
-              
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Condition (Tier)</th>
-                    <th>Responsible (Delivery)</th>
-                    <th>Accountable (Owner)</th>
-                    <th>Consulted (Experts)</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="badge b-blue">Whale Prospect</span></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Manager</option></select></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>TC Head / VP</option></select></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Principal Architect</option></select></td>
-                    <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge b-purple">Tuna Prospect</span></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Lead</option></select></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Manager</option></select></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Solution Architect</option></select></td>
-                    <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge b-grey">Minnow Prospect</span></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Senior Dev</option></select></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Lead</option></select></td>
-                    <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Tech Lead</option></select></td>
-                    <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
-                  </tr>
-                </tbody>
-              </table>
+            </div>
+
+            <div class="sub-content" id="deal-pipeline">
+              <div class="config-card">
+                <div class="config-title">
+                  Pipeline & Stage Configuration
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-plus"></i> Add Pipeline</button>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Stage</button>
+                  </div>
+                </div>
+                <div style="margin-bottom: 16px;">
+                  <label style="font-size: 13px; font-weight: 500; margin-bottom: 4px; display: block;">Select Pipeline:</label>
+                  <select class="form-control" style="width: 250px;"><option>Standard Sales Pipeline</option><option>Renewal Pipeline</option></select>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Stage Name</th>
+                      <th>Probability (%)</th>
+                      <th>Allow Create Bid</th>
+                      <th>Manual Move</th>
+                      <th>Required Fields (Gate)</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> 01 - Lead Identified</td>
+                      <td>10</td>
+                      <td><input type="checkbox"></td>
+                      <td><input type="checkbox" checked></td>
+                      <td><span class="badge b-grey">None</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> 02 - Qualified</td>
+                      <td>30</td>
+                      <td><input type="checkbox" checked></td>
+                      <td><input type="checkbox" checked></td>
+                      <td><span class="badge b-blue">2 fields</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> 03 - Proposing</td>
+                      <td>60</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><input type="checkbox" checked></td>
+                      <td><span class="badge b-blue">3 fields</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> 04 - Negotiation</td>
+                      <td>80</td>
+                      <td><input type="checkbox" checked></td>
+                      <td><input type="checkbox"></td>
+                      <td><span class="badge b-purple">Approval Req.</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> 05 - Won</td>
+                      <td>100</td>
+                      <td><input type="checkbox"></td>
+                      <td><input type="checkbox"></td>
+                      <td><span class="badge b-blue">Contract Date</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> 06 - Lost</td>
+                      <td>0</td>
+                      <td><input type="checkbox"></td>
+                      <td><input type="checkbox" checked></td>
+                      <td><span class="badge b-blue">Reason Lost</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="deal-form">
+              <div class="config-card">
+                <div class="config-title">
+                  Deal Form Layout
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-eye"></i> Preview</button>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Section</button>
+                  </div>
+                </div>
+                <div style="border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 16px;">
+                  <div style="background: #F8FAFC; padding: 12px 16px; border-bottom: 1px solid var(--border-color); font-weight: 600; display: flex; justify-content: space-between;">
+                    <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Deal Information</div>
+                    <div style="color: var(--primary-teal); font-size: 13px; cursor: pointer;"><i class="ph ph-plus"></i> Add Field</div>
+                  </div>
+                  <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 4px;">
+                      <div><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Deal Name <span style="color: #EF4444;">*</span></div>
+                      <div><i class="ph ph-gear" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: var(--text-muted);"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sub-content" id="deal-detail">
+              <div class="config-card">
+                <div class="config-title">Deal Detail Layout</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Section</th>
+                      <th>Default Visible</th>
+                      <th>Fields / Content</th>
+                      <th>Role Visibility</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Overview</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td>Amount, Close Date, Stage</td>
+                      <td>All roles</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Bidding Details</td>
+                      <td><input type="checkbox" checked></td>
+                      <td>Bid History, Related Bids</td>
+                      <td>All roles</td>
+                      <td><button class="btn btn-secondary btn-sm">Configure</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="deal-list">
+              <div class="config-card">
+                <div class="config-title">Deal List & Kanban View</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Column/Card Field</th>
+                      <th>Source Field</th>
+                      <th>Visible on List</th>
+                      <th>Visible on Kanban</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Deal Name</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">deal_name</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Amount</td>
+                      <td style="font-family: monospace; font-size: 12px; color: var(--text-muted);">amount</td>
+                      <td><input type="checkbox" checked></td>
+                      <td><input type="checkbox" checked></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted); margin-right: 8px;"></i><i class="ph ph-x" style="cursor: pointer; color: #EF4444;"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="deal-validation">
+              <div class="config-card">
+                <div class="config-title">Deal Validation Rules</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Rule Name</th>
+                      <th>Field</th>
+                      <th>Condition</th>
+                      <th>Error Message</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Close Date Validation</td>
+                      <td>Close Date</td>
+                      <td>Is before Created Date</td>
+                      <td>Close date cannot be in the past</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="deal-permission">
+              <div class="config-card">
+                <div class="config-title">Deal Permission & Visibility</div>
+                <div style="overflow-x: auto;">
+                  <table class="data-table" style="min-width: 800px;">
+                    <thead>
+                      <tr>
+                        <th>Permission</th>
+                        <th>Sales</th>
+                        <th>Sales Manager</th>
+                        <th>BOD</th>
+                        <th>Delivery/TC</th>
+                        <th>Admin</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-weight: 500;">View Deal</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Owned/Assoc.</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Team</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Limited</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- AUDIT LOGS -->
-          <div class="settings-content" id="tab-audit">
-            <div class="config-card">
-              <div class="config-title">
-                System Audit Logs
-                <div class="search-box" style="width: 250px; margin: 0;">
-                  <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
-                  <input type="text" placeholder="Search logs..." style="height: 32px;">
+          <!-- BIDDING SETTINGS -->
+          <div class="settings-content" id="mod-bidding">
+            <div class="sub-tabs">
+              <div class="sub-tab" data-subtarget="#bidding-properties">Bid Properties</div>
+              <div class="sub-tab" data-subtarget="#bidding-status">Bid Status</div>
+              <div class="sub-tab active" data-subtarget="#bidding-raci">RACI Matrix Rules</div>
+              <div class="sub-tab" data-subtarget="#bidding-layout">Workspace Layout</div>
+              <div class="sub-tab" data-subtarget="#bidding-docs">Document Sections</div>
+              <div class="sub-tab" data-subtarget="#bidding-notify">Notification Group</div>
+              <div class="sub-tab" data-subtarget="#bidding-permission">Permission & Visibility</div>
+            </div>
+
+            <div class="sub-content" id="bidding-properties">
+              <div class="config-card">
+                <div class="config-title">
+                  Bid Properties
+                  <div style="display: flex; gap: 12px;">
+                    <div class="search-box" style="width: 200px; margin: 0;">
+                      <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                      <input type="text" placeholder="Search property..." style="height: 32px;">
+                    </div>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Property</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure data fields for Bidding records.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Property Label</th>
+                      <th>Internal Name</th>
+                      <th>Data Type</th>
+                      <th>Required</th>
+                      <th>Unique</th>
+                      <th>System Field</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Bid ID</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">bid_id</td>
+                      <td>Auto ID</td>
+                      <td>Yes</td>
+                      <td>Yes</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-eye" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Bid Name</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">bid_name</td>
+                      <td>Text</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Submission Date</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">submission_date</td>
+                      <td>Date</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="bidding-status">
+              <div class="config-card">
+                <div class="config-title">
+                  Bid Status Configuration
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Status</button>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure the lifecycle statuses of a Bid.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Status Name</th>
+                      <th>Category</th>
+                      <th>Color Badge</th>
+                      <th>Default Next Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Drafting</td>
+                      <td>Open</td>
+                      <td><span class="badge" style="background: #E0F2FE; color: #0369A1;">Blue</span></td>
+                      <td>Reviewing</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Reviewing</td>
+                      <td>Open</td>
+                      <td><span class="badge" style="background: #FEF3C7; color: #B45309;">Yellow</span></td>
+                      <td>Submitted</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Submitted</td>
+                      <td>Pending</td>
+                      <td><span class="badge" style="background: #F3E8FF; color: #7E22CE;">Purple</span></td>
+                      <td>Won / Lost</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="bidding-layout">
+              <div class="config-card">
+                <div class="config-title">
+                  Workspace Layout Configuration
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm"><i class="ph ph-eye"></i> Preview</button>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Tab</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure the tabs available in the Bid Workspace.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Tab Name</th>
+                      <th>Type</th>
+                      <th>Default Visible</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Overview</td>
+                      <td>Standard</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><button class="btn btn-secondary btn-sm">Configure Widgets</button></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Documents</td>
+                      <td>File Manager</td>
+                      <td><input type="checkbox" checked></td>
+                      <td><button class="btn btn-secondary btn-sm">Configure Structure</button></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Discussion</td>
+                      <td>Activity Stream</td>
+                      <td><input type="checkbox" checked></td>
+                      <td><button class="btn btn-secondary btn-sm">Configure Filters</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="bidding-docs">
+              <div class="config-card">
+                <div class="config-title">
+                  Document Sections Configuration
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Section</button>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure required document templates and sections for Bids.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Section Name</th>
+                      <th>Required for Submission</th>
+                      <th>Template Attached</th>
+                      <th>Allowed File Types</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> RFP Requirements</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td>PDF, DOCX</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Technical Solution</td>
+                      <td>Yes</td>
+                      <td><span style="color: var(--primary-teal);"><i class="ph ph-file-word"></i> tech_template.docx</span></td>
+                      <td>DOCX</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> Commercial Proposal</td>
+                      <td>Yes</td>
+                      <td><span style="color: #10B981;"><i class="ph ph-file-xls"></i> pricing_template.xlsx</span></td>
+                      <td>XLSX</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="bidding-notify">
+              <div class="config-card">
+                <div class="config-title">
+                  Notification Groups
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Rule</button>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Event Trigger</th>
+                      <th>Notify Roles</th>
+                      <th>Notify Specific Teams</th>
+                      <th>Channel</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Bid Created</td>
+                      <td>Delivery Manager</td>
+                      <td>Bidding Office</td>
+                      <td>In-app, Email</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td>Status changed to Submitted</td>
+                      <td>Sales, BOD</td>
+                      <td>-</td>
+                      <td>In-app, Email</td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="bidding-permission">
+              <div class="config-card">
+                <div class="config-title">Bidding Permission & Visibility</div>
+                <div style="overflow-x: auto;">
+                  <table class="data-table" style="min-width: 800px;">
+                    <thead>
+                      <tr>
+                        <th>Permission</th>
+                        <th>Sales</th>
+                        <th>Sales Manager</th>
+                        <th>BOD</th>
+                        <th>Delivery/TC</th>
+                        <th>Admin</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-weight: 500;">View Bid</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Owned/Assoc.</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Team</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Assigned</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 500;">Edit Documents</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option selected>Assigned</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option></select></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <table class="data-table" style="font-size: 13px;">
-                <thead>
-                  <tr>
-                    <th>Timestamp</th>
-                    <th>User</th>
-                    <th>Module</th>
-                    <th>Action / Event</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="audit-log-row">
-                    <td class="audit-log-time">2026-06-22 14:32:10</td>
-                    <td><span class="audit-log-user">Alex Thompson</span></td>
-                    <td>Company (ID: C-002)</td>
-                    <td>Changed Account Health from <strong>Green</strong> to <strong style="color: #EF4444;">Red</strong>. Reason: "Delivery quality issue in Phase 2"</td>
-                  </tr>
-                  <tr class="audit-log-row">
-                    <td class="audit-log-time">2026-06-21 09:15:00</td>
-                    <td><span class="audit-log-user">System Admin</span></td>
-                    <td>Admin Settings</td>
-                    <td>Updated Whale Prospect Revenue Threshold from $250M to $500M</td>
-                  </tr>
-                  <tr class="audit-log-row">
-                    <td class="audit-log-time">2026-06-20 16:45:22</td>
-                    <td><span class="audit-log-user">Sarah Connor</span></td>
-                    <td>Deal (ID: D-112)</td>
-                    <td>Overrode Qualifying Gate "Financial Viability" to <strong>Pass</strong></td>
-                  </tr>
-                  <tr class="audit-log-row">
-                    <td class="audit-log-time">2026-06-19 11:10:05</td>
-                    <td><span class="audit-log-user">John Doe</span></td>
-                    <td>BID (ID: BID-001)</td>
-                    <td>Marked a comment as <strong>Decision</strong> in Discussion Log.</td>
-                  </tr>
-                  <tr class="audit-log-row">
-                    <td class="audit-log-time">2026-06-18 08:30:00</td>
-                    <td><span class="audit-log-user">Alex Thompson</span></td>
-                    <td>Company (ID: C-045)</td>
-                    <td>Updated TTM Revenue. Farming Tier changed to <strong>Growth</strong>.</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
-                <button class="btn btn-secondary">Load More</button>
+            </div>
+
+            <div class="sub-content active" id="bidding-raci">
+              <div class="config-card">
+                <div class="config-title">
+                  Pre-sales RACI Assignments
+                  <button class="btn btn-secondary" style="font-size: 12px; padding: 4px 8px;"><i class="ph ph-plus"></i> Add Rule</button>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure auto-suggestions for BID RACI based on Account Tier.</div>
+                
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Condition (Tier)</th>
+                      <th>Responsible (Delivery)</th>
+                      <th>Accountable (Owner)</th>
+                      <th>Consulted (Experts)</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="badge b-blue">Whale Prospect</span></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Manager</option></select></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>TC Head / VP</option></select></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Principal Architect</option></select></td>
+                      <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge b-purple">Tuna Prospect</span></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Lead</option></select></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Manager</option></select></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Solution Architect</option></select></td>
+                      <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge b-grey">Minnow Prospect</span></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Senior Dev</option></select></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Delivery Lead</option></select></td>
+                      <td><select class="form-control" style="height: 30px; padding: 2px;"><option>Tech Lead</option></select></td>
+                      <td style="text-align: center;"><i class="ph ph-trash" style="color: #EF4444; cursor: pointer;"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- FORECAST SETTINGS -->
+          <div class="settings-content" id="mod-forecast">
+            <div class="sub-tabs">
+              <div class="sub-tab" data-subtarget="#forecast-properties">Forecast Properties</div>
+              <div class="sub-tab active" data-subtarget="#forecast-weights">Forecast Weights by Stage</div>
+              <div class="sub-tab" data-subtarget="#forecast-category">Forecast Category</div>
+              <div class="sub-tab" data-subtarget="#forecast-revenue">Revenue Split Rules</div>
+              <div class="sub-tab" data-subtarget="#forecast-locking">Forecast Locking Rules</div>
+              <div class="sub-tab" data-subtarget="#forecast-permission">Permission & Visibility</div>
+            </div>
+
+            <div class="sub-content" id="forecast-properties">
+              <div class="config-card">
+                <div class="config-title">
+                  Forecast Properties
+                  <div style="display: flex; gap: 12px;">
+                    <div class="search-box" style="width: 200px; margin: 0;">
+                      <i class="ph ph-magnifying-glass search-icon" style="top: 10px;"></i>
+                      <input type="text" placeholder="Search property..." style="height: 32px;">
+                    </div>
+                    <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Property</button>
+                  </div>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure data fields for Forecast submissions.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Property Label</th>
+                      <th>Internal Name</th>
+                      <th>Data Type</th>
+                      <th>Required</th>
+                      <th>Unique</th>
+                      <th>System Field</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 500;">Forecast Period</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">forecast_period</td>
+                      <td>Dropdown</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-eye" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Submission Date</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">submission_date</td>
+                      <td>Date</td>
+                      <td>Yes</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 500;">Manager Override</td>
+                      <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">manager_override</td>
+                      <td>Currency</td>
+                      <td>No</td>
+                      <td>No</td>
+                      <td><span class="badge" style="background: #E2E8F0; color: #475569;">Yes</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="forecast-category">
+              <div class="config-card">
+                <div class="config-title">
+                  Forecast Category Configuration
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Category</button>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure the forecast categories mapping to probabilities.</div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Category Name</th>
+                      <th>Win Probability Range (%)</th>
+                      <th>Include in Pipeline</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> A* (Closed Won)</td>
+                      <td>100</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> A (Commit)</td>
+                      <td>90 - 99</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> B (Best Case)</td>
+                      <td>60 - 89</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> C (Pipeline)</td>
+                      <td>30 - 59</td>
+                      <td><input type="checkbox" checked disabled></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> D (Omitted)</td>
+                      <td>1 - 29</td>
+                      <td><input type="checkbox" disabled></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                    <tr>
+                      <td><i class="ph ph-dots-six-vertical" style="color: var(--text-muted); margin-right: 8px; cursor: grab;"></i> E (Lost)</td>
+                      <td>0</td>
+                      <td><input type="checkbox" disabled></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="forecast-revenue">
+              <div class="config-card">
+                <div class="config-title">
+                  Revenue Split Rules
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Configure how deal revenue is split among team members for forecasting.</div>
+                <div class="form-group" style="max-width: 400px;">
+                  <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><input type="checkbox" checked> Enable Revenue Splits</label>
+                  <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><input type="checkbox" checked> Require Splits to total 100%</label>
+                  <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><input type="checkbox" checked> Allow Manager Overrides</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="sub-content" id="forecast-locking">
+              <div class="config-card">
+                <div class="config-title">
+                  Forecast Locking Rules
+                  <button class="btn btn-primary btn-sm"><i class="ph ph-plus"></i> Add Rule</button>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Condition</th>
+                      <th>Lock Trigger (Date)</th>
+                      <th>Unlock Permission</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>End of Month (Monthly)</td>
+                      <td>Last day of month, 11:59 PM</td>
+                      <td>Admin, VP Sales</td>
+                      <td><span class="badge" style="background: #D1FAE5; color: #059669;">Active</span></td>
+                      <td><i class="ph ph-pencil-simple" style="cursor: pointer; color: var(--text-muted);"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sub-content" id="forecast-permission">
+              <div class="config-card">
+                <div class="config-title">Forecast Permission & Visibility</div>
+                <div style="overflow-x: auto;">
+                  <table class="data-table" style="min-width: 800px;">
+                    <thead>
+                      <tr>
+                        <th>Permission</th>
+                        <th>Sales</th>
+                        <th>Sales Manager</th>
+                        <th>BOD</th>
+                        <th>Admin</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-weight: 500;">View Forecast</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Own</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Team</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Everything</option></select></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 500;">Submit Forecast</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No</option></select></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 500;">Override Team Forecast</td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>Yes</option></select></td>
+                        <td><select class="form-control" style="padding: 4px; height: auto;"><option>No</option></select></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="sub-content active" id="forecast-weights">
+              <div class="config-card">
+                <div class="config-title">
+                  Forecast Weights by Stage
+                  <i class="ph ph-info" style="color: var(--text-muted); font-size: 18px;" title="Set probability weights for calculating Weighted Forecast from Raw Forecast"></i>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                  Weighted Forecast = Raw Forecast * (Probability Weight / 100). Applies globally across all Teams and Owners.
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50%;">Deal Stage</th>
+                      <th style="width: 50%;">Probability Weight (%)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="config-weights-tbody">
+                    <!-- Javascript will populate this based on window.forecastWeights in app.js -->
+                  </tbody>
+                </table>
+                <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                  <button class="btn btn-primary" id="btn-save-weights">Save Weights</button>
+                </div>
               </div>
             </div>
           </div>
@@ -286,23 +1982,184 @@
     </main>
   </div>
 
+  <script src="app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      let hasUnsavedChanges = false;
+
+      // Track unsaved changes
+      document.querySelectorAll('.settings-content input, .settings-content select, .settings-content textarea').forEach(el => {
+        el.addEventListener('input', () => {
+          hasUnsavedChanges = true;
+        });
+        el.addEventListener('change', () => {
+          hasUnsavedChanges = true;
+        });
+      });
+
+      // Custom Unsaved Changes Modal
+      const modalHtml = `
+        <div class="overlay" id="unsaved-modal-overlay" style="z-index: 9999; display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);"></div>
+        <div class="modal" id="unsaved-modal" style="z-index: 10000; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 24px; border-radius: 8px; width: 400px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+          <h3 style="margin-top: 0;">Unsaved Changes</h3>
+          <p style="color: var(--text-muted); margin-bottom: 24px;">You have unsaved changes. Do you want to leave without saving?</p>
+          <div style="display: flex; justify-content: flex-end; gap: 12px;">
+            <button class="btn btn-secondary" id="btn-unsaved-cancel">Cancel</button>
+            <button class="btn btn-secondary" id="btn-unsaved-leave" style="color: #ef4444; border-color: #ef4444;">Leave without saving</button>
+            <button class="btn btn-primary" id="btn-unsaved-save">Save and continue</button>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+      const overlay = document.getElementById('unsaved-modal-overlay');
+      const modal = document.getElementById('unsaved-modal');
+      const btnCancel = document.getElementById('btn-unsaved-cancel');
+      const btnLeave = document.getElementById('btn-unsaved-leave');
+      const btnSave = document.getElementById('btn-unsaved-save');
+
+      let pendingAction = null;
+
+      function showModal(action) {
+        pendingAction = action;
+        overlay.style.display = 'block';
+        modal.style.display = 'block';
+      }
+
+      function hideModal() {
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+        pendingAction = null;
+      }
+
+      btnCancel.addEventListener('click', hideModal);
+
+      btnLeave.addEventListener('click', () => {
+        hasUnsavedChanges = false;
+        hideModal();
+        if (pendingAction) pendingAction();
+      });
+
+      btnSave.addEventListener('click', () => {
+        saveChanges();
+        hasUnsavedChanges = false;
+        hideModal();
+        if (pendingAction) pendingAction();
+      });
+
+      // Save Changes
+      const mainSaveBtn = document.querySelector('.header-actions .btn-primary');
+      if(mainSaveBtn) {
+        mainSaveBtn.addEventListener('click', saveChanges);
+      }
+
+      function saveChanges() {
+        hasUnsavedChanges = false;
+        const toast = document.createElement('div');
+        toast.innerText = 'Settings saved successfully.';
+        toast.style.cssText = 'position: fixed; bottom: 24px; right: 24px; background: #10b981; color: white; padding: 12px 24px; border-radius: 4px; z-index: 10000; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+      }
+
+      // Main Sidebar Tabs
       const tabs = document.querySelectorAll('.settings-tab');
       const contents = document.querySelectorAll('.settings-content');
 
+      function activateModule(tabElement) {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        
+        tabElement.classList.add('active');
+        const targetId = tabElement.getAttribute('data-target');
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.classList.add('active');
+          // Reset to default tab (first tab)
+          const firstSubTab = target.querySelector('.sub-tab');
+          if (firstSubTab) {
+            activateSubTab(firstSubTab, target);
+          }
+        }
+      }
+
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-          tabs.forEach(t => t.classList.remove('active'));
-          contents.forEach(c => c.classList.remove('active'));
-          
-          tab.classList.add('active');
-          const target = document.querySelector(tab.getAttribute('data-target'));
-          if (target) {
-            target.classList.add('active');
+          if (tab.classList.contains('active')) return;
+          if (hasUnsavedChanges) {
+            showModal(() => activateModule(tab));
+          } else {
+            activateModule(tab);
           }
         });
       });
+
+      // Sub-Tabs
+      const subTabs = document.querySelectorAll('.sub-tab');
+
+      function activateSubTab(tabElement, parentContent) {
+        const localTabs = parentContent.querySelectorAll('.sub-tab');
+        const localContents = parentContent.querySelectorAll('.sub-content');
+
+        localTabs.forEach(t => t.classList.remove('active'));
+        localContents.forEach(c => c.classList.remove('active'));
+
+        tabElement.classList.add('active');
+        const target = document.querySelector(tabElement.getAttribute('data-subtarget'));
+        if (target) {
+          target.classList.add('active');
+        }
+      }
+
+      subTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          if (tab.classList.contains('active')) return;
+          const parentContent = tab.closest('.settings-content');
+          if (hasUnsavedChanges) {
+            showModal(() => activateSubTab(tab, parentContent));
+          } else {
+            activateSubTab(tab, parentContent);
+          }
+        });
+      });
+
+      // Handle URL Hash Initial Load
+      const hash = window.location.hash;
+      if (hash) {
+        const targetSubContent = document.querySelector(hash);
+        if (targetSubContent && targetSubContent.classList.contains('sub-content')) {
+          const parentMod = targetSubContent.closest('.settings-content');
+          if (parentMod) {
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            parentMod.classList.add('active');
+            const modTab = document.querySelector(`.settings-tab[data-target="#${parentMod.id}"]`);
+            if (modTab) modTab.classList.add('active');
+
+            const localTabs = parentMod.querySelectorAll('.sub-tab');
+            const localContents = parentMod.querySelectorAll('.sub-content');
+            localTabs.forEach(t => t.classList.remove('active'));
+            localContents.forEach(c => c.classList.remove('active'));
+
+            targetSubContent.classList.add('active');
+            const subTab = document.querySelector(`.sub-tab[data-subtarget="${hash}"]`);
+            if (subTab) subTab.classList.add('active');
+          }
+        }
+      } else {
+        // Default init
+        const activeMod = document.querySelector('.settings-tab.active');
+        if (activeMod) {
+           const targetId = activeMod.getAttribute('data-target');
+           const target = document.querySelector(targetId);
+           if (target) {
+             const firstSubTab = target.querySelector('.sub-tab'); // Set to default tab initially
+             if(firstSubTab) {
+               activateSubTab(firstSubTab, target);
+             }
+           }
+        }
+      }
     });
   </script>
 </body>

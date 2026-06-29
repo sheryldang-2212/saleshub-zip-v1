@@ -120,6 +120,7 @@
             <div class="detail-tab" data-key="deliverables">Deliverables</div>
             <div class="detail-tab" data-key="discussion">Discussion</div>
             <div class="detail-tab" data-key="teamAccess">Team & Access</div>
+            <div class="detail-tab" data-key="history">History Log</div>
           </div>
 
           <div style="background: #FFF; padding: 24px; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 var(--radius-md) var(--radius-md); min-height: 500px;">
@@ -282,10 +283,8 @@
                   <i class="ph ph-push-pin"></i> Decision Log
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 12px;" id="decision-log-container">
-                  <div style="font-size: 13px; color: var(--text-dark); background: #FFF; padding: 8px 12px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.2);">
-                    <span style="font-weight: 600; color: var(--text-muted); margin-right: 8px;">2026-06-20</span> We will propose a hybrid cloud architecture instead of full AWS migration due to client budget constraints. 
-                    <a href="#" style="color: var(--primary-teal); margin-left: 8px; text-decoration: none;">Go to thread</a>
-                  </div>
+                  <!-- JS injected decisions go here -->
+                  <div id="empty-decision-log" style="font-size: 12px; color: var(--text-muted); font-style: italic;">No decisions logged yet.</div>
                 </div>
               </div>
 
@@ -299,13 +298,13 @@
                       <span style="font-weight: 600; font-size: 13px; color: var(--text-dark);">Alex Thompson (Sales)</span>
                       <span style="font-size: 11px; color: var(--text-light);">2026-06-19 14:30</span>
                     </div>
-                    <div style="font-size: 13px; color: var(--text-dark); background: #F8FAFC; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 8px;">
-                      <span style="color: var(--primary-teal); font-weight: 500;">@Minh Tran</span>, please review the latest technical specs. The client wants to ensure we can meet the compliance requirements for SOC2. 
+                    <div style="font-size: 13px; color: var(--text-dark); background: #F8FAFC; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 8px;" id="comment-1">
+                      <span style="color: var(--primary-teal); font-weight: 500;">@Minh Tran</span>, after our discussion with the client, we have agreed that Delivery will handle the main implementation and TC will oversee the initial architecture review.
                     </div>
                     <div style="display: flex; gap: 12px; align-items: center;">
                       <span style="font-size: 12px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 4px;"><i class="ph ph-chat-circle"></i> Reply</span>
                       <span style="font-size: 12px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 4px;"><i class="ph ph-paperclip"></i> Link file</span>
-                      <span class="btn-mark-decision" style="font-size: 12px; color: #D97706; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500;"><i class="ph ph-check-circle"></i> Mark as Decision</span>
+                      <span class="btn-mark-decision" style="font-size: 12px; color: #D97706; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500;" onclick="window.markAsDecision('comment-1')"><i class="ph ph-check-circle"></i> Mark as Decision</span>
                     </div>
                   </div>
                 </div>
@@ -350,6 +349,91 @@
               </table>
               <div class="empty-state" id="workspace-members-empty" style="display: none; text-align: center; padding: 32px 0;">
                 <div style="color: var(--text-muted); font-size: 13px;">No members have been assigned to this BID Workspace yet.</div>
+              </div>
+            </div>
+
+            <!-- HISTORY LOG TAB -->
+            <div class="tab-content" id="history" style="display: none;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center;">
+                <h3 style="margin: 0; font-size: 16px;">Activity History Log</h3>
+                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" onclick="window.showToast('Exporting History Log...', 'success')"><i class="ph ph-download-simple"></i> Export Log</button>
+              </div>
+              
+              <!-- Filters -->
+              <div style="display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;">
+                <select class="form-control" style="width: 150px; font-size: 13px;"><option>All Event Types</option><option>Decision Marked</option><option>Execution Ownership Updated</option><option>File Uploaded</option></select>
+                <select class="form-control" style="width: 150px; font-size: 13px;"><option>All Users</option><option>Alex Sales</option><option>System</option></select>
+                <input type="date" class="form-control" style="width: 140px; font-size: 13px;">
+                <select class="form-control" style="width: 150px; font-size: 13px;"><option>All Fields</option><option>Decision Status</option><option>Owner</option></select>
+                <div class="search-box" style="margin: 0; width: 200px;">
+                  <i class="ph ph-magnifying-glass search-icon" style="top: 8px;"></i>
+                  <input type="text" placeholder="Search logs..." style="height: 32px; font-size: 13px;">
+                </div>
+              </div>
+
+              <!-- Timeline -->
+              <div class="history-timeline" style="position: relative; padding-left: 20px; border-left: 2px solid #E2E8F0;">
+                
+                <!-- Item 1: Execution Ownership -->
+                <div style="position: relative; margin-bottom: 24px;">
+                  <div style="position: absolute; left: -29px; top: 0; background: #FFF; border: 2px solid #8B5CF6; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: #8B5CF6;">
+                    <i class="ph-fill ph-check-circle" style="font-size: 10px;"></i>
+                  </div>
+                  <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">Execution Owner changed from Not Decided to Delivery + TC</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">2026-06-27 15:45 PM</div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);">By <strong>Delivery Manager</strong> &bull; Source: Modal Conversion</div>
+                  </div>
+                </div>
+
+                <!-- Item 2: Decision Marked -->
+                <div style="position: relative; margin-bottom: 24px;">
+                  <div style="position: absolute; left: -29px; top: 0; background: #FFF; border: 2px solid #F59E0B; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: #F59E0B;">
+                    <i class="ph-fill ph-lightbulb" style="font-size: 10px;"></i>
+                  </div>
+                  <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">Comment #42 marked as Decision</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">2026-06-27 15:30 PM</div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);">By <strong>Alex Sales</strong> &bull; Source: Comment Action</div>
+                  </div>
+                </div>
+
+                <!-- Item 3: File Uploaded -->
+                <div style="position: relative; margin-bottom: 24px;">
+                  <div style="position: absolute; left: -29px; top: 0; background: #FFF; border: 2px solid #3B82F6; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: #3B82F6;">
+                    <i class="ph-fill ph-file-pdf" style="font-size: 10px;"></i>
+                  </div>
+                  <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">SOW_Draft_v1.pdf uploaded</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">2026-06-25 11:20 AM</div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);">By <strong>Tech Architect</strong> &bull; Source: Deliverables Tab</div>
+                  </div>
+                </div>
+
+                <!-- Item 4: Created -->
+                <div style="position: relative; margin-bottom: 24px;">
+                  <div style="position: absolute; left: -29px; top: 0; background: #FFF; border: 2px solid #10B981; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: #10B981;">
+                    <i class="ph-fill ph-plus" style="font-size: 10px;"></i>
+                  </div>
+                  <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">Bid created</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">2026-06-25 09:00 AM</div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);">By <strong>Alex Sales</strong> &bull; Source: Deal Conversion</div>
+                  </div>
+                </div>
+                
+              </div>
+              
+              <div style="text-align: center; margin-top: 24px;">
+                <button class="btn btn-secondary" style="font-size: 13px;">Load More</button>
               </div>
             </div>
 
@@ -419,38 +503,40 @@
             </div>
             <div style="padding: 0 16px 16px;">
               <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-                <div style="font-weight: 600; font-size: 13px; color: var(--text-dark); margin-bottom: 8px;">Execution Decision</div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">OWNER TYPE</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-type">Delivery + TC</div>
-                  <div class="request-field-edit hidden">
-                    <select class="form-control" id="input-exec-type"><option>Delivery</option><option>TC</option><option selected>Delivery + TC</option></select>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <div style="font-weight: 600; font-size: 13px; color: var(--text-dark);">Execution Ownership</div>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;" id="btn-reopen-decision" onclick="window.changeExecutionOwnership()" style="display: none;"><i class="ph ph-pencil-simple"></i> Change Decision</button>
+                    <button class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;" id="btn-manage-exec" onclick="window.openExecutionOwnershipModal('manual')" style="display: none;"><i class="ph ph-pencil-simple"></i> Manage</button>
                   </div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">EXECUTION DECISION</div>
+                  <div class="c-val" style="color: var(--text-dark);" id="view-exec-decision">Not Decided</div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">EXECUTION OWNER</div>
+                  <div class="c-val" style="color: var(--text-dark);" id="view-exec-type">Not Decided</div>
                 </div>
                 <div style="margin-bottom: 8px;">
                   <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION STATUS</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-status">Decided</div>
-                  <div class="request-field-edit hidden">
-                    <select class="form-control" id="input-exec-status"><option>Pending Decision</option><option selected>Decided</option></select>
-                  </div>
+                  <div class="c-val" style="color: var(--text-dark);" id="view-exec-status"><span class="badge" style="background: #E2E8F0; color: #475569; padding: 2px 8px; border-radius: 4px; font-size: 11px;">Discussing</span></div>
                 </div>
                 <div style="margin-bottom: 8px;">
                   <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION DATE</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-date">2026-06-20</div>
-                  <div class="request-field-edit hidden">
-                    <input type="date" class="form-control" id="input-exec-date" value="2026-06-20">
-                  </div>
+                  <div class="c-val" style="color: var(--text-muted);" id="view-exec-date">--</div>
                 </div>
                 <div style="margin-bottom: 8px;">
                   <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION BY</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-by">Bid Manager</div>
+                  <div class="c-val" style="color: var(--text-muted);" id="view-exec-by">--</div>
                 </div>
-                <div>
+                <div style="margin-bottom: 8px;">
                   <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION NOTE</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-exec-note">Delivery owns estimation; TC owns architecture review.</div>
-                  <div class="request-field-edit hidden">
-                    <textarea class="form-control" id="input-exec-note" rows="2">Delivery owns estimation; TC owns architecture review.</textarea>
-                  </div>
+                  <div class="c-val" style="color: var(--text-muted); font-size: 12px; line-height: 1.4;" id="view-exec-note">--</div>
+                </div>
+                <div id="view-exec-source-wrapper" style="display: none;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">SOURCE DECISION</div>
+                  <div class="c-val"><a href="#" id="view-exec-source" style="font-size: 12px; color: var(--primary-teal); text-decoration: none;">View original decision</a></div>
                 </div>
               </div>
               
@@ -458,24 +544,19 @@
                 <div style="font-weight: 600; font-size: 13px; color: var(--text-dark); margin-bottom: 8px;">Responsible Manager</div>
                 <div style="margin-bottom: 8px;">
                   <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DELIVERY MANAGER</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-dm">Hai Nguyen (D1)</div>
-                  <div class="request-field-edit hidden">
-                    <select class="form-control" id="input-dm"><option selected>Hai Nguyen (D1)</option><option>Lan Tran (D2)</option></select>
-                  </div>
+                  <div class="c-val" style="color: var(--text-muted);" id="view-dm">--</div>
                 </div>
                 <div style="margin-bottom: 8px;">
                   <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">TC MANAGER</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-tm">Minh Tran</div>
-                  <div class="request-field-edit hidden">
-                    <select class="form-control" id="input-tm"><option selected>Minh Tran</option><option>Thu Pham</option></select>
-                  </div>
+                  <div class="c-val" style="color: var(--text-muted);" id="view-tm">--</div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">PRIMARY RESPONSIBLE</div>
+                  <div class="c-val" style="color: var(--text-muted);" id="view-pm">--</div>
                 </div>
                 <div>
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">PRIMARY RESPONSIBLE</div>
-                  <div class="request-field-view c-val" style="color: var(--text-dark);" id="view-pm">Hai Nguyen (D1)</div>
-                  <div class="request-field-edit hidden">
-                    <select class="form-control" id="input-pm"><option selected>Hai Nguyen (D1)</option><option>Minh Tran</option></select>
-                  </div>
+                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">SUPPORTING RESPONSIBLE</div>
+                  <div class="c-val" style="color: var(--text-muted);" id="view-sm">--</div>
                 </div>
               </div>
             </div>
@@ -494,11 +575,26 @@
 
           <div class="association-card" style="border-radius: var(--radius-md);" id="card-contacts">
             <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none; display: flex; justify-content: space-between; align-items: center;">
-              <strong>Contacts (0)</strong>
+              <strong>Contacts (1)</strong>
               <button class="btn btn-secondary btn-add-assoc" data-assoc-type="Contact" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-plus"></i> Add Contact</button>
             </div>
-            <div class="empty-state" style="padding: 0 16px 16px; border: none; background: transparent;">
-              <div style="font-size: 13px;">No contacts linked.</div>
+            <div style="padding: 0 16px 16px; border: none; background: transparent;">
+              <!-- Empty state for no contacts -->
+              <div class="empty-state" id="empty-contacts" style="display: none; padding: 12px; margin: 0; background: #F8FAFC; border: 1px dashed var(--border-color); border-radius: var(--radius-md);">
+                <div class="empty-icon" style="width: 32px; height: 32px; margin-bottom: 8px;"><i class="ph ph-users"></i></div>
+                <h3 style="font-size: 13px; margin-bottom: 4px;">No contacts</h3>
+                <p style="font-size: 12px;">Add a contact to keep track of stakeholders.</p>
+              </div>
+              <div class="assoc-list" id="list-contacts" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--border-color); border-radius: var(--radius-md); position: relative;" class="assoc-item">
+                  <div class="company-avatar" style="width: 24px; height: 24px; font-size: 11px;">S</div>
+                  <div style="flex: 1;">
+                    <a href="contact.html" style="font-weight: 500; font-size: 13px; color: var(--text-dark); text-decoration: none;">Sarah Jenkins</a>
+                    <div style="font-size: 11px; color: var(--text-muted);">CTO</div>
+                  </div>
+                  <button class="btn-icon" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px;"><i class="ph ph-x"></i></button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -671,9 +767,165 @@
       <button class="btn btn-secondary" id="cancel-upload-version">Cancel</button>
       <button class="btn btn-primary" id="submit-upload-version">Upload</button>
     </div>
+  <!-- Convert Decision to Execution Ownership Modal -->
+  <div class="modal-overlay" id="modal-convert-decision" style="display: none; align-items: flex-start; overflow-y: auto; padding: 40px 0;">
+    <div class="center-modal" style="width: 800px; padding: 0; border-radius: 8px; margin: auto; max-height: none; overflow: visible;">
+      <div style="padding: 24px 24px 16px; border-bottom: 1px solid var(--border-color);">
+        <h2 style="font-size: 20px; margin-bottom: 8px;">Convert Decision to Execution Ownership</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Use this confirmed discussion decision to update the official execution ownership of this bid.</p>
+      </div>
+      
+      <div style="padding: 24px; display: flex; flex-direction: column; gap: 32px;">
+        <!-- SECTION 1: Source Decision -->
+        <div id="dec-source-section">
+          <h3 style="font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">1. Source Decision</h3>
+          <div style="background: #F8FAFC; padding: 16px; border-radius: 8px; border: 1px solid var(--border-color);">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+              <tbody>
+                <tr>
+                  <td style="padding: 8px 0; color: var(--text-muted); font-weight: 600; width: 150px;">Decision Source</td>
+                  <td style="padding: 8px 0; color: var(--text-dark);">Discussion & Decisions</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: var(--text-muted); font-weight: 600;">Decision Added Date</td>
+                  <td style="padding: 8px 0; color: var(--text-dark);" id="dec-source-date">--</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: var(--text-muted); font-weight: 600;">Decision Added By</td>
+                  <td style="padding: 8px 0; color: var(--text-dark);" id="dec-source-author">--</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: var(--text-muted); font-weight: 600; vertical-align: top;">Original Comment</td>
+                  <td style="padding: 8px 0; color: var(--text-dark); font-style: italic; line-height: 1.4; border-left: 2px solid #CBD5E1; padding-left: 12px; margin-left: -14px;" id="dec-content">--</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0;"></td>
+                  <td style="padding: 8px 0;"><a href="#" id="dec-source-link" style="color: var(--primary-teal); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;"><i class="ph ph-arrow-bend-down-right"></i> Go to original comment</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- SECTION 2: Execution Decision -->
+        <div>
+          <h3 style="font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">2. Execution Decision</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 8px;">Execution Decision <span style="color: red;">*</span></label>
+              <select class="form-control" id="dec-exec-decision" onchange="window.updateExecutionDecisionLogic()">
+                <option value="">Select...</option>
+                <option value="Delivery owns execution">Delivery owns execution</option>
+                <option value="TC owns execution">TC owns execution</option>
+                <option value="Delivery & TC jointly own execution">Delivery & TC jointly own execution</option>
+                <option value="Not decided yet">Not decided yet</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 8px;">Decision Status <span style="color: red;">*</span></label>
+              <select class="form-control" id="dec-status" onchange="window.updatePreviewTable()">
+                <option value="Discussing">Discussing</option>
+                <option value="Confirmed" selected>Confirmed</option>
+                <option value="Changed">Changed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 8px;">Decision Date <span style="color: red;">*</span></label>
+              <input type="date" class="form-control" id="dec-date" onchange="window.updatePreviewTable()">
+            </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 8px;">Decision By <span style="color: red;">*</span></label>
+              <input type="text" class="form-control" id="dec-by" value="Alex Thompson" oninput="window.updatePreviewTable()">
+            </div>
+          </div>
+          
+          <div>
+            <label style="font-size: 12px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 8px;">Decision Note</label>
+            <textarea class="form-control" id="dec-note" rows="3" placeholder="Enter official note..." oninput="window.updatePreviewTable()"></textarea>
+          </div>
+        </div>
+        
+        <!-- SECTION 3: Responsible Manager Assignment -->
+        <div>
+          <h3 style="font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">3. Responsible Manager Assignment</h3>
+          <div style="background: #F8FAFC; padding: 16px; border-radius: 8px; border: 1px solid var(--border-color);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 4px;">Delivery Manager</label>
+                <select class="form-control" id="dec-dm" onchange="window.updatePrimaryResponsibleOptions()">
+                  <option value="">Select Delivery Manager...</option>
+                  <option value="Hai Nguyen (D1)">Hai Nguyen (D1)</option>
+                  <option value="Lan Tran (D2)">Lan Tran (D2)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 4px;">TC Manager</label>
+                <select class="form-control" id="dec-tm" onchange="window.updatePrimaryResponsibleOptions()">
+                  <option value="">Select TC Manager...</option>
+                  <option value="Minh Tran">Minh Tran</option>
+                  <option value="Thu Pham">Thu Pham</option>
+                </select>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 4px;">Primary Responsible <span style="color: red;" id="req-pm">*</span></label>
+                <select class="form-control" id="dec-pm" onchange="window.updatePreviewTable()">
+                  <option value="">Select Primary Responsible...</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 4px;">Supporting Responsible</label>
+                <select class="form-control" id="dec-sm" onchange="window.updatePreviewTable()">
+                  <option value="">Select Supporting Responsible...</option>
+                </select>
+              </div>
+            </div>
+            
+            <div>
+              <label style="font-size: 11px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 4px;">Notify Users</label>
+              <select class="form-control" id="dec-notify">
+                <option value="Deal Owner, Bid Manager">Deal Owner, Bid Manager</option>
+                <option value="Deal Owner, Bid Manager, Delivery Manager, TC Manager">Deal Owner, Bid Manager, Delivery Manager, TC Manager</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SECTION 4: Preview Update -->
+        <div>
+          <h3 style="font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">4. Preview Update</h3>
+          <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+            <table class="data-table" style="margin: 0; width: 100%;">
+              <thead>
+                <tr>
+                  <th style="width: 30%; background: #F1F5F9;">Field</th>
+                  <th style="width: 70%; background: #F1F5F9;">New Value in Sidebar</th>
+                </tr>
+              </thead>
+              <tbody id="preview-table-body">
+                <!-- Javascript will populate this -->
+              </tbody>
+            </table>
+          </div>
+          <div id="dec-error" style="color: #DC2626; font-size: 13px; font-weight: 500; margin-top: 16px; padding: 12px; background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 4px; display: none;"></div>
+        </div>
+      </div>
+      
+      <div style="display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--border-color); padding: 16px 24px;">
+        <button class="btn btn-secondary" onclick="document.getElementById('modal-convert-decision').style.display='none'">Cancel</button>
+        <button class="btn btn-secondary" onclick="window.confirmExecutionOwnership('draft')" id="btn-save-draft">Save as Draft</button>
+        <button class="btn btn-primary" onclick="window.confirmExecutionOwnership('confirm')" id="btn-convert-update">Convert & Update Ownership</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Version History Modal -->
   <div class="center-modal" id="modal-version-history" style="display: none; max-width: 700px;">
     <div class="modal-header">
       <h2>Version History</h2>
