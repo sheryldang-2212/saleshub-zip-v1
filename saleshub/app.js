@@ -35,6 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: "C-0005", name: "Tim Cook", email: "tim@apple.com", phone: "+1 408 996 1010", owner: "John Doe", company: "Apple", activity: "2 weeks ago", status: "Subscribed", created: "May 20, 2026", isMy: true }
   ];
 
+  window.mockRevenueTargets = [
+    { year: '2026', team: 'Total', bookingTarget: 4117022, invoiceTarget: 6108663 },
+    { year: '2026', team: 'Hanoi Sales', bookingTarget: 2290249, invoiceTarget: 3665048 },
+    { year: '2026', team: 'HCMC Sales', bookingTarget: 1826773, invoiceTarget: 2443614 },
+    { year: '2026', team: 'Enterprise Sales', bookingTarget: 1000000, invoiceTarget: 1500000 },
+    { year: '2026', team: 'SMB Sales', bookingTarget: 800000, invoiceTarget: 1000000 },
+    { year: '2026', team: 'Partner Sales', bookingTarget: 500000, invoiceTarget: 600000 }
+  ];
+
+  window.mockTargetAuditLogs = [];
+
   window.mockDeals = [
     {
       id: "deal-hubspot-closed-won-001",
@@ -3338,12 +3349,12 @@ const initForecastModule = () => {
     columns.forEach(c => {
       ths += `<th class="raw-col" data-type="raw">${c.label} Raw</th>`;
     });
-    ths += `<th class="raw-col" data-type="raw" style="font-weight: 700;">Total Raw Forecast</th>`;
+    ths += `<th class="raw-col" data-type="raw" style="font-weight: 700;">Total weighted forecast</th>`;
     
     columns.forEach(c => {
       ths += `<th class="weighted-col" data-type="weighted" style="display:none;">${c.label} Wtd</th>`;
     });
-    ths += `<th class="weighted-col" data-type="weighted" style="display:none; font-weight: 700; color: var(--primary-teal);">TOTAL WEIGHTED FORECAST</th>`;
+    ths += `<th class="weighted-col" data-type="weighted" style="display:none; font-weight: 700; color: var(--primary-teal);">YTD</th>`;
     ths += `<th>Action</th>`;
     
     theadMain.innerHTML = `<tr>${ths}</tr>`;
@@ -3430,7 +3441,7 @@ const initForecastModule = () => {
   let analyticsMeasure = 'weighted';
   const chartInstances = {};
 
-  const getAnalyticsData = (groupByField) => {
+  const getAnalyticsData = (groupByField, overrideType) => {
     let months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
     let monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
@@ -3476,12 +3487,37 @@ const initForecastModule = () => {
 
     // Prepare datasets for Chart.js
     const colors = ['#0EA5E9', '#F59E0B', '#10B981', '#8B5CF6', '#EF4444', '#F43F5E', '#14B8A6', '#84CC16'];
+
+    if (overrideType === 'doughnut' || overrideType === 'pie') {
+      const pieData = Object.keys(groups).map(groupName => {
+        return groups[groupName].reduce((sum, val) => sum + val, 0);
+      });
+      const pieLabels = Object.keys(groups);
+      
+      return {
+        labels: pieLabels,
+        datasets: [{
+          data: pieData,
+          backgroundColor: colors.slice(0, pieLabels.length),
+          borderWidth: 1
+        }],
+        hasData: pieData.some(v => v > 0)
+      };
+    }
+
+    const isGrouped = overrideType === 'bar-grouped';
+    const isLine = overrideType === 'line';
+
     const datasets = Object.keys(groups).map((groupName, idx) => {
       return {
-        type: 'bar',
+        type: isLine ? 'line' : 'bar',
         label: groupName,
         data: groups[groupName],
         backgroundColor: colors[idx % colors.length],
+        borderColor: colors[idx % colors.length],
+        borderWidth: isLine ? 2 : 1,
+        tension: 0.3,
+        fill: !isLine,
         order: 1
       };
     });
@@ -3517,7 +3553,7 @@ const initForecastModule = () => {
     };
   };
 
-  const createChart = (canvasId, title, groupByField) => {
+  const createChart = (canvasId, title, groupByField, overrideType) => {
     const ctx = document.getElementById(canvasId);
     if (!ctx) return;
     
@@ -3525,7 +3561,7 @@ const initForecastModule = () => {
       chartInstances[canvasId].destroy();
     }
 
-    const dataObj = getAnalyticsData(groupByField);
+    const dataObj = getAnalyticsData(groupByField, overrideType);
     
     // Empty state handling
     const parentContainer = ctx.parentElement;
@@ -3546,7 +3582,10 @@ const initForecastModule = () => {
       if (emptyState) emptyState.remove();
     }
 
+    const actualChartType = (overrideType === 'bar-grouped') ? 'bar' : (overrideType || 'bar');
+
     chartInstances[canvasId] = new Chart(ctx, {
+      type: actualChartType,
       data: dataObj,
       options: {
         responsive: true,
@@ -3565,9 +3604,9 @@ const initForecastModule = () => {
             }
           }
         },
-        scales: {
-          x: { stacked: true, grid: { display: false } },
-          y: { stacked: true, beginAtZero: true, ticks: { callback: (value) => '$' + (value/1000) + 'k' } }
+        scales: (overrideType === 'doughnut' || overrideType === 'pie') ? {} : {
+          x: { stacked: overrideType !== 'line' && overrideType !== 'bar-grouped', grid: { display: false } },
+          y: { stacked: overrideType !== 'line' && overrideType !== 'bar-grouped', beginAtZero: true, ticks: { callback: (value) => '$' + (value/1000) + 'k' } }
         },
         onClick: (e, elements) => {
           if (elements.length > 0) {
@@ -3598,11 +3637,11 @@ const initForecastModule = () => {
   };
 
   const renderAnalytics = () => {
-    createChart('chart-team', 'Team - Revenue Sales Forecast', 'team');
-    createChart('chart-sales', 'Revenue Forecast By Sales', 'owner');
-    createChart('chart-market', 'Revenue By Market', 'country');
-    createChart('chart-project', 'Revenue By Type Of Project', 'projectType');
-    createChart('chart-stage', 'Revenue Forecast By Deal Stage', 'stage');
+    createChart('chart-team', 'Team - Revenue Sales Forecast', 'team'); // Stacked Bar (default)
+    createChart('chart-sales', 'Revenue Forecast By Sales', 'owner', 'line'); // Line
+    createChart('chart-market', 'Revenue By Market', 'country', 'doughnut'); // Doughnut
+    createChart('chart-project', 'Revenue By Type Of Project', 'projectType', 'pie'); // Pie
+    createChart('chart-stage', 'Revenue Forecast By Deal Stage', 'stage', 'bar-grouped'); // Grouped Bar
   };
 
   // Bind filter events
@@ -4418,9 +4457,227 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if(document.getElementById('deal-comp-pursue')) document.getElementById('deal-comp-pursue').textContent = comp.pursueRecommendation;
   };
-  setTimeout(window.initDealIntelligenceUI, 200);
+  // --- FORECAST TARGET DASHBOARD ---
+  function getClosedWonDeals(year, team) {
+    return window.mockDeals.filter(d => {
+      const isWon = (d.stage === 'Closed Won' || d.stage === 'Closed Won (100%)' || d.dealStage === 'Closed Won');
+      if (!isWon) return false;
+      const dYear = new Date(d.closeDate).getFullYear().toString();
+      if (dYear !== year) return false;
+      if (team && team !== 'Total' && d.team !== team) return false;
+      return true;
+    });
+  }
 
+  function renderTargetDashboard(year) {
+    const container = document.getElementById('target-dashboard-container');
+    if (!container) return;
+    
+    // Total Company Target
+    let totalTarget = window.mockRevenueTargets.find(t => t.year === year && t.team === 'Total');
+    if (!totalTarget) {
+      totalTarget = { bookingTarget: 0, invoiceTarget: 0 };
+    }
+    
+    const totalWon = getClosedWonDeals(year, 'Total').reduce((sum, d) => sum + window.parseAmount(d.amount), 0);
+    const bookingAchieved = totalTarget.bookingTarget ? (totalWon / totalTarget.bookingTarget) * 100 : 0;
+    
+    // Team Targets
+    const teams = [...new Set(window.mockDeals.map(d => d.team).filter(Boolean))];
+    
+    let html = `
+      <div class="target-section">
+        <div class="target-section-title">Total Revenue Target Level - ${year}</div>
+        <div class="target-cards-grid">
+          <div class="target-card">
+            <div class="target-card-title">Booking Target</div>
+            <div class="target-card-value">${totalTarget.bookingTarget ? window.formatCurrency(totalTarget.bookingTarget) : '<span style="color:#94a3b8; font-size: 16px;">Not set</span>'}</div>
+            <div class="target-card-subtitle">Yearly goal for ${year}</div>
+          </div>
+          <div class="target-card">
+            <div class="target-card-title">Invoice Target</div>
+            <div class="target-card-value">${totalTarget.invoiceTarget ? window.formatCurrency(totalTarget.invoiceTarget) : '<span style="color:#94a3b8; font-size: 16px;">Not set</span>'}</div>
+            <div class="target-card-subtitle">Expected billing for ${year}</div>
+          </div>
+          <div class="target-card" style="border-top: 3px solid var(--primary-teal);">
+            <div class="target-card-title" style="color: var(--primary-teal); font-weight: 600;">Current Forecast (Won)</div>
+            <div class="target-card-value">${window.formatCurrency(totalWon)}</div>
+            <div class="target-card-subtitle">
+              <span>Achieved: ${bookingAchieved.toFixed(1)}%</span>
+            </div>
+            <div class="achievement-bar-bg">
+              <div class="achievement-bar-fill" style="width: ${Math.min(bookingAchieved, 100)}%; background-color: ${bookingAchieved < 50 ? '#EF4444' : (bookingAchieved < 80 ? '#F59E0B' : '#10B981')};"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="target-section">
+        <div class="target-section-title">Team Revenue Target Level - ${year}</div>
+        <div class="target-cards-grid">
+    `;
+    
+    teams.forEach(team => {
+      let teamTarget = window.mockRevenueTargets.find(t => t.year === year && t.team === team);
+      if (!teamTarget) {
+        teamTarget = { bookingTarget: 0, invoiceTarget: 0 };
+      }
+      const teamWon = getClosedWonDeals(year, team).reduce((sum, d) => sum + window.parseAmount(d.amount), 0);
+      const teamAchieved = teamTarget.bookingTarget ? (teamWon / teamTarget.bookingTarget) * 100 : 0;
+      
+      html += `
+        <div class="target-card">
+          <div style="font-weight: 600; font-size: 15px; color: var(--text-dark); margin-bottom: 12px; display: flex; justify-content: space-between;">
+            ${team}
+            <span class="badge-status ${teamAchieved >= 80 ? 'badge-green' : (teamAchieved >= 50 ? 'badge-yellow' : (teamTarget.bookingTarget ? 'badge-red' : 'badge-gray'))}">
+              ${teamTarget.bookingTarget ? teamAchieved.toFixed(1) + '%' : 'N/A'}
+            </span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+            <span style="color: var(--text-muted);">Booking:</span>
+            <span style="font-weight: 500;">${teamTarget.bookingTarget ? window.formatCurrency(teamTarget.bookingTarget) : 'Not set'}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+            <span style="color: var(--text-muted);">Invoice:</span>
+            <span style="font-weight: 500;">${teamTarget.invoiceTarget ? window.formatCurrency(teamTarget.invoiceTarget) : 'Not set'}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; border-top: 1px dashed var(--border-color); padding-top: 8px; margin-top: 8px;">
+            <span style="color: var(--text-dark); font-weight: 500;">Current Forecast:</span>
+            <span style="font-weight: 600; color: var(--primary-teal);">${window.formatCurrency(teamWon)}</span>
+          </div>
+          <div class="achievement-bar-bg">
+            <div class="achievement-bar-fill" style="width: ${Math.min(teamAchieved, 100)}%; background-color: ${teamAchieved < 50 ? '#EF4444' : (teamAchieved < 80 ? '#F59E0B' : '#10B981')};"></div>
+          </div>
+        </div>
+      `;
+    });
+    
+    html += `
+        </div>
+      </div>
+    `;
+    
+    container.innerHTML = html;
+  }
+
+  function initTargetDashboard() {
+    const btnEditTargets = document.getElementById('btn-edit-targets');
+    const modal = document.getElementById('target-modal');
+    const btnCloseModal = document.getElementById('btn-close-target-modal');
+    const btnCancel = document.getElementById('btn-cancel-targets');
+    const btnSave = document.getElementById('btn-save-targets');
+    const yearSelect = document.getElementById('target-modal-year');
+    const teamsContainer = document.getElementById('target-modal-teams-container');
+    const globalYearFilter = document.querySelector('.forecast-layout select'); // first select is year
+    
+    if (!btnEditTargets || !modal) return;
+    
+    let selectedYear = globalYearFilter ? globalYearFilter.value : '2026';
+    renderTargetDashboard(selectedYear);
+    
+    if (globalYearFilter) {
+      globalYearFilter.addEventListener('change', (e) => {
+        selectedYear = e.target.value;
+        renderTargetDashboard(selectedYear);
+      });
+    }
+    
+    const openModal = () => {
+      yearSelect.value = selectedYear;
+      renderModalInputs(selectedYear);
+      modal.style.display = 'flex';
+    };
+    
+    const closeModal = () => {
+      modal.style.display = 'none';
+    };
+    
+    const renderModalInputs = (year) => {
+      // Total
+      const totalTarget = window.mockRevenueTargets.find(t => t.year === year && t.team === 'Total') || { bookingTarget: '', invoiceTarget: '' };
+      document.getElementById('target-input-total-booking').value = totalTarget.bookingTarget || '';
+      document.getElementById('target-input-total-invoice').value = totalTarget.invoiceTarget || '';
+      
+      // Teams
+      const teams = [...new Set(window.mockDeals.map(d => d.team).filter(Boolean))];
+      let teamsHtml = '';
+      teams.forEach(team => {
+        const tTarget = window.mockRevenueTargets.find(t => t.year === year && t.team === team) || { bookingTarget: '', invoiceTarget: '' };
+        teamsHtml += `
+          <div class="target-input-row team-target-row" data-team="${team}">
+            <div style="font-size: 14px;">${team}</div>
+            <div><input type="number" class="form-control team-booking" min="0" step="1" value="${tTarget.bookingTarget || ''}"></div>
+            <div><input type="number" class="form-control team-invoice" min="0" step="1" value="${tTarget.invoiceTarget || ''}"></div>
+          </div>
+        `;
+      });
+      teamsContainer.innerHTML = teamsHtml;
+    };
+    
+    yearSelect.addEventListener('change', (e) => {
+      renderModalInputs(e.target.value);
+    });
+    
+    btnEditTargets.addEventListener('click', openModal);
+    btnCloseModal.addEventListener('click', closeModal);
+    btnCancel.addEventListener('click', closeModal);
+    
+    btnSave.addEventListener('click', () => {
+      const year = yearSelect.value;
+      
+      // Parse Total
+      const tBooking = parseFloat(document.getElementById('target-input-total-booking').value) || 0;
+      const tInvoice = parseFloat(document.getElementById('target-input-total-invoice').value) || 0;
+      
+      // Update or create
+      let tTarget = window.mockRevenueTargets.find(t => t.year === year && t.team === 'Total');
+      if (tTarget) {
+        tTarget.bookingTarget = tBooking;
+        tTarget.invoiceTarget = tInvoice;
+      } else {
+        window.mockRevenueTargets.push({ year, team: 'Total', bookingTarget: tBooking, invoiceTarget: tInvoice });
+      }
+      
+      // Parse Teams
+      const teamRows = teamsContainer.querySelectorAll('.team-target-row');
+      teamRows.forEach(row => {
+        const team = row.getAttribute('data-team');
+        const b = parseFloat(row.querySelector('.team-booking').value) || 0;
+        const i = parseFloat(row.querySelector('.team-invoice').value) || 0;
+        
+        let target = window.mockRevenueTargets.find(t => t.year === year && t.team === team);
+        if (target) {
+          target.bookingTarget = b;
+          target.invoiceTarget = i;
+        } else {
+          window.mockRevenueTargets.push({ year, team, bookingTarget: b, invoiceTarget: i });
+        }
+      });
+      
+      // Push Audit Log
+      window.mockTargetAuditLogs.push({
+        timestamp: new Date().toISOString(),
+        user: 'Admin',
+        year: year,
+        action: 'Updated revenue targets'
+      });
+      
+      if (globalYearFilter && globalYearFilter.value !== year) {
+          globalYearFilter.value = year;
+          selectedYear = year;
+      }
+      
+      renderTargetDashboard(selectedYear);
+      closeModal();
+      if(typeof showToast === 'function') showToast('Revenue targets updated successfully');
+    });
+  }
+
+  setTimeout(initTargetDashboard, 150);
+  
+  setTimeout(window.initDealIntelligenceUI, 200);
   setTimeout(initAssociationManager, 100);
   setTimeout(initForecastRegistration, 100);
   setTimeout(initForecastModule, 100);
+
 });

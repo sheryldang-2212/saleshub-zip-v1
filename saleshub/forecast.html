@@ -89,6 +89,128 @@
       text-align: left;
     }
     .config-table th { background: #F8FAFC; font-weight: 600; }
+    
+    /* Target Dashboard Styles */
+    .target-dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .target-section {
+      margin-bottom: 32px;
+    }
+    .target-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .target-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .target-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      position: relative;
+    }
+    .target-card-title {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .target-card-value {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .target-card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+    .achievement-bar-bg {
+      height: 6px;
+      background: #F1F5F9;
+      border-radius: 3px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    .achievement-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-green { background: #DCFCE7; color: #166534; }
+    .badge-yellow { background: #FEF9C3; color: #854D0E; }
+    .badge-red { background: #FEE2E2; color: #991B1B; }
+    .badge-gray { background: #F1F5F9; color: #475569; }
+
+    /* Modal Styles */
+    .target-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .target-modal-content {
+      background: white;
+      border-radius: 8px;
+      width: 700px;
+      max-width: 90vw;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+    }
+    .target-modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .target-modal-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .target-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      background: #F8FAFC;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    .target-input-row {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1.5fr;
+      gap: 16px;
+      margin-bottom: 12px;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -112,8 +234,15 @@
 
     <main class="main-content">
       <div class="forecast-layout">
-        <h1 style="font-size: 24px; font-weight: 600; margin-bottom: 24px; color: var(--text-dark);">Revenue Forecast</h1>
-        
+        <div class="target-dashboard-header">
+          <h1 style="font-size: 24px; font-weight: 600; color: var(--text-dark); margin: 0;">Revenue Forecast</h1>
+          <button class="btn btn-secondary" id="btn-edit-targets"><i class="ph ph-pencil-simple"></i> Edit Targets</button>
+        </div>
+
+        <div id="target-dashboard-container">
+          <!-- JS Injected Target Cards -->
+        </div>
+
         <div class="tabs-header">
           <div class="tab-link active" data-target="tab-data">Forecast Data</div>
           <div class="tab-link" data-target="tab-analytics">Forecast Analytics</div>
@@ -264,6 +393,53 @@
 
       </div>
     </main>
+  </div>
+
+  <!-- Edit Targets Modal -->
+  <div class="target-modal-overlay" id="target-modal">
+    <div class="target-modal-content">
+      <div class="target-modal-header">
+        <h2 style="font-size: 18px; font-weight: 600; margin: 0;">Edit Revenue Targets</h2>
+        <button id="btn-close-target-modal" style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted);"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="target-modal-body">
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 13px; font-weight: 500; color: var(--text-dark); display: block; margin-bottom: 8px;">Target Year</label>
+          <select class="form-control" id="target-modal-year" style="width: 200px;">
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+          </select>
+        </div>
+
+        <div style="background: #F8FAFC; padding: 16px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 24px;">
+          <h3 style="font-size: 14px; font-weight: 600; margin-top: 0; margin-bottom: 16px;">Total Company Targets</h3>
+          <div class="target-input-row">
+            <div style="font-weight: 500; font-size: 13px;">Level of Expectation</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Booking Target ($)</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Invoice Target ($)</div>
+          </div>
+          <div class="target-input-row">
+            <div style="font-size: 14px;">Total</div>
+            <div><input type="number" class="form-control" id="target-input-total-booking" min="0" step="1"></div>
+            <div><input type="number" class="form-control" id="target-input-total-invoice" min="0" step="1"></div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Team Targets</h3>
+        <div class="target-input-row">
+          <div style="font-weight: 500; font-size: 13px;">BU / Team</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Booking Target ($)</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Invoice Target ($)</div>
+        </div>
+        <div id="target-modal-teams-container">
+          <!-- JS Injected Team Inputs -->
+        </div>
+      </div>
+      <div class="target-modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-targets">Cancel</button>
+        <button class="btn btn-primary" id="btn-save-targets">Save Targets</button>
+      </div>
+    </div>
   </div>
 
   <script src="app.js?v=2"></script>
