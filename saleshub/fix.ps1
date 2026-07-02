@@ -20,7 +20,9 @@ foreach ($file in $files) {
         @{text="Deal"; icon="ph-currency-dollar"; href="deals.html"},
         @{text="Presale Workspace"; icon="ph-gavel"; href="bidding.html"},
         @{text="Revenue Forecast"; icon="ph-trend-up"; href="forecast.html"},
-        @{text="Case Study Hub"; icon="ph-books"; href="case_studies.html"}
+        @{text="Case Study Hub"; icon="ph-books"; href="case_studies.html"},
+        @{text="<i>Marketing (Coming soon)</i>"; icon="ph-megaphone"; href="#"},
+        @{text="<i>Report (Coming soon)</i>"; icon="ph-file-text"; href="#"}
     )
 
     $newSidebar = "<aside class=`"sidebar`">`n      <div style=`"color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;`"><i class=`"ph ph-hexagon-fill`"></i> <span style=`"font-size: 18px; font-weight: 600;`">SalesHub</span></div>`n"

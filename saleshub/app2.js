@@ -66,7 +66,7 @@
     { id: 'D-626-0000041', name: 'Test 345', pipeline: 'Outbound Target Account', stage: 'Target Account Identified', amount: '$0', closeDate: '06/13/2026', company: 'Test 345', avatar: 'T3', badges: ['CLOSING OR OVERDUE'], owner: 'Sarah Smith', team: 'Enterprise Sales', country: 'US', projectType: 'T&M', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-626-0000027', name: 'Meeting - GreenEnergy', pipeline: 'Sales Pipeline', stage: '1st Meeting (10%)', amount: '$200,000', closeDate: '08/20/2026', company: 'GreenEnergy', avatar: 'G', badges: ['ADD MORE CONTACTS'], owner: 'Jane Smith', team: 'Partner Sales', country: 'Germany', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 100000, aug: 100000, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-626-0000039', name: 'Test 1306', pipeline: 'Outbound Target Account', stage: 'Outreach - Engage', amount: '$123,699,789', closeDate: '06/13/2026', company: 'Unknown', avatar: 'U', badges: ['CLOSING OR OVERDUE'], owner: 'Sarah Smith', team: 'Enterprise Sales', country: 'US', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 61849894, aug: 61849895, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-426-0000012', name: 'Enterprise SaaS rollout', pipeline: 'Sales Pipeline', stage: 'Solution Design (40%)', amount: '$398,123', closeDate: '09/01/2026', company: 'Global Fin', avatar: 'GF', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'SMB Sales', country: 'Vietnam', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 199061, aug: 199062, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-426-0000012', name: 'Enterprise SaaS rollout', pipeline: 'Sales Pipeline', stage: 'Solution Design (Synced)', amount: '$398,123', closeDate: '09/01/2026', company: 'Global Fin', avatar: 'GF', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'SMB Sales', country: 'Vietnam', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 199061, aug: 199062, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-426-0000009', name: 'ODC proposal - TechVN', pipeline: 'Sales Pipeline', stage: 'Draft Proposal (Synced)', amount: '$120,000', closeDate: '10/15/2026', company: 'TechVN Ltd', avatar: 'TL', badges: ['ADD MORE CONTACTS'], owner: 'Mike Johnson', team: 'Partner Sales', country: 'Vietnam', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 60000, aug: 60000, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-226-0000004', name: 'SGH - RE - City Developments', pipeline: 'Sales Pipeline', stage: 'Proposal Presented (Synced)', amount: '$180,000', closeDate: '07/15/2026', company: 'City Developments Limited', avatar: 'CD', badges: ['ADD MORE CONTACTS'], owner: 'Sarah Smith', team: 'Enterprise Sales', country: 'Singapore', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 90000, aug: 90000, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-326-0000005', name: 'Proposal - FinServ EU', pipeline: 'Sales Pipeline', stage: 'Proposal Presented (Synced)', amount: '$520,000', closeDate: '08/30/2026', company: 'FinServ EU', avatar: 'FE', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'SMB Sales', country: 'Germany', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 260000, aug: 260000, sep: 0, oct: 0, nov: 0, dec: 0 } },
@@ -171,10 +171,10 @@
   window.mockCompanies.forEach(c => window.calculateCompanyIntelligence(c.id));
 
   window.mockBids = [
-    { id: 'BID-00800', client: 'TechCorp Solutions', opp: 'Digital Dynamics', status: 'Under Review', val: '$180,000', deadline: '2023-11-15', owner: 'Alex Thompson', deal: 'D-426-0000012 - Enterprise SaaS rollout', isMy: false },
+    { id: 'BID-00800', client: 'TechCorp Solutions', opp: 'Digital Dynamics', status: 'Discovery', val: '$180,000', deadline: '2023-11-15', owner: 'Alex Thompson', deal: 'D-426-0000012 - Enterprise SaaS rollout', isMy: false },
     { id: 'BID-00001', client: 'City Developments Limited', opp: 'SGH - RE - City Developments', status: 'Proposal Presented', val: '$180,000', deadline: '2026-07-15', owner: 'Alex Sales', deal: 'D-226-0000004 - SGH - RE - City Developments', isMy: true },
     { id: 'BID-00002', client: 'TechVN Ltd', opp: 'ODC proposal â€” TechVN', status: 'Draft Proposal', val: '$240,000', deadline: '2026-10-15', owner: 'Jane Smith', deal: 'D-426-0000009 - ODC proposal â€” TechVN', isMy: false },
-    { id: 'BID-00801', client: 'Global Fin', opp: 'OB - Sievo - Finland', status: 'Under Review', val: '$85,000', deadline: '2026-08-01', owner: 'Alex Sales', deal: 'D-526-0000026 - OB - Sievo - Finland', isMy: true }
+    { id: 'BID-00801', client: 'Global Fin', opp: 'OB - Sievo - Finland', status: 'Discovery', val: '$85,000', deadline: '2026-08-01', owner: 'Alex Sales', deal: 'D-526-0000026 - OB - Sievo - Finland', isMy: true }
   ];
 
   window.mockDeliverables = [
@@ -252,8 +252,8 @@
     'Nurture (0%)': 0,
     'Nurture': 0,
     '1st Meeting (10%)': 10,
-    'Discovery (10%)': 10,
-    'Solution Design (40%)': 40,
+    'Discovery (Synced)': 10,
+    'Solution Design (Synced)': 40,
     'Draft Proposal (Synced)': 40,
     'Proposal Presented (Synced)': 70,
     'Negotiation (90%)': 90,
@@ -269,7 +269,7 @@
   };
 
   const salesPipelineStages = [
-    'Nurture (0%)', '1st Meeting (10%)', 'Discovery (10%)', 'Solution Design (40%)',
+    'Nurture (0%)', '1st Meeting (10%)', 'Discovery (Synced)', 'Solution Design (Synced)',
     'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 'Negotiation (90%)',
     'Closed Won (100%)', 'Closed Lost (0%)'
   ];
@@ -1661,7 +1661,7 @@
                 <a href="#" style="color: var(--primary-teal); font-weight: 500; text-decoration: none;">B-26-00123</a>
                 <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Platform Implementation</div>
               </div>
-              <span style="background: #FEF08A; color: #A16207; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">Under Review</span>
+              <span style="background: #FEF08A; color: #A16207; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">Discovery</span>
             </div>
           `;
         }
@@ -2049,7 +2049,8 @@
 
   const getBidStatusClass = (status) => {
     switch(status) {
-      case 'Under Review': return 'bid-review';
+      case 'Discovery': return 'bid-review';
+      case 'Solution Design': return 'bid-review';
       case 'Draft Proposal': return 'bid-draft';
       case 'Proposal Presented': return 'bid-presented';
       case 'Done': return 'bid-done';
@@ -3633,8 +3634,8 @@ const initForecastModule = () => {
   const renderConfig = () => {
     weightsTbody.innerHTML = '';
     const stages = [
-      'Nurture', 'Nurture (0%)', '1st Meeting (10%)', 'Discovery (10%)', 
-      'Solution Design (40%)', 'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 
+      'Nurture', 'Nurture (0%)', '1st Meeting (10%)', 'Discovery (Synced)', 
+      'Solution Design (Synced)', 'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 
       'Negotiation (90%)', 'Closed Won (100%)', 'Closed Lost (0%)'
     ];
     
@@ -4416,5 +4417,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(initForecastRegistration, 100);
   setTimeout(initForecastModule, 100);
 });
+
+
 
 

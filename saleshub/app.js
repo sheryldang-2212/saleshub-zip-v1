@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
   // Global error handling to capture uncaught exceptions
   window.addEventListener('error', (event) => {
     console.error('[SalesHub] Unhandled error:', event.message, 'at', event.filename + ':' + event.lineno);
@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     { year: '2026', team: 'Total', bookingTarget: 4117022, invoiceTarget: 6108663 },
     { year: '2026', team: 'Hanoi Sales', bookingTarget: 2290249, invoiceTarget: 3665048 },
     { year: '2026', team: 'HCMC Sales', bookingTarget: 1826773, invoiceTarget: 2443614 },
-    { year: '2026', team: 'Team Hà Nội', bookingTarget: 1000000, invoiceTarget: 1500000 },
+    { year: '2026', team: 'Team HÃ  Ná»™i', bookingTarget: 1000000, invoiceTarget: 1500000 },
     { year: '2026', team: 'Team HCM', bookingTarget: 800000, invoiceTarget: 1000000 },
-    { year: '2026', team: 'Team Đà Nẵng', bookingTarget: 500000, invoiceTarget: 600000 }
+    { year: '2026', team: 'Team ÄÃ  Náºµng', bookingTarget: 500000, invoiceTarget: 600000 }
   ];
 
   window.mockTargetAuditLogs = [];
@@ -72,17 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
       clientSegmentation: "Whale Class (Hunting)",
       status: "Closed Won"
     },
-    { id: 'D-626-0000034', name: 'Nurture - HealthCo', pipeline: 'Sales Pipeline', stage: 'Nurture (0%)', amount: '$40,000', closeDate: '12/01/2026', company: 'HealthCo', avatar: 'H', badges: ['ADD MORE CONTACTS', '<10 Touch Points', 'Missing information'], owner: 'Sarah Smith', team: 'Team Hà Nội', country: 'US', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 20000, aug: 20000, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-626-0000034', name: 'Nurture - HealthCo', pipeline: 'Sales Pipeline', stage: 'Nurture (0%)', amount: '$40,000', closeDate: '12/01/2026', company: 'HealthCo', avatar: 'H', badges: ['ADD MORE CONTACTS', '<10 Touch Points', 'Missing information'], owner: 'Sarah Smith', team: 'Team HÃ  Ná»™i', country: 'US', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 20000, aug: 20000, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-626-0000037', name: 'New deal - AI Startup', pipeline: 'Sales Pipeline', stage: 'Nurture (0%)', amount: '$80,000', closeDate: '11/30/2026', company: 'AI Startup', avatar: 'AS', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'Team HCM', country: 'UK', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 40000, aug: 40000, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-626-0000041', name: 'Test 345', pipeline: 'Outbound Target Account', stage: 'Target Account Identified', amount: '$0', closeDate: '06/13/2026', company: 'Test 345', avatar: 'T3', badges: ['CLOSING OR OVERDUE'], owner: 'Sarah Smith', team: 'Team Hà Nội', country: 'US', projectType: 'T&M', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-626-0000027', name: 'Meeting - GreenEnergy', pipeline: 'Sales Pipeline', stage: '1st Meeting (10%)', amount: '$200,000', closeDate: '08/20/2026', company: 'GreenEnergy', avatar: 'G', badges: ['ADD MORE CONTACTS'], owner: 'Jane Smith', team: 'Team Đà Nẵng', country: 'Germany', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 100000, aug: 100000, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-626-0000039', name: 'Test 1306', pipeline: 'Outbound Target Account', stage: 'Outreach - Engage', amount: '$123,699,789', closeDate: '06/13/2026', company: 'Unknown', avatar: 'U', badges: ['CLOSING OR OVERDUE'], owner: 'Sarah Smith', team: 'Team Hà Nội', country: 'US', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 61849894, aug: 61849895, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-426-0000012', name: 'Enterprise SaaS rollout', pipeline: 'Sales Pipeline', stage: 'Solution Design (40%)', amount: '$398,123', closeDate: '09/01/2026', company: 'Global Fin', avatar: 'GF', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'Team HCM', country: 'Vietnam', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 199061, aug: 199062, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-426-0000009', name: 'ODC proposal - TechVN', pipeline: 'Sales Pipeline', stage: 'Draft Proposal (Synced)', amount: '$120,000', closeDate: '10/15/2026', company: 'TechVN Ltd', avatar: 'TL', badges: ['ADD MORE CONTACTS'], owner: 'Mike Johnson', team: 'Team Đà Nẵng', country: 'Vietnam', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 60000, aug: 60000, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-226-0000004', name: 'SGH - RE - City Developments', pipeline: 'Sales Pipeline', stage: 'Proposal Presented (Synced)', amount: '$180,000', closeDate: '07/15/2026', company: 'City Developments Limited', avatar: 'CD', badges: ['ADD MORE CONTACTS'], owner: 'Sarah Smith', team: 'Team Hà Nội', country: 'Singapore', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 90000, aug: 90000, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-626-0000041', name: 'Test 345', pipeline: 'Outbound Target Account', stage: 'Target Account Identified', amount: '$0', closeDate: '06/13/2026', company: 'Test 345', avatar: 'T3', badges: ['CLOSING OR OVERDUE'], owner: 'Sarah Smith', team: 'Team HÃ  Ná»™i', country: 'US', projectType: 'T&M', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-626-0000027', name: 'Meeting - GreenEnergy', pipeline: 'Sales Pipeline', stage: '1st Meeting (10%)', amount: '$200,000', closeDate: '08/20/2026', company: 'GreenEnergy', avatar: 'G', badges: ['ADD MORE CONTACTS'], owner: 'Jane Smith', team: 'Team ÄÃ  Náºµng', country: 'Germany', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 100000, aug: 100000, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-626-0000039', name: 'Test 1306', pipeline: 'Outbound Target Account', stage: 'Outreach - Engage', amount: '$123,699,789', closeDate: '06/13/2026', company: 'Unknown', avatar: 'U', badges: ['CLOSING OR OVERDUE'], owner: 'Sarah Smith', team: 'Team HÃ  Ná»™i', country: 'US', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 61849894, aug: 61849895, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-426-0000012', name: 'Enterprise SaaS rollout', pipeline: 'Sales Pipeline', stage: 'Solution Design (Synced)', amount: '$398,123', closeDate: '09/01/2026', company: 'Global Fin', avatar: 'GF', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'Team HCM', country: 'Vietnam', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 199061, aug: 199062, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-426-0000009', name: 'ODC proposal - TechVN', pipeline: 'Sales Pipeline', stage: 'Draft Proposal (Synced)', amount: '$120,000', closeDate: '10/15/2026', company: 'TechVN Ltd', avatar: 'TL', badges: ['ADD MORE CONTACTS'], owner: 'Mike Johnson', team: 'Team ÄÃ  Náºµng', country: 'Vietnam', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 60000, aug: 60000, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-226-0000004', name: 'SGH - RE - City Developments', pipeline: 'Sales Pipeline', stage: 'Proposal Presented (Synced)', amount: '$180,000', closeDate: '07/15/2026', company: 'City Developments Limited', avatar: 'CD', badges: ['ADD MORE CONTACTS'], owner: 'Sarah Smith', team: 'Team HÃ  Ná»™i', country: 'Singapore', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 90000, aug: 90000, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-326-0000005', name: 'Proposal - FinServ EU', pipeline: 'Sales Pipeline', stage: 'Proposal Presented (Synced)', amount: '$520,000', closeDate: '08/30/2026', company: 'FinServ EU', avatar: 'FE', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'Team HCM', country: 'Germany', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 260000, aug: 260000, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-326-0000008', name: 'Negotiation - InsurTech', pipeline: 'Sales Pipeline', stage: 'Negotiation (90%)', amount: '$123,699,789', closeDate: '06/30/2026', company: 'InsurTech Asia', avatar: 'IA', badges: ['ADD MORE CONTACTS'], owner: 'Sarah Smith', team: 'Team Hà Nội', country: 'Singapore', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 61849894, aug: 61849895, sep: 0, oct: 0, nov: 0, dec: 0 } },
-    { id: 'D-1125-0000001', name: 'Won - Retail SG', pipeline: 'Sales Pipeline', stage: 'Closed Won (100%)', amount: '$398,123', closeDate: '05/20/2026', company: 'Retail SG', avatar: 'RS', badges: ['ADD MORE CONTACTS'], owner: 'Sarah Smith', team: 'Team Hà Nội', country: 'Singapore', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 199061, aug: 199062, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-326-0000008', name: 'Negotiation - InsurTech', pipeline: 'Sales Pipeline', stage: 'Negotiation (90%)', amount: '$123,699,789', closeDate: '06/30/2026', company: 'InsurTech Asia', avatar: 'IA', badges: ['ADD MORE CONTACTS'], owner: 'Sarah Smith', team: 'Team HÃ  Ná»™i', country: 'Singapore', projectType: 'Project based', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 61849894, aug: 61849895, sep: 0, oct: 0, nov: 0, dec: 0 } },
+    { id: 'D-1125-0000001', name: 'Won - Retail SG', pipeline: 'Sales Pipeline', stage: 'Closed Won (100%)', amount: '$398,123', closeDate: '05/20/2026', company: 'Retail SG', avatar: 'RS', badges: ['ADD MORE CONTACTS'], owner: 'Sarah Smith', team: 'Team HÃ  Ná»™i', country: 'Singapore', projectType: 'ODC', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 199061, aug: 199062, sep: 0, oct: 0, nov: 0, dec: 0 } },
     { id: 'D-326-0000006', name: 'Lost - Legacy ERP', pipeline: 'Outbound Target Account', stage: 'Close Lost', amount: '$240,000', closeDate: '04/01/2026', company: 'Legacy Corp', avatar: 'LC', badges: ['ADD MORE CONTACTS'], owner: 'John Doe', team: 'Team HCM', country: 'US', projectType: 'T&M', forecast: { jan: 0, feb: 0, mar: 0, apr: 0, may: 0, jun: 0, jul: 120000, aug: 120000, sep: 0, oct: 0, nov: 0, dec: 0 } }
   ];
 
@@ -182,10 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.mockCompanies.forEach(c => window.calculateCompanyIntelligence(c.id));
 
   window.mockBids = [
-    { id: 'BID-00800', client: 'TechCorp Solutions', opp: 'Digital Dynamics', status: 'Under Review', val: '$180,000', deadline: '2023-11-15', owner: 'Alex Thompson', deal: 'D-426-0000012 - Enterprise SaaS rollout', isMy: false },
+    { id: 'BID-00800', client: 'TechCorp Solutions', opp: 'Digital Dynamics', status: 'Discovery', val: '$180,000', deadline: '2023-11-15', owner: 'Alex Thompson', deal: 'D-426-0000012 - Enterprise SaaS rollout', isMy: false },
     { id: 'BID-00001', client: 'City Developments Limited', opp: 'SGH - RE - City Developments', status: 'Proposal Presented', val: '$180,000', deadline: '2026-07-15', owner: 'Alex Sales', deal: 'D-226-0000004 - SGH - RE - City Developments', isMy: true },
-    { id: 'BID-00002', client: 'TechVN Ltd', opp: 'ODC proposal — TechVN', status: 'Draft Proposal', val: '$240,000', deadline: '2026-10-15', owner: 'Jane Smith', deal: 'D-426-0000009 - ODC proposal — TechVN', isMy: false },
-    { id: 'BID-00801', client: 'Global Fin', opp: 'OB - Sievo - Finland', status: 'Under Review', val: '$85,000', deadline: '2026-08-01', owner: 'Alex Sales', deal: 'D-526-0000026 - OB - Sievo - Finland', isMy: true }
+    { id: 'BID-00002', client: 'TechVN Ltd', opp: 'ODC proposal â€” TechVN', status: 'Draft Proposal', val: '$240,000', deadline: '2026-10-15', owner: 'Jane Smith', deal: 'D-426-0000009 - ODC proposal â€” TechVN', isMy: false },
+    { id: 'BID-00801', client: 'Global Fin', opp: 'OB - Sievo - Finland', status: 'Discovery', val: '$85,000', deadline: '2026-08-01', owner: 'Alex Sales', deal: 'D-526-0000026 - OB - Sievo - Finland', isMy: true }
   ];
 
   window.mockDeliverables = [
@@ -298,8 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'Nurture (0%)': 0,
     'Nurture': 0,
     '1st Meeting (10%)': 10,
-    'Discovery (10%)': 10,
-    'Solution Design (40%)': 40,
+    'Discovery (Synced)': 10,
+    'Solution Design (Synced)': 40,
     'Draft Proposal (Synced)': 40,
     'Proposal Presented (Synced)': 70,
     'Negotiation (90%)': 90,
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const salesPipelineStages = [
-    'Nurture (0%)', '1st Meeting (10%)', 'Discovery (10%)', 'Solution Design (40%)',
+    'Nurture (0%)', '1st Meeting (10%)', 'Discovery (Synced)', 'Solution Design (Synced)',
     'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 'Negotiation (90%)',
     'Closed Won (100%)', 'Closed Lost (0%)'
   ];
@@ -1318,7 +1318,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const infoEl = document.querySelector('.profile-card div');
         if (infoEl) {
-           infoEl.textContent = `${deal.id} · Sales Pipeline · ${deal.stage}`;
+           infoEl.textContent = `${deal.id} Â· Sales Pipeline Â· ${deal.stage}`;
         }
         
         // Update Property List
@@ -1665,7 +1665,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactsStrong = document.querySelector('#card-contacts .card-header strong');
     const contactsCount = contactsStrong ? contactsStrong.textContent : '';
     
-    // AC says: "khi user hover hoặc click nút tạo Bid, then hệ thống hiển thị lý do cụ thể..."
+    // AC says: "khi user hover hoáº·c click nÃºt táº¡o Bid, then há»‡ thá»‘ng hiá»ƒn thá»‹ lÃ½ do cá»¥ thá»ƒ..."
     // We add a click listener below that handles alerts, but we also set title for hover.
     if (!stageText.includes('Solution Design')) {
        btnNewBid.classList.remove('btn-disabled');
@@ -1710,7 +1710,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="#" style="color: var(--primary-teal); font-weight: 500; text-decoration: none;">B-26-00123</a>
                 <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Platform Implementation</div>
               </div>
-              <span style="background: #FEF08A; color: #A16207; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">Under Review</span>
+              <span style="background: #FEF08A; color: #A16207; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">Discovery</span>
             </div>
           `;
         }
@@ -2098,7 +2098,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const getBidStatusClass = (status) => {
     switch(status) {
-      case 'Under Review': return 'bid-review';
+      case 'Discovery': return 'bid-review';
+      case 'Solution Design': return 'bid-review';
       case 'Draft Proposal': return 'bid-draft';
       case 'Proposal Presented': return 'bid-presented';
       case 'Done': return 'bid-done';
@@ -2443,7 +2444,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fileBlockHtml = `
           <div style="background: #FFF0F2; border: 1px dashed #FFA8B4; padding: 16px; border-radius: 6px; color: #E11D48; font-size: 13px; display: flex; align-items: center; gap: 8px;">
             <i class="ph ph-lock-key" style="font-size: 18px;"></i>
-            Restricted Document — You do not have permission to view pricing documents.
+            Restricted Document â€” You do not have permission to view pricing documents.
           </div>
         `;
       } else {
@@ -3307,7 +3308,7 @@ const initForecastRegistration = () => {
     });
     
     btnsOpen.forEach(btn => {
-      btn.setAttribute('title', hasForecast ? 'Cập nhật Forecast để phân bổ giá trị Deal theo từng tháng. Tổng Forecast sẽ cập nhật lại Deal Amount.' : 'Đăng ký Forecast để phân bổ giá trị Deal theo từng tháng. Tổng Forecast sẽ cập nhật lại Deal Amount.');
+      btn.setAttribute('title', hasForecast ? 'Cáº­p nháº­t Forecast Ä‘á»ƒ phÃ¢n bá»• giÃ¡ trá»‹ Deal theo tá»«ng thÃ¡ng. Tá»•ng Forecast sáº½ cáº­p nháº­t láº¡i Deal Amount.' : 'ÄÄƒng kÃ½ Forecast Ä‘á»ƒ phÃ¢n bá»• giÃ¡ trá»‹ Deal theo tá»«ng thÃ¡ng. Tá»•ng Forecast sáº½ cáº­p nháº­t láº¡i Deal Amount.');
     });
   };
 
@@ -3773,8 +3774,8 @@ const initForecastModule = () => {
   const renderConfig = () => {
     weightsTbody.innerHTML = '';
     const stages = [
-      'Nurture', 'Nurture (0%)', '1st Meeting (10%)', 'Discovery (10%)', 
-      'Solution Design (40%)', 'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 
+      'Nurture', 'Nurture (0%)', '1st Meeting (10%)', 'Discovery (Synced)', 
+      'Solution Design (Synced)', 'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 
       'Negotiation (90%)', 'Closed Won (100%)', 'Closed Lost (0%)'
     ];
     
@@ -4988,3 +4989,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -57,7 +57,7 @@
           
           <select class="form-control" style="width: auto;" id="filter-bid-status">
             <option value="all">All statuses</option>
-            <option value="Under Review">Under Review</option>
+            <option value="Discovery">Discovery</option><option value="Solution Design">Solution Design</option>
             <option value="Draft Proposal">Draft Proposal</option>
             <option value="Proposal Presented">Proposal Presented</option>
             <option value="Done">Done</option>
@@ -123,13 +123,22 @@
         <!-- Kanban View -->
         <div id="bidding-board-view" class="view-container hidden">
           <div class="kanban-board visual-board">
-            <!-- Under Review -->
+            <!-- Discovery -->
             <div class="kanban-col">
               <div class="kanban-col-header">
-                <span>UNDER REVIEW</span>
+                <span>DISCOVERY</span>
                 <div class="col-badges"><span class="col-count">0</span></div>
               </div>
-              <div class="kanban-cards kanban-col-body" data-stage="Under Review"></div>
+              <div class="kanban-cards kanban-col-body" data-stage="Discovery"></div>
+            </div>
+
+            <!-- Solution Design -->
+            <div class="kanban-col">
+              <div class="kanban-col-header">
+                <span>SOLUTION DESIGN</span>
+                <div class="col-badges"><span class="col-count">0</span></div>
+              </div>
+              <div class="kanban-cards kanban-col-body" data-stage="Solution Design"></div>
             </div>
 
             <!-- Draft Proposal -->
@@ -291,5 +300,6 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
 

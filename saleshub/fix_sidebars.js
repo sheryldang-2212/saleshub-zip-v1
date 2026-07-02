@@ -22,6 +22,8 @@ const finalMenuItems = [
   { text: 'Deal', icon: 'ph-currency-dollar', href: 'deals.html' },
   { text: 'Presale Workspace', icon: 'ph-gavel', href: 'bidding.html' },
   { text: 'Revenue Forecast', icon: 'ph-trend-up', href: 'forecast.html' },
+  { text: 'Marketing (Coming soon)', icon: 'ph-megaphone', href: '#' },
+  { text: 'Report (Coming soon)', icon: 'ph-file-text', href: '#' },
   { text: 'Case Study Hub', icon: 'ph-books', href: 'case_studies.html' }
 ];
 
