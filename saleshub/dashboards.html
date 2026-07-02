@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -403,16 +403,15 @@
 
     <main class="main-content" style="padding: 0; display: flex; flex-direction: column;">
       <div class="dashboard-tabs">
-        <div class="dashboard-tab active" onclick="switchTab('tab-1', this)">CRM Dashboard</div>
+        <div class="dashboard-tab active" onclick="switchTab('tab-1', this)">Sales Performance Dashboard</div>
         <div class="dashboard-tab" onclick="switchTab('tab-2', this)">Intelligence Views</div>
-        <div class="dashboard-tab" onclick="switchTab('tab-3', this)">Executive Decision Room</div>
       </div>
       <div class="tab-content">
         <!-- TAB 1: CRM Dashboard -->
         <div id="tab-1" class="tab-pane active" style="padding: 24px 32px; background: #F1F5F9; overflow-y: auto;">
           <div class="crm-header">
             <div>
-              <h1 style="margin: 0; font-size: 24px; color: #1E293B;">CRM Dashboard</h1>
+              <h1 style="margin: 0; font-size: 24px; color: #1E293B;">Sales Performance Dashboard</h1>
               <p style="margin: 4px 0 0 0; color: #64748B; font-size: 14px;">Sales Pipeline, Booking & Bidding Performance Overview</p>
             </div>
             <div style="display: flex; gap: 12px;">
@@ -503,7 +502,7 @@
           <div class="crm-row" style="grid-template-columns: 1fr 1fr;">
             <div class="crm-panel" style="padding: 0;">
               <div class="panel-title" style="padding: 16px 20px; margin: 0; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
-                Individual Performance Breakdown
+                Team Performance Breakdown
                 <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: normal; color: #64748B;">
                   Sales <select style="border: 1px solid #E2E8F0; border-radius: 4px; padding: 4px; color: #1E293B;"><option>All reps</option></select>
                 </div>
@@ -552,74 +551,72 @@
               </tbody>
             </table>
           </div>
-        </div>
-        
-        <!-- TAB 3: Executive Decision Room -->
-        <div id="tab-3" class="tab-pane" style="padding: 24px 32px; background: #F1F5F9; overflow-y: auto;">
-          <div class="crm-header">
-            <div>
-              <h1 style="margin: 0; font-size: 24px; color: #1E293B;">Executive Decision Room</h1>
-              <p style="margin: 4px 0 0 0; color: #64748B; font-size: 14px;">Presale Governance & Strategic Opportunity Reviews</p>
-            </div>
-            <div style="display: flex; gap: 12px;">
+
+          <!-- Executive Decision Room (merged into CRM Dashboard) -->
+          <div style="margin-top: 8px; margin-bottom: 8px; padding: 16px 0 8px 0; border-top: 2px solid #E2E8F0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <h2 style="margin: 0; font-size: 18px; color: #1E293B;">Executive Decision Room</h2>
+                <p style="margin: 4px 0 0 0; color: #64748B; font-size: 13px;">Presale Governance &amp; Strategic Opportunity Reviews</p>
+              </div>
               <button class="btn btn-secondary" style="border: 1px solid #E2E8F0; background: white; padding: 8px 12px; border-radius: 4px; color: #64748B; cursor: pointer; display: flex; align-items: center;"><i class="ph ph-arrows-clockwise" style="font-size: 18px;"></i></button>
             </div>
-          </div>
 
-          <!-- KPI Cards -->
-          <div class="crm-kpis">
-            <div class="crm-kpi-card" style="border-top: 4px solid #F59E0B;">
-              <div class="kpi-icon-title" style="color: #F59E0B;"><i class="ph ph-shield-warning"></i> Pending COO Approvals</div>
-              <div class="kpi-value">3</div>
-              <div class="kpi-sub">Total TCV: $1.2M</div>
+            <!-- KPI Cards -->
+            <div class="crm-kpis">
+              <div class="crm-kpi-card" style="border-top: 4px solid #F59E0B;">
+                <div class="kpi-icon-title" style="color: #F59E0B;"><i class="ph ph-shield-warning"></i> Pending COO Approvals</div>
+                <div class="kpi-value">3</div>
+                <div class="kpi-sub">Total TCV: $1.2M</div>
+              </div>
+              <div class="crm-kpi-card" style="border-top: 4px solid #EF4444;">
+                <div class="kpi-icon-title" style="color: #EF4444;"><i class="ph ph-warning-circle"></i> Routing Conflicts</div>
+                <div class="kpi-value">2</div>
+                <div class="kpi-sub">TC vs BU Lead Mismatch</div>
+              </div>
+              <div class="crm-kpi-card" style="border-top: 4px solid #10B981;">
+                <div class="kpi-icon-title" style="color: #10B981;"><i class="ph ph-check-circle"></i> Approved This Week</div>
+                <div class="kpi-value">5</div>
+                <div class="kpi-sub">$4.5M Pipeline Validated</div>
+              </div>
             </div>
-            <div class="crm-kpi-card" style="border-top: 4px solid #EF4444;">
-              <div class="kpi-icon-title" style="color: #EF4444;"><i class="ph ph-warning-circle"></i> Routing Conflicts</div>
-              <div class="kpi-value">2</div>
-              <div class="kpi-sub">TC vs BU Lead Mismatch</div>
-            </div>
-            <div class="crm-kpi-card" style="border-top: 4px solid #10B981;">
-              <div class="kpi-icon-title" style="color: #10B981;"><i class="ph ph-check-circle"></i> Approved This Week</div>
-              <div class="kpi-value">5</div>
-              <div class="kpi-sub">$4.5M Pipeline Validated</div>
-            </div>
-          </div>
 
-          <!-- Decisions Table -->
-          <div class="crm-panel" style="padding: 0; margin-bottom: 32px;">
-            <div class="panel-title" style="padding: 16px 20px; margin: 0; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
-              Action Required: Strategic Opportunities
+            <!-- Decisions Table -->
+            <div class="crm-panel" style="padding: 0; margin-bottom: 32px;">
+              <div class="panel-title" style="padding: 16px 20px; margin: 0; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+                Action Required: Strategic Opportunities
+              </div>
+              <table class="crm-table">
+                <thead>
+                  <tr>
+                    <th>OPPORTUNITY</th>
+                    <th>TYPE</th>
+                    <th>TCV</th>
+                    <th>BOTTLENECK</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="deal.html" style="color: #3B82F6; text-decoration: none; font-weight: 500;">Enterprise SaaS rollout</a></td>
+                    <td>New Logo</td>
+                    <td>$450K</td>
+                    <td><span class="badge" style="background: #FEF3C7; color: #D97706; padding: 2px 8px; border-radius: 4px; font-size: 11px;">COO Approval Needed</span></td>
+                    <td><button class="btn btn-primary" style="padding: 4px 8px; font-size: 12px;" onclick="window.location.href='bid_detail.html'">Review Gate</button></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" style="color: #3B82F6; text-decoration: none; font-weight: 500;">Cloud Migration DB</a></td>
+                    <td>Existing Acc</td>
+                    <td>$1.1M</td>
+                    <td><span class="badge" style="background: #FEE2E2; color: #DC2626; padding: 2px 8px; border-radius: 4px; font-size: 11px;">Routing Escalation</span></td>
+                    <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Resolve Conflict</button></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <table class="crm-table">
-              <thead>
-                <tr>
-                  <th>OPPORTUNITY</th>
-                  <th>TYPE</th>
-                  <th>TCV</th>
-                  <th>BOTTLENECK</th>
-                  <th>ACTION</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><a href="deal.html" style="color: #3B82F6; text-decoration: none; font-weight: 500;">Enterprise SaaS rollout</a></td>
-                  <td>New Logo</td>
-                  <td>$450K</td>
-                  <td><span class="badge" style="background: #FEF3C7; color: #D97706; padding: 2px 8px; border-radius: 4px; font-size: 11px;">COO Approval Needed</span></td>
-                  <td><button class="btn btn-primary" style="padding: 4px 8px; font-size: 12px;" onclick="window.location.href='bid_detail.html'">Review Gate</button></td>
-                </tr>
-                <tr>
-                  <td><a href="#" style="color: #3B82F6; text-decoration: none; font-weight: 500;">Cloud Migration DB</a></td>
-                  <td>Existing Acc</td>
-                  <td>$1.1M</td>
-                  <td><span class="badge" style="background: #FEE2E2; color: #DC2626; padding: 2px 8px; border-radius: 4px; font-size: 11px;">Routing Escalation</span></td>
-                  <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">Resolve Conflict</button></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
-
+        
         <!-- TAB 2: Intelligence Views -->
         <div id="tab-2" class="tab-pane">
 
