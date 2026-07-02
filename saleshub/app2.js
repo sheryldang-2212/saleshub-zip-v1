@@ -252,7 +252,7 @@
     'Nurture (0%)': 0,
     'Nurture': 0,
     '1st Meeting (10%)': 10,
-    'Discovery (Synced)': 10,
+    'Discovery (10%)': 10,
     'Solution Design (Synced)': 40,
     'Draft Proposal (Synced)': 40,
     'Proposal Presented (Synced)': 70,
@@ -269,7 +269,7 @@
   };
 
   const salesPipelineStages = [
-    'Nurture (0%)', '1st Meeting (10%)', 'Discovery (Synced)', 'Solution Design (Synced)',
+    'Nurture (0%)', '1st Meeting (10%)', 'Discovery (10%)', 'Solution Design (Synced)',
     'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 'Negotiation (90%)',
     'Closed Won (100%)', 'Closed Lost (0%)'
   ];
@@ -1618,7 +1618,7 @@
     
     // AC says: "khi user hover hoáº·c click nÃºt táº¡o Bid, then há»‡ thá»‘ng hiá»ƒn thá»‹ lÃ½ do cá»¥ thá»ƒ..."
     // We add a click listener below that handles alerts, but we also set title for hover.
-    if (!stageText.includes('Solution Design')) {
+    if (!stageText.includes('Solution Design') && !stageText.includes('Discovery')) {
        btnNewBid.classList.remove('btn-disabled');
        btnNewBid.removeAttribute('title');
     } else if (contactsCount.includes('(0)')) {
@@ -1633,8 +1633,8 @@
   if (btnNewBid) {
     btnNewBid.addEventListener('click', (e) => {
       const stageText = stageDisplay ? stageDisplay.textContent : '';
-      if (!stageText.includes('Solution Design')) {
-        alert(`Bid can only be created in Solution Design stage. Current stage: ${stageText}`);
+      if (!stageText.includes('Solution Design') && !stageText.includes('Discovery')) {
+        alert(`Bid can only be created in Discovery or Solution Design stage. Current stage: ${stageText}`);
         return;
       }
 
@@ -1934,6 +1934,16 @@
            return;
         }
 
+        if (newStage.includes('Discovery')) {
+           const overlay = document.getElementById('discovery-modal-overlay');
+           const modal = document.getElementById('discovery-modal');
+           if(overlay && modal) {
+             overlay.style.display='block';
+             modal.style.display='block';
+           }
+           return;
+        }
+
         const deal = mockDeals.find(d => d.id === dealId);
         if (deal && deal.stage !== newStage) {
            mockAuditLogs.push(`[${new Date().toISOString()}] Deal ${deal.id} moved from ${deal.stage} to ${newStage}`);
@@ -2199,8 +2209,8 @@
         return;
       }
       const selected = createBidDealSelect.options[createBidDealSelect.selectedIndex].text;
-      if (!selected.includes('Solution Design')) {
-        alert('Bid can only be created in Solution Design stage. Current stage is not valid.');
+      if (!selected.includes('Solution Design') && !selected.includes('Discovery')) {
+        alert('Bid can only be created in Discovery or Solution Design stage. Current stage is not valid.');
         return;
       }
       alert('Bid created successfully! Notifications sent to Bidding Manager.');
@@ -3634,7 +3644,7 @@ const initForecastModule = () => {
   const renderConfig = () => {
     weightsTbody.innerHTML = '';
     const stages = [
-      'Nurture', 'Nurture (0%)', '1st Meeting (10%)', 'Discovery (Synced)', 
+      'Nurture', 'Nurture (0%)', '1st Meeting (10%)', 'Discovery (10%)', 
       'Solution Design (Synced)', 'Draft Proposal (Synced)', 'Proposal Presented (Synced)', 
       'Negotiation (90%)', 'Closed Won (100%)', 'Closed Lost (0%)'
     ];
@@ -4417,6 +4427,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(initForecastRegistration, 100);
   setTimeout(initForecastModule, 100);
 });
+
 
 
 
