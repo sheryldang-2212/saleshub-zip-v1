@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Study Hub - SalesHub CRM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    .cs-table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; }
+    .cs-table th, .cs-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); text-align: left; }
+    .cs-table th { background: #F8FAFC; font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 11px; position: sticky; top: 0; }
+    .cs-table tr:hover { background: #F8FAFC; }
+    .badge-draft { background: #FEF9C3; color: #854D0E; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+    .badge-approved { background: #DCFCE7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+    .badge-internal { background: #F1F5F9; color: #475569; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+    .badge-sales { background: #DBEAFE; color: #1E40AF; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Presale Workspace</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='case_studies.html'"><i class="ph ph-books" style="font-size: 22px;"></i> Case Study Hub</div>
+      <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
+    </aside>
+
+    <main class="main-content">
+      <!-- Header -->
+      <header class="page-header" style="border-bottom: none; padding-bottom: 0;">
+        <div class="page-title-row" style="margin-bottom: 12px;">
+          <div class="page-title">
+            <h1 style="font-size: 24px;">Case Study Hub / Knowledge</h1>
+            <div class="record-count" style="font-size: 13px; color: var(--text-muted); display: block;">124 records</div>
+          </div>
+          <div class="header-actions">
+          </div>
+        </div>
+
+        <div class="view-tabs" style="border-bottom: 1px solid var(--border-color); margin-bottom: 16px;">
+          <div class="tab-item active">All Records</div>
+          <div class="tab-item">Win Case Studies</div>
+          <div class="tab-item">Loss Learnings</div>
+          <div class="tab-item">Reusable Assets</div>
+        </div>
+      </header>
+
+      <!-- Filter Bar -->
+      <div class="filter-row top-filter-row">
+        <div class="filter-group"><span class="filter-label">Outcome</span><button class="btn btn-filter">All <i class="ph ph-caret-down"></i></button></div>
+        <div class="filter-group"><span class="filter-label">Opportunity Type</span><button class="btn btn-filter">All <i class="ph ph-caret-down"></i></button></div>
+        <div class="filter-group"><span class="filter-label">Industry</span><button class="btn btn-filter">All <i class="ph ph-caret-down"></i></button></div>
+        <div class="filter-group"><span class="filter-label">Tech Stack</span><button class="btn btn-filter">All <i class="ph ph-caret-down"></i></button></div>
+        <div class="filter-group"><span class="filter-label">Reusable Level</span><button class="btn btn-filter">All <i class="ph ph-caret-down"></i></button></div>
+      </div>
+      
+      <div class="filter-row bottom-filter-row" style="margin-bottom: 16px;">
+        <div class="search-box" style="flex: 1; max-width: 400px;">
+          <i class="ph ph-magnifying-glass search-icon"></i>
+          <input type="text" placeholder="Search case title, client...">
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div style="background: white; border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; max-height: calc(100vh - 250px); overflow-y: auto;">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Case Title</th>
+              <th>BID ID</th>
+              <th>Country</th>
+              <th>Opportunity Type</th>
+              <th>Account Motion</th>
+              <th>Classification / Tier</th>
+              <th>Industry</th>
+              <th>Opportunity Size</th>
+              <th>Tech Stack</th>
+              <th>Reusable Level</th>
+              <th>Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="case_study_detail.html" style="font-weight: 500; color: var(--primary-teal); text-decoration: none;">Global CRM Transformation (TechCorp)</a></td>
+              <td>BID-00800</td>
+              <td>Vietnam</td>
+              <td>New logo standard project</td>
+              <td>Hunting</td>
+              <td>Whale</td>
+              <td>Financial Services</td>
+              <td>Big Opportunity</td>
+              <td>Salesforce, AWS</td>
+              <td>High</td>
+              <td><span style="color: #16A34A; font-weight: 500;">Closed Won</span></td>
+            </tr>
+            <tr>
+              <td><a href="#" style="font-weight: 500; color: var(--primary-teal); text-decoration: none;">Loss: Data Warehouse Migration (RetailX)</a></td>
+              <td>BID-00801</td>
+              <td>Singapore</td>
+              <td>Existing customer enhancement</td>
+              <td>Farming</td>
+              <td>Tuna</td>
+              <td>Retail</td>
+              <td>Medium</td>
+              <td>Snowflake</td>
+              <td>Medium</td>
+              <td><span style="color: #DC2626; font-weight: 500;">Closed Lost</span></td>
+            </tr>
+            <tr>
+              <td><a href="case_study_detail.html" style="font-weight: 500; color: var(--primary-teal); text-decoration: none;">Enterprise SaaS Rollout (New Entry)</a></td>
+              <td>BID-00802</td>
+              <td>Australia</td>
+              <td>Enterprise modernization</td>
+              <td>Hunting</td>
+              <td>Mega</td>
+              <td>Manufacturing</td>
+              <td>Big Opportunity</td>
+              <td>Azure</td>
+              <td>--</td>
+              <td><span style="color: #16A34A; font-weight: 500;">Closed Won</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
+

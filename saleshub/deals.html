@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,14 +12,13 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
       <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
-      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Presale Workspace</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='case_studies.html'"><i class="ph ph-books" style="font-size: 22px;"></i> Case Study Hub</div>
       <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
     </aside>
 
@@ -346,7 +345,18 @@
   </div>
 
   <script src="app.js?v=2"></script>
+  <div class="overlay" id="discovery-modal-overlay" style="z-index: 9999; display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);"></div>
+  <div class="modal" id="discovery-modal" style="z-index: 10000; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 24px; border-radius: 8px; width: 450px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+    <h3 style="margin-top: 0; color: #1E293B;"><i class="ph ph-warning-circle" style="color: #F59E0B; margin-right: 8px;"></i> Create Bid Required</h3>
+    <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px; line-height: 1.5;">From Discovery stage onward, a Bid/Presale Workspace is required.<br><br>Please create a Bid before moving this Deal to Discovery.</p>
+    
+    <div style="display: flex; justify-content: flex-end; gap: 12px;">
+      <button class="btn btn-secondary" onclick="document.getElementById('discovery-modal-overlay').style.display='none'; document.getElementById('discovery-modal').style.display='none';">Cancel Move</button>
+      <button class="btn btn-primary" onclick="window.location.href='bidding.html'">Create Presale Workspace</button>
+    </div>
+  </div>
 </body>
 </html>
+
 
 

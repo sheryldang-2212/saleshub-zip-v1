@@ -10,21 +10,20 @@
 <body>
   
   <div class="edit-mode-banner">
-    <i class="ph ph-pencil-simple"></i> Editing Ã¢â‚¬â€ save or cancel your changes at the bottom of the page.
+    <i class="ph ph-pencil-simple"></i> Editing ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â save or cancel your changes at the bottom of the page.
   </div>
 
   <div class="app-container">
     <!-- Sidebar -->
     <aside class="sidebar">
       <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
       <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
-      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Presale Workspace</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='case_studies.html'"><i class="ph ph-books" style="font-size: 22px;"></i> Case Study Hub</div>
       <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
     </aside>
 
@@ -44,12 +43,16 @@
             <a href="deals.html" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 500; color: var(--text-dark); text-decoration: none;">
               <i class="ph ph-arrow-left"></i> Back to board
             </a>
-            <button class="btn btn-secondary btn-edit-mode" id="btn-enter-edit" style="padding: 4px 12px; font-size: 13px;"><i class="ph ph-pencil-simple"></i> Edit</button>
+            
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <!-- Role Switcher -->
+
+            </div>
           </div>
           
           <div class="profile-card">
-            <h2 style="margin-bottom: 4px;">New deal Ã¢â‚¬â€ AI Startup <span class="badge b-purple" style="font-size: 12px; margin-left: 8px; vertical-align: text-bottom;"><i class="ph ph-star"></i> Whale Prospect</span></h2>
-            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">D-626-0000074 Ã‚Â· Sales Pipeline Ã‚Â· Nurture (0%)</div>
+            <h2 style="margin-bottom: 4px;">New deal ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â AI Startup <span class="badge b-purple" style="font-size: 12px; margin-left: 8px; vertical-align: text-bottom;"><i class="ph ph-star"></i> Whale Prospect</span></h2>
+            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">D-626-0000074 Ãƒâ€šÃ‚Â· Sales Pipeline Ãƒâ€šÃ‚Â· Nurture (0%)</div>
             <span class="deal-badge info">NURTURE</span>
             
             <div class="quick-actions" style="margin-top: 16px;">
@@ -62,6 +65,8 @@
             </div>
           </div>
 
+
+
           <div class="section-wrapper">
             <div class="section-header" style="cursor: pointer;" onclick="document.getElementById('about-props').classList.toggle('collapsed')">
               <span>Deal Overview</span>
@@ -70,7 +75,76 @@
                 <i class="ph ph-caret-up"></i>
               </div>
             </div>
-            <div id="dynamic-properties-list" data-object-type="Deal" class="property-list"></div>
+            <div id="dynamic-properties-list" data-object-type="Deal" class="property-list" style="padding: 16px 24px;">
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Deal owner</div>
+                <div style="color: var(--primary-teal); font-size: 13px; font-weight: 500; cursor: pointer;">phuong nguyen</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Country/Region</div>
+                <div style="color: #334155; font-size: 13px;">Japan</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Currency</div>
+                <div style="color: #334155; font-size: 13px;">JPY</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Service Provider</div>
+                <div style="color: #334155; font-size: 13px;">TECHVIFY Japan</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Deal Type</div>
+                <div style="color: #334155; font-size: 13px;">New Business</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Project Type</div>
+                <div style="color: #334155; font-size: 13px;">Undetermined</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Pre-Sales Status</div>
+                <div style="color: #334155; font-size: 13px;">--</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Lead Source</div>
+                <div style="color: #334155; font-size: 13px;">Partnership</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">TC In Charge</div>
+                <div style="color: #334155; font-size: 13px;">No owner</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Delivery Unit</div>
+                <div style="color: #334155; font-size: 13px;">None</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Last Contacted</div>
+                <div style="color: #334155; font-size: 13px;">--</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Deal Description</div>
+                <div style="color: #334155; font-size: 13px;">--</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Next step</div>
+                <div style="color: #334155; font-size: 13px;">--</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">IT Challenges</div>
+                <div style="color: #334155; font-size: 13px;">--</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Closed Lost Reason</div>
+                <div style="color: #334155; font-size: 13px;">--</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Last Activity Date</div>
+                <div style="color: #334155; font-size: 13px;">06/17/2026 11:53 AM GMT+7</div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 4px;">Next Activity Date</div>
+                <div style="color: #334155; font-size: 13px;">09/21/2026 6:00 AM GMT+7</div>
+              </div>
+            </div>
             <div style="padding: 0 24px 16px;">
               <button class="btn btn-secondary" style="width: 100%;" onclick="PropertyManager.open('Deal')">View all properties</button>
             </div>
@@ -97,13 +171,6 @@
               </div>
             </div>
 
-            <div class="pipeline-stepper">
-              <div class="pipeline-step completed">Appointment Scheduled</div>
-              <div class="pipeline-step completed">Qualified To Buy</div>
-              <div class="pipeline-step active">Presentation Scheduled</div>
-              <div class="pipeline-step">Decision Maker Bought-In</div>
-              <div class="pipeline-step">Contract Sent</div>
-            </div>
 
             <div class="overview-grid">
               <div class="overview-box" style="position: relative;">
@@ -242,6 +309,38 @@
                 </div>
               </div>
               
+              <!-- Item: Stage Change Blocked (from Audit Log) -->
+              <div style="position: relative; margin-bottom: 24px;">
+                <div style="position: absolute; left: -29px; top: 0; background: #FFF; border: 2px solid #EF4444; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: #EF4444;">
+                  <i class="ph-fill ph-warning-circle" style="font-size: 10px;"></i>
+                </div>
+                <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">Stage Change Blocked (Deal Governance)</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">Today, 02:15 PM</div>
+                  </div>
+                  <div style="font-size: 12px; color: var(--text-muted);">
+                    Deal could not move to "Solution Design". Reason: "Presale Workspace is required."
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item: Opportunity Classification Updated (from Audit Log) -->
+              <div style="position: relative; margin-bottom: 24px;">
+                <div style="position: absolute; left: -29px; top: 0; background: #FFF; border: 2px solid #3B82F6; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: #3B82F6;">
+                  <i class="ph-fill ph-pencil-simple" style="font-size: 10px;"></i>
+                </div>
+                <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">Opportunity Classification Updated (Deal Governance)</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">Yesterday, 10:00 AM</div>
+                  </div>
+                  <div style="font-size: 12px; color: var(--text-muted);">
+                    Alex changed Opportunity Type to "Enterprise Modernization".
+                  </div>
+                </div>
+              </div>
+              
             </div>
             
             <div style="text-align: center; margin-top: 24px;">
@@ -283,29 +382,46 @@
             </div>
           </div>
           
-          <div class="association-card" style="background: #FFF3E0; border-color: #FFE082;">
-            <div class="card-header" style="color: #E65100;">
-              <strong>Health Badges</strong>
+          <div class="association-card" style="border-color: #E2E8F0;">
+            <div class="card-header">
+              <strong>Opportunity Passport</strong>
             </div>
-            <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-              <span class="deal-badge warning" style="width: fit-content;">ADD MORE CONTACTS</span>
-              <span class="deal-badge info" style="width: fit-content;">&lt;10 TOUCH POINTS</span>
-            </div>
-          </div>
-
-          <div class="association-card" id="card-playbooks">
-            <div class="card-header" style="cursor: pointer;" onclick="const content = this.nextElementSibling; content.style.display = content.style.display === 'none' ? 'block' : 'none';">
-              <strong>Playbooks</strong>
-              <i class="ph ph-caret-down"></i>
-            </div>
-            <div style="padding: 12px; display: block;">
-              <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 8px; cursor: pointer;">
-                <i class="ph ph-book-open" style="color: var(--primary-teal);"></i>
-                <span style="font-size: 13px; font-weight: 500;">Discovery Call Guide</span>
+            <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+              <div class="property-item" style="flex-direction: column; align-items: stretch; gap: 4px; padding: 0;">
+                <div class="property-label">Opportunity Type</div>
+                <select class="form-control input-edit-mode" style="width: 100%;" onchange="checkOppTypeMismatch(this.value)">
+                  <option>Select Type...</option>
+                  <option value="Existing Customer Enhancement">Existing Customer Enhancement</option>
+                  <option value="Small Implementation">Small Implementation</option>
+                  <option value="New Logo Standard Project">New Logo Standard Project</option>
+                  <option value="Large Digital Transformation">Large Digital Transformation</option>
+                  <option value="AI Transformation Program">AI Transformation Program</option>
+                  <option value="Enterprise Modernization">Enterprise Modernization</option>
+                  <option value="RFP Requiring New Offering">RFP Requiring New Offering</option>
+                </select>
+                <div class="property-value view-mode" style="display: none;">Select Type...</div>
               </div>
-              <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer;">
-                <i class="ph ph-book-open" style="color: var(--primary-teal);"></i>
-                <span style="font-size: 13px; font-weight: 500;">Pricing Negotiation</span>
+              
+              <div id="opp-type-warning" style="display: none; padding: 12px; background: #FFFBEB; border-left: 3px solid #F59E0B;">
+                <div style="font-size: 12px; color: #B45309; margin-bottom: 8px;"><i class="ph ph-warning"></i> Classification Mismatch Detected.</div>
+                <input type="text" class="form-control input-edit-mode" placeholder="Provide Override Reason..." style="width: 100%; font-size: 12px;">
+              </div>
+
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Opportunity Size</span>
+                <span class="property-value" id="opp-size-display" style="font-weight: 500;">$80,000</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: var(--text-muted);">Presale Required</span>
+                <select class="form-control input-edit-mode presale-select-mode" style="width: 100px;">
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+                <div class="property-value view-mode presale-view-mode" style="display: none; font-weight: 500;">Yes</div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: var(--text-muted);">Big Opp Required</span>
+                <span class="badge" id="big-opp-badge" style="background:#F1F5F9;color:#64748B;">No</span>
               </div>
             </div>
           </div>
@@ -371,6 +487,16 @@
             </div>
           </div>
 
+          <div class="association-card" style="background: #FFF3E0; border-color: #FFE082;">
+            <div class="card-header" style="color: #E65100;">
+              <strong>Health Badges</strong>
+            </div>
+            <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <span class="deal-badge warning" style="width: fit-content;">ADD MORE CONTACTS</span>
+              <span class="deal-badge info" style="width: fit-content;">&lt;10 TOUCH POINTS</span>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -429,7 +555,58 @@
 
 
   <script src="app.js?v=2"></script>
+  <div class="overlay" id="discovery-modal-overlay" style="z-index: 9999; display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);"></div>
+  <div class="modal" id="discovery-modal" style="z-index: 10000; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 24px; border-radius: 8px; width: 450px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+    <h3 style="margin-top: 0; color: #1E293B;"><i class="ph ph-warning-circle" style="color: #F59E0B; margin-right: 8px;"></i> Create Bid Required</h3>
+    <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px; line-height: 1.5;">From Discovery stage onward, a Bid/Presale Workspace is required.<br><br>Please create a Bid before moving this Deal to Discovery.</p>
+    
+    <div style="display: flex; justify-content: flex-end; gap: 12px;">
+      <button class="btn btn-secondary" onclick="document.getElementById('discovery-modal-overlay').style.display='none'; document.getElementById('discovery-modal').style.display='none';">Cancel Move</button>
+      <button class="btn btn-primary" onclick="window.location.href='bidding.html'">Create Presale Workspace</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Calculate Opportunity Size from Amount
+      const amountText = document.querySelector('.deal-amount-display').innerText;
+      const amount = parseFloat(amountText.replace(/[^0-9.-]+/g, ''));
+      let sizeStr = "Small";
+      if (amount >= 100000) {
+        sizeStr = "Big Opportunity";
+      } else if (amount >= 50000) {
+        sizeStr = "Standard";
+      }
+      document.getElementById('opp-size-display').innerText = sizeStr;
+
+      // 2. Auto-fill Presale Required to Yes
+      const viewMode = document.querySelector('.presale-view-mode');
+      if (viewMode) viewMode.innerText = 'Yes';
+      const selectMode = document.querySelector('.presale-select-mode');
+      if (selectMode) selectMode.value = 'Yes';
+    });
+
+    function checkDiscoveryStage() {
+      // Show modal when user tries to click the Discovery stage
+      document.getElementById('discovery-modal-overlay').style.display = 'block';
+      document.getElementById('discovery-modal').style.display = 'block';
+    }
+
+    function checkOppTypeMismatch(selectedType) {
+      const isHunting = true; // Assuming we read from Account Intelligence "Action: Hunting"
+      const warningDiv = document.getElementById('opp-type-warning');
+      if (isHunting && selectedType === 'Existing Customer Enhancement') {
+        warningDiv.style.display = 'block';
+      } else if (!isHunting && selectedType === 'New Logo Standard Project') {
+        warningDiv.style.display = 'block';
+      } else {
+        warningDiv.style.display = 'none';
+      }
+    }
+  </script>
+
 </body>
 </html>
+
 
 

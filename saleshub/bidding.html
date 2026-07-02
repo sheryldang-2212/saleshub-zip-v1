@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bidding - SalesHub CRM</title>
+  <title>Presale Workspace - SalesHub CRM</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
@@ -12,14 +12,13 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
-      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Presale Workspace</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='case_studies.html'"><i class="ph ph-books" style="font-size: 22px;"></i> Case Study Hub</div>
       <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
     </aside>
 
@@ -30,21 +29,21 @@
         <div class="page-title-row">
           <div class="page-title">
             <i class="ph ph-gavel" style="font-size: 28px; color: var(--primary-teal);"></i>
-            <h1>Bidding</h1>
+            <h1>Presale Workspace</h1>
             <span class="record-count" id="total-bids">Loading...</span>
           </div>
           <div class="header-actions">
             <button class="btn btn-secondary" id="btn-export-bid" disabled><i class="ph ph-export"></i> Export</button>
             <button class="btn btn-secondary" id="btn-delete-bid" disabled><i class="ph ph-trash"></i> Delete</button>
             <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Import</button>
-            <button class="btn btn-primary" id="btn-create-bid-main"><i class="ph ph-plus"></i> New bid</button>
+            <button class="btn btn-primary" id="btn-create-bid-main"><i class="ph ph-plus"></i> New Workspace</button>
           </div>
         </div>
 
         <!-- View Tabs -->
         <div class="view-tabs" id="bidding-tabs">
-          <div class="tab-item active" data-view="all">All bids</div>
-          <div class="tab-item" data-view="my">My bids</div>
+          <div class="tab-item active" data-view="all">All Workspaces</div>
+          <div class="tab-item" data-view="my">My Workspaces</div>
         </div>
       </header>
 
@@ -85,7 +84,7 @@
       <!-- Search -->
       <div class="search-box" style="margin-bottom: 24px; max-width: 400px;">
         <i class="ph ph-magnifying-glass search-icon"></i>
-        <input type="text" id="search-bids" placeholder="Search bid ID, client or opportunity">
+        <input type="text" id="search-bids" placeholder="Search workspace ID, client or opportunity">
       </div>
 
       <!-- Content Area -->
@@ -97,7 +96,7 @@
               <thead>
                 <tr>
                   <th style="width: 40px;"><input type="checkbox" id="bid-select-all"></th>
-                  <th>Bid ID</th>
+                  <th>Workspace ID</th>
                   <th>Client</th>
                   <th>Opportunity</th>
                   <th>Status</th>
@@ -186,10 +185,10 @@
   <!-- Overlay -->
   <div class="overlay" id="main-overlay"></div>
 
-  <!-- Create Bid Modal -->
+  <!-- Create Workspace Modal -->
   <div class="center-modal" id="modal-create-bid">
     <div class="modal-header">
-      <h2>Create bid</h2>
+      <h2>Create Workspace</h2>
       <button class="close-drawer" id="close-modal-create-bid"><i class="ph ph-x"></i></button>
     </div>
     
@@ -255,7 +254,7 @@
         <div class="notif-card selected" onclick="this.classList.toggle('selected')">
           <input type="checkbox" checked onclick="event.stopPropagation()">
           <div class="group-name">Bidding Manager <span style="color: var(--primary-teal); font-size: 10px; margin-left: 4px;">DEFAULT</span></div>
-          <div class="group-desc">Bid desk and proposal coordination Â· Lan Nguyá»…n</div>
+          <div class="group-desc">Bid desk and proposal coordination Ã‚Â· Lan NguyÃ¡Â»â€¦n</div>
         </div>
         <div class="notif-card" onclick="this.classList.toggle('selected')">
           <input type="checkbox" onclick="event.stopPropagation()">
@@ -265,12 +264,12 @@
         <div class="notif-card" onclick="this.classList.toggle('selected')">
           <input type="checkbox" onclick="event.stopPropagation()">
           <div class="group-name">TC Team</div>
-          <div class="group-desc">Technical consultants - Minh Tráº§n, Thu Pháº¡m</div>
+          <div class="group-desc">Technical consultants - Minh TrÃ¡ÂºÂ§n, Thu PhÃ¡ÂºÂ¡m</div>
         </div>
         <div class="notif-card" onclick="this.classList.toggle('selected')">
           <input type="checkbox" onclick="event.stopPropagation()">
           <div class="group-name">Delivery Lead</div>
-          <div class="group-desc">Delivery and development leads - Huy LÃª, David Park</div>
+          <div class="group-desc">Delivery and development leads - Huy LÃƒÂª, David Park</div>
         </div>
       </div>
 
@@ -285,10 +284,12 @@
     
     <div class="modal-footer">
       <button class="btn btn-secondary" id="cancel-modal-create-bid">Cancel</button>
-      <button class="btn btn-primary" id="submit-create-bid">Create bid</button>
+      <button class="btn btn-primary" id="submit-create-bid">Create Workspace</button>
     </div>
   </div>
 
   <script src="app.js"></script>
 </body>
 </html>
+
+

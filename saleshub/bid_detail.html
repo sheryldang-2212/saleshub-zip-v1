@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bid Detail - SalesHub CRM</title>
+  <title>Presale Workspace - SalesHub CRM</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
@@ -12,14 +12,13 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div style="color: white; font-size: 24px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px;"><i class="ph ph-hexagon-fill"></i> <span style="font-size: 18px; font-weight: 600;">SalesHub</span></div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='dashboards.html'"><i class="ph ph-chart-pie-slice" style="font-size: 22px;"></i> Dashboards</div>
-      
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='index.html'"><i class="ph ph-address-book" style="font-size: 22px;"></i> Contacts</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='companies.html'"><i class="ph ph-buildings" style="font-size: 22px;"></i> Company</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='deals.html'"><i class="ph ph-currency-dollar" style="font-size: 22px;"></i> Deal</div>
-      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Bidding</div>
+      <div style="color: white; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='bidding.html'"><i class="ph ph-gavel" style="font-size: 22px;"></i> Presale Workspace</div>
       <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='forecast.html'"><i class="ph ph-trend-up" style="font-size: 22px;"></i> Revenue Forecast</div>
+      <div style="color: #7C98B6; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='case_studies.html'"><i class="ph ph-books" style="font-size: 22px;"></i> Case Study Hub</div>
       <div style="margin-top: auto; color: #7C98B6; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; width: 100%;" onclick="window.location.href='admin_settings.html'"><i class="ph ph-gear" style="font-size: 22px;"></i> Settings</div>
     </aside>
 
@@ -38,6 +37,8 @@
             </div>
             <div style="color: var(--text-muted); font-size: 14px;">Digital Dynamics Â· TechCorp Solutions</div>
           </div>
+          
+
         </div>
       </div>
 
@@ -46,7 +47,7 @@
         <!-- LEFT COLUMN -->
         <div class="bid-col-left">
           <div class="association-card" style="border-radius: var(--radius-md);">
-            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none; display: flex; justify-content: space-between; align-items: center;">
               <strong>Request Summary</strong>
             </div>
             <div style="padding: 0 16px 16px;">
@@ -62,7 +63,7 @@
 
           <!-- Account Context Block -->
           <div class="association-card" style="border-radius: var(--radius-md); background: #F8FAFC;">
-            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none; display: flex; justify-content: space-between; align-items: center;">
               <strong>Account Context</strong>
               <a href="company.html" style="font-size: 12px; color: var(--primary-teal); font-weight: 500; text-decoration: none;">View Account</a>
             </div>
@@ -71,6 +72,19 @@
               <div class="card-row"><span class="c-label">Potential Tag</span> <span class="c-val"><span class="badge b-yellow" style="font-size: 10px; padding: 2px 6px;">Mega-potential</span></span></div>
               <div class="card-row"><span class="c-label">Account Health</span> <span class="c-val" style="color: #DC2626; font-weight: 500;"><i class="ph-fill ph-warning-circle" style="margin-right: 4px;"></i> Red</span></div>
               <div class="card-row"><span class="c-label">Service Line</span> <span class="c-val">CRM, AI</span></div>
+            </div>
+          </div>
+
+          <!-- Opportunity Passport Block -->
+          <div class="association-card" style="border-radius: var(--radius-md); background: #F8FAFC;">
+            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none; display: flex; justify-content: space-between; align-items: center;">
+              <strong>Opportunity Passport</strong>
+              <a href="deal.html" style="font-size: 12px; color: var(--primary-teal); font-weight: 500; text-decoration: none; text-align: right;">View Deal</a>
+            </div>
+            <div style="padding: 0 16px 16px;">
+              <div class="card-row"><span class="c-label">Opportunity Type</span> <span class="c-val">New Logo Standard Project</span></div>
+              <div class="card-row"><span class="c-label">Opportunity Size</span> <span class="c-val">Big Opportunity</span></div>
+              <div class="card-row"><span class="c-label">Presale Required</span> <span class="c-val">Yes</span></div>
             </div>
           </div>
 
@@ -91,21 +105,21 @@
                   <i class="ph ph-file-csv" style="font-size: 24px; color: #E74C3C;"></i>
                   <div>
                     <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">bids-import-template.csv</div>
-                    <div style="font-size: 11px; color: var(--text-light);">Excel Â· 116 B Â· Alex Thompson (Sales) Â· 2026-06-14 20:56</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Excel Ã‚Â· 116 B Ã‚Â· Alex Thompson (Sales) Ã‚Â· 2026-06-14 20:56</div>
                   </div>
                 </div>
                 <div style="display: flex; gap: 12px; align-items: flex-start;">
                   <i class="ph ph-file-pdf" style="font-size: 24px; color: #E74C3C;"></i>
                   <div>
                     <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">RFP_Document.pdf</div>
-                    <div style="font-size: 11px; color: var(--text-light);">PDF Â· 2.4 MB Â· Alex Thompson (Sales) Â· 2023-10-18 09:30</div>
+                    <div style="font-size: 11px; color: var(--text-light);">PDF Ã‚Â· 2.4 MB Ã‚Â· Alex Thompson (Sales) Ã‚Â· 2023-10-18 09:30</div>
                   </div>
                 </div>
                 <div style="display: flex; gap: 12px; align-items: flex-start;">
                   <i class="ph ph-file-doc" style="font-size: 24px; color: #E74C3C;"></i>
                   <div>
                     <div style="font-weight: 500; font-size: 13px; color: var(--text-dark);">Technical_Specs.docx</div>
-                    <div style="font-size: 11px; color: var(--text-light);">Word Â· 890 KB Â· Alex Thompson (Sales) Â· 2023-10-19 14:15</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Word Ã‚Â· 890 KB Ã‚Â· Alex Thompson (Sales) Ã‚Â· 2023-10-19 14:15</div>
                   </div>
                 </div>
               </div>
@@ -117,10 +131,10 @@
         <div class="bid-col-mid">
           <div class="detail-tabs" id="bid-tabs" style="border-radius: var(--radius-md) var(--radius-md) 0 0; background: #FFF;">
             <div class="detail-tab active" data-key="overview">Overview</div>
+            <div class="detail-tab" data-key="workspace">Presale Workspace</div>
             <div class="detail-tab" data-key="deliverables">Deliverables</div>
-            <div class="detail-tab" data-key="discussion">Discussion</div>
-            <div class="detail-tab" data-key="teamAccess">Team & Access</div>
-            <div class="detail-tab" data-key="history">History Log</div>
+            <div class="detail-tab" data-key="governance">Governance Gate</div>
+            <div class="detail-tab" data-key="postmortem">Post-Mortem / Knowledge</div>
           </div>
 
           <div style="background: #FFF; padding: 24px; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 var(--radius-md) var(--radius-md); min-height: 500px;">
@@ -132,7 +146,7 @@
               <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; letter-spacing: 0.5px;">BIDDING STATUS</div>
               <span class="badge bid-review" id="summary-bid-status" style="border-radius: 12px; padding: 4px 12px; font-size: 12px; font-weight: 600; display: inline-block; margin-bottom: 32px;">Under Review</span>
 
-              <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; letter-spacing: 0.5px;">BID OVERVIEW</div>
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; letter-spacing: 0.5px;">Workspace Overview</div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;">
                 <div>
                   <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DEAL ID</div>
@@ -239,28 +253,246 @@
               </div>
             </div>
 
+            <!-- PRESALE WORKSPACE TAB -->
+            <div class="tab-content" id="workspace" style="display: none;">
+              <h2 style="font-size: 16px; margin-bottom: 24px;">Presale Workspace & Routing</h2>
+              
+              <!-- Presale Routing Board -->
+              <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 16px; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <h3 style="font-size: 13px; margin: 0; display: flex; align-items: center; gap: 8px;">Routing Decision <span class="badge b-grey" id="routing-status-badge">Pending Confirmation</span></h3>
+                  <button class="btn btn-primary" style="font-size: 11px; padding: 4px 12px;" onclick="window.confirmRoutingDecision()" id="btn-confirm-routing">Confirm Routing</button>
+                </div>
+                
+                <div style="display: flex; gap: 16px; align-items: center;">
+                  <div style="flex: 1;">
+                    <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">SYSTEM SUGGESTION</div>
+                    <div style="font-size: 12px; font-weight: 600; color: var(--text-dark);" id="system-suggestion-text">Delivery BU Led</div>
+                  </div>
+                  <div style="width: 1px; height: 32px; background: var(--border-color);"></div>
+                  <div style="flex: 1.5;">
+                    <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">PRIMARY RESPONSIBLE</div>
+                    <input type="text" list="responsible-options" class="form-control" id="primary-responsible-input" placeholder="Select..." style="width: 100%; font-size: 12px; padding: 4px 8px; height: 28px;">
+                  </div>
+                  <div style="flex: 1.5;">
+                    <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">SUPPORTING RESPONSIBLE</div>
+                    <input type="text" list="responsible-options" class="form-control" id="supporting-responsible-input" placeholder="Select..." style="width: 100%; font-size: 12px; padding: 4px 8px; height: 28px;">
+                  </div>
+                  <datalist id="responsible-options">
+                    <option value="TC"></option>
+                    <option value="D1"></option>
+                    <option value="D2"></option>
+                    <option value="D3"></option>
+                    <option value="D4"></option>
+                    <option value="ITS"></option>
+                  </datalist>
+                  <div style="flex: 3;">
+                    <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">OVERRIDE REASON</div>
+                    <input type="text" class="form-control" id="override-reason-input" placeholder="Required if changing routing..." style="width: 100%; font-size: 12px; padding: 4px 8px; height: 28px;">
+                  </div>
+                </div>
+              </div>
+
+              <!-- 1. Routing Discussion -->
+              <div style="margin-bottom: 32px;">
+                <div style="border: 1px solid var(--border-color); border-radius: 8px; background: #FFF; display: flex; flex-direction: column; height: 450px; overflow: hidden;">
+                  
+                  <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); background: #F8FAFC;">
+                    <h3 style="font-size: 13px; margin: 0;">Routing Discussion</h3>
+                  </div>
+
+                  <!-- Decision Log -->
+                  <div id="decision-log-container" style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: none; background: #FFF; overflow-y: auto; max-height: 150px;">
+                    <div style="font-size: 11px; font-weight: 700; color: #D97706; margin-bottom: 8px; text-transform: uppercase;">Decision Log</div>
+                    <div id="decision-log-list" style="display: flex; flex-direction: column; gap: 8px;">
+                    </div>
+                  </div>
+                  <!-- Discussion Thread -->
+                  <div id="routing-discussion-thread" style="flex: 1; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding: 16px; background: #F8FAFC;">
+                    <!-- Dynamically populated comments -->
+                    <div style="font-size: 13px; color: var(--text-muted); font-style: italic; text-align: center; margin: auto;" id="empty-routing-discussion">No discussion yet. Start the conversation!</div>
+                  </div>
+                  
+                  <!-- Comment Box -->
+                  <div id="routing-comment-box" style="padding: 12px 16px; border-top: 1px solid var(--border-color); background: #FFF; border-radius: 0 0 var(--radius-md) var(--radius-md);">
+
+                    <div style="display: flex; gap: 8px; align-items: flex-end;">
+                      <div style="flex: 1; display: flex; align-items: center; background: #F1F5F9; border-radius: 20px; padding: 4px 12px; border: 1px solid transparent;">
+                        <textarea class="form-control" id="routing-comment-text" rows="1" placeholder="Type a message..." style="border: none; padding: 4px 0; outline: none; box-shadow: none; font-size: 13px; resize: none; background: transparent; flex: 1; margin: 0;"></textarea>
+                        <i class="ph ph-paperclip" style="color: var(--text-muted); cursor: pointer; font-size: 18px; margin-left: 8px;"></i>
+                      </div>
+                      <button class="btn btn-primary" style="padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; flex-shrink: 0;" id="btn-send-routing-comment" onclick="window.addRoutingComment()">
+                        <i class="ph ph-paper-plane-right" style="font-size: 16px;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- GOVERNANCE GATE TAB -->
+            <div class="tab-content" id="governance" style="display: none;">
+              <h2 style="font-size: 16px; margin-bottom: 24px;">Governance Gate & HealthCheck</h2>
+              
+              <div class="alert alert-warning" id="gov-block-alert" style="margin-bottom: 24px;">
+                <i class="ph ph-warning-circle alert-icon"></i>
+                <div>
+                  <div class="alert-title">Proposal Blocked</div>
+                  <div class="alert-desc">This is a Big Opportunity (TCV >= $100k). Proposal submission is blocked until COO approval is granted.</div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+                <!-- Checklist -->
+                <div>
+                  <h3 style="font-size: 14px; margin-bottom: 16px;">Qualification Checklist</h3>
+                  <div style="border: 1px solid var(--border-color); border-radius: 8px; background: #FFF;">
+                    <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px;">
+                      <input type="checkbox" id="chk-margin" checked>
+                      <label for="chk-margin" style="font-size: 13px;">Estimated Gross Margin >= 25%</label>
+                    </div>
+                    <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px;">
+                      <input type="checkbox" id="chk-resource" checked>
+                      <label for="chk-resource" style="font-size: 13px;">Resource Availability Confirmed</label>
+                    </div>
+                    <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px;">
+                      <input type="checkbox" id="chk-tech">
+                      <label for="chk-tech" style="font-size: 13px;">Technology Stack aligned with guidelines</label>
+                    </div>
+                    <div style="padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                      <input type="checkbox" id="chk-legal">
+                      <label for="chk-legal" style="font-size: 13px;">Legal & Compliance Reviewed</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Approval Actions -->
+                <div>
+                  <h3 style="font-size: 14px; margin-bottom: 16px;">COO Approval</h3>
+                  <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; text-align: center;">
+                    <div style="font-size: 48px; color: #CBD5E1; margin-bottom: 12px;"><i class="ph ph-shield-warning"></i></div>
+                    <div style="font-size: 13px; color: var(--text-dark); font-weight: 500; margin-bottom: 4px;">Pending Approval</div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 16px;">Requested by Alex (Sales)</div>
+                    
+                    <button class="btn btn-primary" style="width: 100%; margin-bottom: 8px;" onclick="approveGovGate()">Approve</button>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="rejectGovGate()">Reject</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- POST-MORTEM TAB -->
+            <div class="tab-content" id="postmortem" style="display: none;">
+              <h2 style="font-size: 16px; margin-bottom: 24px;">Post-Mortem / Knowledge Capture</h2>
+              
+              <div class="alert alert-info" style="margin-bottom: 24px;">
+                <i class="ph ph-info alert-icon"></i>
+                <div>
+                  <div class="alert-title">Knowledge Capture Required</div>
+                  <div class="alert-desc">This opportunity has been closed. Please complete the post-mortem to auto-create a Knowledge Record in the Case Study Hub.</div>
+                </div>
+              </div>
+
+              <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 8px; padding: 24px;">
+                
+                <!-- Section: Outcome & Reason -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">FINAL OUTCOME</label>
+                    <select class="form-control" style="width: 100%;" id="pm-outcome">
+                      <option value="">Select Outcome...</option>
+                      <option value="Closed Won">Closed Won</option>
+                      <option value="Closed Lost">Closed Lost</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">WIN/LOSS REASON</label>
+                    <select class="form-control" style="width: 100%;" id="pm-reason">
+                      <option>Select Reason...</option>
+                      <option>Pricing/Commercials</option>
+                      <option>Technical Fit</option>
+                      <option>Relationship/Trust</option>
+                      <option>Competitor Superiority</option>
+                      <option>Client Budget Loss</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">COMPETITOR(S)</label>
+                    <input type="text" class="form-control" placeholder="E.g., Competitor A" style="width: 100%;" id="pm-competitor">
+                  </div>
+                </div>
+                
+                <!-- Section: High-Level Lessons -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">WHAT WORKED</label>
+                    <textarea class="form-control" rows="3" style="width: 100%;" id="pm-worked"></textarea>
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">WHAT DID NOT WORK</label>
+                    <textarea class="form-control" rows="3" style="width: 100%;" id="pm-did-not-work"></textarea>
+                  </div>
+                </div>
+
+                <!-- Section: Specific Lessons -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">PRICING LESSON</label>
+                    <textarea class="form-control" rows="2" style="width: 100%;" id="pm-pricing-lesson"></textarea>
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">DELIVERY LESSON</label>
+                    <textarea class="form-control" rows="2" style="width: 100%;" id="pm-delivery-lesson"></textarea>
+                  </div>
+                  <div>
+                    <label class="form-label" style="font-size: 12px; font-weight: 700;">TECHNICAL LESSON</label>
+                    <textarea class="form-control" rows="2" style="width: 100%;" id="pm-technical-lesson"></textarea>
+                  </div>
+                </div>
+
+                <!-- Section: Reusable Notes and Assets -->
+                <div style="margin-bottom: 24px;">
+                  <label class="form-label" style="font-size: 12px; font-weight: 700;">REUSABLE CASE STUDY NOTE</label>
+                  <textarea class="form-control" rows="3" style="width: 100%;" id="pm-reusable-note" placeholder="Write a summary that can be reused for future sales pitches..."></textarea>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                  <label class="form-label" style="font-size: 12px; font-weight: 700;">REUSABLE ASSETS (PROPOSAL / ARCHITECTURE / ESTIMATION)</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input type="text" class="form-control" placeholder="Link to files (e.g. SharePoint, Google Drive...)" style="flex: 1;" id="pm-assets">
+                    <button class="btn btn-secondary"><i class="ph ph-plus"></i> Add Link</button>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                  <button class="btn btn-primary" onclick="window.savePostMortem()">Save Knowledge Entry</button>
+                </div>
+              </div>
+            </div>
+
             <!-- DELIVERABLES TAB -->
             <div class="tab-content" id="deliverables" style="display: none;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                <h2 style="font-size: 16px; margin: 0;">Document Requests (Deliverables)</h2>
-                <button class="btn btn-secondary" id="btn-add-deliverable"><i class="ph ph-plus"></i> Add request</button>
+                <h2 style="font-size: 16px; margin: 0;">Presales Deliverable Package</h2>
               </div>
 
               <div class="kpi-cards-grid">
                 <div class="kpi-card" style="background: #FAFAFA;">
-                  <div class="kpi-num">4</div>
-                  <div class="kpi-label">Total requests</div>
+                  <div class="kpi-num kpi-deliv-total">0</div>
+                  <div class="kpi-label">Required Docs</div>
                 </div>
                 <div class="kpi-card">
-                  <div class="kpi-num" style="color: var(--state-success);">2</div>
-                  <div class="kpi-label">ÄÃ£ ná»™p</div>
+                  <div class="kpi-num kpi-deliv-submitted" style="color: var(--state-success);">0</div>
+                  <div class="kpi-label">Completed</div>
                 </div>
                 <div class="kpi-card">
-                  <div class="kpi-num" style="color: var(--state-warning);">0</div>
-                  <div class="kpi-label">Chá» ná»™p</div>
+                  <div class="kpi-num kpi-deliv-pending" style="color: var(--state-warning);">0</div>
+                  <div class="kpi-label">Pending Review</div>
                 </div>
                 <div class="kpi-card">
-                  <div class="kpi-num" style="color: var(--state-danger);">2</div>
+                  <div class="kpi-num kpi-deliv-overdue" style="color: var(--state-danger);">0</div>
                   <div class="kpi-label">Overdue</div>
                 </div>
               </div>
@@ -452,7 +684,7 @@
                 <span class="badge bid-review" style="border-radius: 12px; padding: 2px 10px; font-size: 12px; font-weight: 600;">Under Review</span>
               </div>
               <div class="request-field-edit hidden">
-                <select class="form-control" style="margin-bottom: 8px;">
+                <select class="form-control" id="select-bid-status" style="margin-bottom: 8px;">
                   <option selected>Under Review</option>
                   <option>Draft Proposal</option>
                   <option>Proposal Presented</option>
@@ -465,98 +697,52 @@
             </div>
           </div>
 
-          <div class="association-card" style="border-radius: var(--radius-md); background: rgba(0, 164, 189, 0.05); border: 1px solid rgba(0, 164, 189, 0.2);">
-            <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none; color: var(--primary-teal);">
-              <strong><i class="ph ph-users-three"></i> Pre-sales RACI</strong>
-            </div>
-            <div style="padding: 0 16px 16px;">
-              <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Suggested based on Whale Prospect tier.</div>
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-size: 12px; color: var(--text-dark); font-weight: 500;">Responsible</span>
-                  <select class="form-control" style="width: 140px; padding: 2px 8px; font-size: 12px;">
-                    <option selected>Bid Manager</option>
-                    <option>Sales Manager</option>
-                  </select>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-size: 12px; color: var(--text-dark); font-weight: 500;">Accountable</span>
-                  <select class="form-control" style="width: 140px; padding: 2px 8px; font-size: 12px;">
-                    <option selected>TC Head</option>
-                    <option>Delivery Manager</option>
-                  </select>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-size: 12px; color: var(--text-dark); font-weight: 500;">Consulted</span>
-                  <select class="form-control" style="width: 140px; padding: 2px 8px; font-size: 12px;">
-                    <option selected>Tech Architect</option>
-                    <option>Domain Expert</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+
 
           <div class="association-card" style="border-radius: var(--radius-md);">
             <div class="card-header" style="background: transparent; padding-bottom: 8px; border-bottom: none;">
               <strong>Execution Ownership</strong>
             </div>
             <div style="padding: 0 16px 16px;">
-              <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                  <div style="font-weight: 600; font-size: 13px; color: var(--text-dark);">Execution Ownership</div>
-                  <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;" id="btn-reopen-decision" onclick="window.changeExecutionOwnership()" style="display: none;"><i class="ph ph-pencil-simple"></i> Change Decision</button>
-                    <button class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;" id="btn-manage-exec" onclick="window.openExecutionOwnershipModal('manual')" style="display: none;"><i class="ph ph-pencil-simple"></i> Manage</button>
-                  </div>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+                <div>
+                  <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">EXECUTION DECISION</div>
+                  <div class="c-val" style="color: var(--text-dark); font-size: 12px; font-weight: 500;" id="view-exec-decision">Not Decided</div>
                 </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">EXECUTION DECISION</div>
-                  <div class="c-val" style="color: var(--text-dark);" id="view-exec-decision">Not Decided</div>
+                <div>
+                  <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">STATUS</div>
+                  <div class="c-val" id="view-exec-status"><span class="badge" style="background: #E2E8F0; color: #475569; padding: 2px 6px; border-radius: 4px; font-size: 10px;">Discussing</span></div>
                 </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">EXECUTION OWNER</div>
-                  <div class="c-val" style="color: var(--text-dark);" id="view-exec-type">Not Decided</div>
+                <div>
+                  <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">OWNER</div>
+                  <div class="c-val" style="color: var(--text-dark); font-size: 12px;" id="view-exec-type">Not Decided</div>
                 </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION STATUS</div>
-                  <div class="c-val" style="color: var(--text-dark);" id="view-exec-status"><span class="badge" style="background: #E2E8F0; color: #475569; padding: 2px 8px; border-radius: 4px; font-size: 11px;">Discussing</span></div>
+                <div>
+                  <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">DATE</div>
+                  <div class="c-val" style="color: var(--text-muted); font-size: 12px;" id="view-exec-date">--</div>
                 </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION DATE</div>
-                  <div class="c-val" style="color: var(--text-muted);" id="view-exec-date">--</div>
+                <div>
+                  <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">DECISION BY</div>
+                  <div class="c-val" style="color: var(--text-muted); font-size: 12px;" id="view-exec-by">--</div>
                 </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION BY</div>
-                  <div class="c-val" style="color: var(--text-muted);" id="view-exec-by">--</div>
-                </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DECISION NOTE</div>
-                  <div class="c-val" style="color: var(--text-muted); font-size: 12px; line-height: 1.4;" id="view-exec-note">--</div>
-                </div>
-                <div id="view-exec-source-wrapper" style="display: none;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">SOURCE DECISION</div>
-                  <div class="c-val"><a href="#" id="view-exec-source" style="font-size: 12px; color: var(--primary-teal); text-decoration: none;">View original decision</a></div>
+                <div style="grid-column: span 2;">
+                  <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">NOTE</div>
+                  <div class="c-val" style="color: var(--text-muted); font-size: 11px; line-height: 1.4; background: #F8FAFC; padding: 6px; border-radius: 4px; border: 1px solid #F1F5F9;" id="view-exec-note">--</div>
                 </div>
               </div>
               
               <div>
-                <div style="font-weight: 600; font-size: 13px; color: var(--text-dark); margin-bottom: 8px;">Responsible Manager</div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">DELIVERY MANAGER</div>
-                  <div class="c-val" style="color: var(--text-muted);" id="view-dm">--</div>
-                </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">TC MANAGER</div>
-                  <div class="c-val" style="color: var(--text-muted);" id="view-tm">--</div>
-                </div>
-                <div style="margin-bottom: 8px;">
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">PRIMARY RESPONSIBLE</div>
-                  <div class="c-val" style="color: var(--text-muted);" id="view-pm">--</div>
-                </div>
-                <div>
-                  <div class="c-label" style="font-size: 11px; margin-bottom: 4px;">SUPPORTING RESPONSIBLE</div>
-                  <div class="c-val" style="color: var(--text-muted);" id="view-sm">--</div>
+                <div style="font-weight: 600; font-size: 12px; color: var(--text-dark); margin-bottom: 8px;">Responsible Manager</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div>
+                    <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">PRIMARY</div>
+                    <div class="c-val" style="color: var(--text-dark); font-size: 12px; font-weight: 500;" id="view-pm">--</div>
+                  </div>
+                  <div>
+                    <div class="c-label" style="font-size: 10px; margin-bottom: 2px;">SUPPORTING</div>
+                    <div class="c-val" style="color: var(--text-muted); font-size: 12px;" id="view-sm">--</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -654,9 +840,9 @@
         <div class="form-group" style="flex: 1;">
           <label>Assign to <span class="required">*</span></label>
           <select class="form-control">
-            <option>Minh Tráº§n (TC)</option>
-            <option>Thu Pháº¡m (TC)</option>
-            <option>Huy LÃª (Dev)</option>
+            <option>Minh TrÃ¡ÂºÂ§n (TC)</option>
+            <option>Thu PhÃ¡ÂºÂ¡m (TC)</option>
+            <option>Huy LÃƒÂª (Dev)</option>
             <option>Minh Tran (TC)</option>
             <option>Thu Pham (TC)</option>
             <option>Huy Le (Dev)</option>
@@ -678,7 +864,7 @@
     </div>
     
     <div class="modal-footer">
-      <button class="btn btn-secondary" id="cancel-add-deliverable">Há»§y</button>
+      <button class="btn btn-secondary" id="cancel-add-deliverable">HÃ¡Â»Â§y</button>
       <button class="btn btn-primary" id="submit-add-deliverable">Create request</button>
     </div>
   </div>
@@ -956,5 +1142,54 @@
   </div>
 
   <script src="app.js"></script>
+  <div class="overlay" id="audit-modal-overlay" style="z-index: 9999; display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);"></div>
+  <div class="modal" id="audit-modal" style="z-index: 10000; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 24px; border-radius: 8px; width: 600px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); max-height: 80vh; overflow-y: auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h3 style="margin: 0; color: #1E293B;"><i class="ph ph-clock-counter-clockwise" style="color: var(--primary-teal); margin-right: 8px;"></i> Opportunity Governance Audit Log</h3>
+      <button style="background: none; border: none; cursor: pointer; font-size: 20px;" onclick="document.getElementById('audit-modal-overlay').style.display='none'; document.getElementById('audit-modal').style.display='none';"><i class="ph ph-x"></i></button>
+    </div>
+    
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <div class="timeline-icon"><i class="ph ph-shield-check" style="color: #10B981;"></i></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <strong>COO Approved Governance Gate</strong>
+            <span class="timeline-time">Today, 10:30 AM</span>
+          </div>
+          <div class="timeline-body">
+            Approved by Jane (COO). Note: "Margins look good, proceed."
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon"><i class="ph ph-warning-circle" style="color: #EF4444;"></i></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <strong>Proposal Blocked (Big Opportunity Rule)</strong>
+            <span class="timeline-time">Yesterday, 04:15 PM</span>
+          </div>
+          <div class="timeline-body">
+            TCV ($1.2M) exceeded $100k threshold. Auto-blocked by system.
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon"><i class="ph ph-arrows-split" style="color: #F59E0B;"></i></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <strong>Routing Confirmed with Override</strong>
+            <span class="timeline-time">Yesterday, 09:00 AM</span>
+          </div>
+          <div class="timeline-body">
+            Alex (Bid Manager) changed routing from "Delivery BU" to "Technology Consulting".<br>
+            Reason: "Complex cloud architecture requires TC lead."
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
+
+

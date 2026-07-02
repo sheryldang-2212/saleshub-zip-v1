@@ -190,10 +190,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.mockDeliverables = [
     {
-      id: "deliv-1",
-      name: "Solution Architecture Document",
-      assignee: "Minh Tran (TC)",
+      id: "group-solution",
+      name: "Solution Design",
+      assignee: "Delivery",
+      isRequired: true,
       deadline: "2023-10-25",
+      subItems: [
+        { name: "Scope", checked: true },
+        { name: "Architecture", checked: true },
+        { name: "Estimate", checked: false },
+        { name: "Staffing", checked: false },
+        { name: "Delivery Plan", checked: false }
+      ],
       versions: [
         {
           versionNumber: "V1",
@@ -214,34 +222,61 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     {
-      id: "deliv-2",
-      name: "Effort & Cost Estimation",
-      assignee: "Huy Le (Dev)",
+      id: "group-strategic",
+      name: "Strategic Review",
+      assignee: "Technology Consulting",
+      isRequired: false, // Calculated dynamically later
+      deadline: "2023-10-26",
+      subItems: [
+        { name: "Architecture", checked: false },
+        { name: "AI", checked: false },
+        { name: "Governance", checked: false },
+        { name: "Standards", checked: false }
+      ],
+      versions: []
+    },
+    {
+      id: "group-proposal",
+      name: "Proposal",
+      assignee: "Sales / Bid Manager",
+      isRequired: true,
       deadline: "2023-10-28",
+      versions: []
+    },
+    {
+      id: "group-other",
+      name: "Other Docs",
+      assignee: "--",
+      isRequired: false,
+      deadline: "--",
       versions: [
         {
           versionNumber: "V1",
-          fileName: "Effort_Estimation_v2.xlsx",
-          uploadedBy: "Huy Le",
-          uploadedDate: "2023-10-26",
-          note: "Final estimation",
+          fileName: "Client_RFP_Document.pdf",
+          uploadedBy: "Alex Thompson",
+          uploadedDate: "2023-10-15",
+          note: "Original RFP",
           isLatest: true
         }
       ]
     },
     {
-      id: "deliv-3",
-      name: "Technical Proposal Deck",
-      assignee: "Minh Tran (TC)",
-      deadline: "2023-10-25",
-      versions: []
-    },
-    {
-      id: "deliv-4",
-      name: "Risk Assessment Report",
-      assignee: "Thu Phạm (TC)",
-      deadline: "2023-10-25",
-      versions: []
+      id: "group-price",
+      name: "Price",
+      assignee: "Sales",
+      isRequired: true,
+      isRestricted: true,
+      deadline: "2023-10-30",
+      versions: [
+        {
+          versionNumber: "V1",
+          fileName: "Pricing_Estimation.xlsx",
+          uploadedBy: "Alex Thompson",
+          uploadedDate: "2023-10-26",
+          note: "Initial Pricing",
+          isLatest: true
+        }
+      ]
     }
   ];
 
@@ -2295,17 +2330,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const btnAddDeliverable = document.getElementById('btn-add-deliverable');
-  const closeAddDeliverable = document.getElementById('close-modal-add-deliverable');
-  const cancelAddDeliverable = document.getElementById('cancel-add-deliverable');
-  const submitAddDeliverable = document.getElementById('submit-add-deliverable');
-
-  if (btnAddDeliverable) btnAddDeliverable.addEventListener('click', () => openCenterModal('modal-add-deliverable'));
-  if (closeAddDeliverable) closeAddDeliverable.addEventListener('click', () => closeCenterModal('modal-add-deliverable'));
-  if (cancelAddDeliverable) cancelAddDeliverable.addEventListener('click', () => closeCenterModal('modal-add-deliverable'));
-  if (submitAddDeliverable) submitAddDeliverable.addEventListener('click', () => {
-    alert('Deliverable added!');
-    closeCenterModal('modal-add-deliverable');
-  });
+  if (btnAddDeliverable) {
+    btnAddDeliverable.style.display = 'none'; // Ensure it's hidden if not removed from HTML yet
+  }
 
   // --- Deliverables Versioning Logic ---
   const deliverablesList = document.getElementById('deliverables-list');
@@ -2329,29 +2356,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const updateDeliverableKPIs = () => {
     if (!kpiTotal) return;
-    let total = window.mockDeliverables.length;
-    let sub = 0;
-    let pend = 0;
-    let over = 0;
-    const now = new Date('2023-10-26'); // hardcoding "today" based on mock deadlines
+    
+    const oppTypeEl = document.getElementById('val-opp-type');
+    const oppType = oppTypeEl ? oppTypeEl.innerText.trim().toLowerCase() : '';
+    const strategicReview = window.mockDeliverables.find(d => d.id === 'group-strategic');
+    if (strategicReview) {
+      if (['ai transformation program', 'enterprise modernization', 'large digital transformation', 'rfp requiring new offering'].includes(oppType)) {
+        strategicReview.isRequired = true;
+      } else {
+        strategicReview.isRequired = false;
+        strategicReview.status = "Not Required";
+      }
+    }
+
+    let requiredDocs = 0;
+    let completed = 0;
+    let pending = 0;
+    let overdue = 0;
+    const now = new Date('2023-10-26');
 
     window.mockDeliverables.forEach(d => {
-      if (d.versions.length > 0) {
-        sub++;
-      } else {
-        const deadline = new Date(d.deadline);
-        if (deadline < now) {
-          over++;
+      if (d.isRequired) {
+        requiredDocs++;
+        if (d.versions && d.versions.length > 0) {
+          completed++;
+          d.status = "Submitted";
         } else {
-          pend++;
+          const deadline = new Date(d.deadline);
+          if (deadline < now) {
+            overdue++;
+            d.status = "Overdue";
+          } else {
+            pending++;
+            d.status = "Missing";
+          }
+        }
+      } else {
+        if (d.versions && d.versions.length > 0) {
+          d.status = "Submitted";
+        } else if (d.id !== 'group-strategic') {
+          d.status = "Missing";
         }
       }
     });
 
-    kpiTotal.innerText = total;
-    kpiSubmitted.innerText = sub;
-    kpiPending.innerText = pend;
-    kpiOverdue.innerText = over;
+    kpiTotal.innerText = requiredDocs;
+    kpiSubmitted.innerText = completed;
+    kpiPending.innerText = pending;
+    kpiOverdue.innerText = overdue;
   };
 
   const getFileIcon = (fileName) => {
@@ -2364,61 +2416,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const renderDeliverables = () => {
     if (!deliverablesList) return;
+    updateDeliverableKPIs();
     deliverablesList.innerHTML = '';
-    const now = new Date('2023-10-26'); 
+    
+    // Simulate user role - Assuming "Sales Owner" for now so we can see the Price group.
+    // If you want to simulate "Delivery" to see the block, change this to 'Delivery'.
+    const currentUserRole = 'Sales Owner'; 
 
     window.mockDeliverables.forEach((d, index) => {
       let statusHtml = '';
       let fileBlockHtml = '';
+      
+      let badgeColor = '';
+      let badgeBg = '';
+      let badgeBorder = '';
+      if (d.status === 'Submitted') { badgeColor = '#27AE60'; badgeBg = '#E8F5E9'; badgeBorder = '#C8E6C9'; }
+      else if (d.status === 'Overdue') { badgeColor = '#C0392B'; badgeBg = '#FFEBEE'; badgeBorder = '#FFCDD2'; }
+      else if (d.status === 'Missing' || d.status === 'In Progress') { badgeColor = '#E67E22'; badgeBg = '#FFF3E0'; badgeBorder = '#FFE0B2'; }
+      else { badgeColor = '#7F8C8D'; badgeBg = '#F2F4F4'; badgeBorder = '#D5D8DC'; } // Not Required
+      
+      statusHtml = `<span class="badge" style="background: ${badgeBg}; color: ${badgeColor}; border: 1px solid ${badgeBorder}; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${d.status}</span>`;
 
-      if (d.versions.length > 0) {
-        statusHtml = `<span class="badge" style="background: #E8F5E9; color: #27AE60; border: 1px solid #C8E6C9; padding: 2px 8px; border-radius: 12px; font-size: 12px;">Submitted</span>`;
-        const latest = d.versions.find(v => v.isLatest) || d.versions[d.versions.length - 1];
+      const isRestrictedForUser = d.isRestricted && !['Sales Owner', 'Sales Manager', 'COO', 'Admin', 'Sales'].includes(currentUserRole);
+
+      if (isRestrictedForUser) {
         fileBlockHtml = `
-          <div style="display: flex; justify-content: space-between; align-items: center; background: #F8FAFC; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color);">
-            <div style="display: flex; gap: 12px; align-items: center; flex: 1;">
-              ${getFileIcon(latest.fileName)}
-              <div style="flex: 1;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="font-size: 13px; color: var(--primary-teal); font-weight: 600;">${latest.fileName}</span>
-                  <span style="font-size: 10px; background: var(--primary-teal); color: #FFF; padding: 2px 6px; border-radius: 10px;">Latest (${latest.versionNumber})</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Uploaded by ${latest.uploadedBy} on ${latest.uploadedDate}</div>
-              </div>
-            </div>
-            <div style="display: flex; gap: 8px;">
-              <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-eye"></i> Preview</button>
-              <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-download-simple"></i> Download</button>
-            </div>
+          <div style="background: #FFF0F2; border: 1px dashed #FFA8B4; padding: 16px; border-radius: 6px; color: #E11D48; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+            <i class="ph ph-lock-key" style="font-size: 18px;"></i>
+            Restricted Document — You do not have permission to view pricing documents.
           </div>
         `;
       } else {
-        const deadline = new Date(d.deadline);
-        if (deadline < now) {
-          statusHtml = `<span class="badge" style="background: #FFEBEE; color: #C0392B; border: 1px solid #FFCDD2; padding: 2px 8px; border-radius: 12px; font-size: 12px;">Overdue</span>`;
-          fileBlockHtml = `<div style="font-size: 12px; color: #C0392B; display: flex; align-items: center; gap: 4px; padding: 8px 0;"><i class="ph ph-warning-circle"></i> This request is overdue - no file yet</div>`;
+        if (d.versions && d.versions.length > 0) {
+          const latest = d.versions.find(v => v.isLatest) || d.versions[d.versions.length - 1];
+          fileBlockHtml = `
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #F8FAFC; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+              <div style="display: flex; gap: 12px; align-items: center; flex: 1;">
+                ${getFileIcon(latest.fileName)}
+                <div style="flex: 1;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 13px; color: var(--primary-teal); font-weight: 600;">${latest.fileName}</span>
+                    <span style="font-size: 10px; background: var(--primary-teal); color: #FFF; padding: 2px 6px; border-radius: 10px;">Latest (${latest.versionNumber})</span>
+                  </div>
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Uploaded by ${latest.uploadedBy} on ${latest.uploadedDate}</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-eye"></i> Preview</button>
+                <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;"><i class="ph ph-download-simple"></i> Download</button>
+              </div>
+            </div>
+          `;
         } else {
-          statusHtml = `<span class="badge" style="background: #FFF3E0; color: #E67E22; border: 1px solid #FFE0B2; padding: 2px 8px; border-radius: 12px; font-size: 12px;">Pending</span>`;
-          fileBlockHtml = `<div style="font-size: 12px; color: var(--text-muted); padding: 8px 0;">No file uploaded yet.</div>`;
+          if (d.status === 'Overdue') {
+            fileBlockHtml = `<div style="font-size: 12px; color: #C0392B; display: flex; align-items: center; gap: 4px; padding: 8px 0;"><i class="ph ph-warning-circle"></i> This request is overdue - no file yet</div>`;
+          } else if (d.status === 'Not Required') {
+            fileBlockHtml = `<div style="font-size: 12px; color: var(--text-muted); padding: 8px 0;">This deliverable is not required for this opportunity type.</div>`;
+          } else {
+            fileBlockHtml = `<div style="font-size: 12px; color: var(--text-muted); padding: 8px 0;">No file uploaded yet.</div>`;
+          }
         }
       }
+
+      let checklistHtml = '';
+      if (d.subItems && d.subItems.length > 0) {
+        checklistHtml = `<div style="margin: 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">`;
+        d.subItems.forEach(item => {
+          const icon = item.checked ? '<i class="ph-fill ph-check-square" style="color: #27AE60; font-size: 16px;"></i>' : '<i class="ph ph-square" style="color: #94A3B8; font-size: 16px;"></i>';
+          checklistHtml += `<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dark);">${icon} ${item.name}</div>`;
+        });
+        checklistHtml += `</div>`;
+      }
+
+      let actionsHtml = '';
+      if (!isRestrictedForUser && d.status !== 'Not Required') {
+         actionsHtml = `
+          <div style="display: flex; gap: 12px; align-items: center; margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+            <button class="btn btn-primary btn-upload-version" data-id="${d.id}" style="padding: 6px 12px; font-size: 12px;"><i class="ph ph-upload-simple"></i> Upload File</button>
+            <button class="btn btn-secondary btn-view-history" data-id="${d.id}" style="padding: 6px 12px; font-size: 12px;">
+              <i class="ph ph-clock-counter-clockwise"></i> View Versions (${d.versions ? d.versions.length : 0})
+            </button>
+          </div>
+         `;
+      }
+
+      const reqLabel = d.isRequired ? '<span style="color: #E11D48; font-size: 12px; font-weight: 700; margin-left: 8px;">*REQUIRED</span>' : '';
 
       deliverablesList.innerHTML += `
         <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; background: #FFF;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
             <div>
-              <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text-dark);">${index + 1}. ${d.name}</div>
-              <div style="font-size: 12px; color: var(--text-muted);">Assignee: <span style="color: var(--text-dark);">${d.assignee}</span> &middot; Deadline: ${d.deadline}</div>
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text-dark);">${index + 1}. ${d.name} ${reqLabel}</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Owner: <span style="color: var(--text-dark);">${d.assignee}</span> &middot; Deadline: ${d.deadline}</div>
             </div>
             ${statusHtml}
           </div>
+          ${checklistHtml}
           ${fileBlockHtml}
-          <div style="display: flex; gap: 12px; align-items: center; margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px;">
-            <button class="btn btn-primary btn-upload-version" data-id="${d.id}" style="padding: 6px 12px; font-size: 12px;"><i class="ph ph-upload-simple"></i> Upload File</button>
-            <button class="btn btn-secondary btn-view-history" data-id="${d.id}" style="padding: 6px 12px; font-size: 12px;">
-              <i class="ph ph-clock-counter-clockwise"></i> View Versions (${d.versions.length})
-            </button>
-          </div>
+          ${actionsHtml}
         </div>
       `;
     });
@@ -2440,7 +2535,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if(historyTbody) {
           historyTbody.innerHTML = '';
-          if (d.versions.length === 0) {
+          if (!d.versions || d.versions.length === 0) {
             historyTbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 24px; color: var(--text-muted);">No versions uploaded yet.</td></tr>`;
           } else {
             const sorted = [...d.versions].reverse();
@@ -2461,12 +2556,10 @@ document.addEventListener('DOMContentLoaded', () => {
               `;
             });
           }
+          openCenterModal('modal-version-history');
         }
-        openCenterModal('modal-version-history');
       });
     });
-
-    updateDeliverableKPIs();
   };
 
   if(uploadClose) uploadClose.addEventListener('click', () => closeCenterModal('modal-upload-version'));
@@ -4680,4 +4773,218 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(initForecastRegistration, 100);
   setTimeout(initForecastModule, 100);
 
+});
+
+// --- Routing Workspace Logic ---
+window.isRoutingConfirmed = false;
+
+window.addRoutingComment = function() {
+  if (window.isRoutingConfirmed) {
+    alert("Routing is already confirmed. Discussion is locked.");
+    return;
+  }
+  
+  const textInput = document.getElementById('routing-comment-text');
+  const thread = document.getElementById('routing-discussion-thread');
+  const emptyMsg = document.getElementById('empty-routing-discussion');
+  
+  if (!textInput || !textInput.value.trim()) return;
+  
+  if (emptyMsg) emptyMsg.style.display = 'none';
+  
+  const text = textInput.value;
+  const time = new Date().toISOString().replace('T', ' ').substring(0, 16);
+  const commentId = 'rc-' + Date.now();
+  
+  let borderColor = 'var(--border-color)';
+  let bg = '#F8FAFC';
+  let badgeHtml = '';
+  
+  const html = `
+    <div style="display: flex; flex-direction: row-reverse; gap: 12px; margin-bottom: 8px;" id="${commentId}">
+      <div class="company-avatar" style="width: 32px; height: 32px; font-size: 14px; flex-shrink: 0; background: var(--primary-teal); color: #fff;">ME</div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; max-width: 80%;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-direction: row-reverse;">
+          <span style="font-weight: 600; font-size: 12px; color: var(--text-dark);">Current User</span>
+          <span style="font-size: 11px; color: var(--text-light);">${time}</span>
+          ${badgeHtml}
+        </div>
+        <div style="font-size: 13px; color: var(--text-dark); background: ${bg}; padding: 10px 14px; border-radius: 16px 4px 16px 16px; border: 1px solid ${borderColor}; margin-bottom: 4px; text-align: left; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" class="rc-content">
+          ${text}
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: flex-end;">
+          <span class="btn-mark-decision" style="font-size: 11px; color: #D97706; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500;" onclick="window.markRoutingDecision('${commentId}')"><i class="ph ph-check-circle"></i> Mark as Decision</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  thread.insertAdjacentHTML('beforeend', html);
+  textInput.value = '';
+  
+  thread.scrollTop = thread.scrollHeight;
+  
+  if(window.addAuditLog) window.addAuditLog('Routing Comment Added', `User added a comment.`);
+};
+
+window.markRoutingDecision = function(id) {
+  document.querySelectorAll('.rc-content').forEach(el => el.style.borderWidth = '1px');
+  
+  const commentEl = document.getElementById(id);
+  if (commentEl) {
+    const content = commentEl.querySelector('.rc-content');
+    content.style.border = '2px solid #D97706';
+    
+    // Add to Decision Log
+    const logList = document.getElementById('decision-log-list');
+    const logContainer = document.getElementById('decision-log-container');
+    if (logList && logContainer) {
+      logContainer.style.display = 'block';
+      const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const date = new Date().toISOString().substring(0,10);
+      const logHtml = `
+        <div style="background: #FFFBEB; border: 1px solid #FCD34D; padding: 8px 12px; border-radius: 4px; font-size: 12px; color: #92400E; display: flex; align-items: flex-start; gap: 8px;">
+          <i class="ph ph-check-circle" style="font-size: 16px; color: #D97706; margin-top: 2px;"></i>
+          <div>
+            <div style="font-weight: 600; margin-bottom: 2px;">Marked as Decision at ${time}</div>
+            <div>${content.innerText}</div>
+          </div>
+        </div>
+      `;
+      logList.insertAdjacentHTML('beforeend', logHtml);
+      
+      // Update Execution Ownership sidebar
+      const viewExecNote = document.getElementById('view-exec-note');
+      if (viewExecNote) viewExecNote.innerText = content.innerText;
+      
+      const viewExecStatus = document.getElementById('view-exec-status');
+      if (viewExecStatus) viewExecStatus.innerHTML = '<span class="badge" style="background: #10B981; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px;">Decided</span>';
+      
+      const viewExecDate = document.getElementById('view-exec-date');
+      if (viewExecDate) viewExecDate.innerText = date;
+      
+      const viewExecBy = document.getElementById('view-exec-by');
+      if (viewExecBy) viewExecBy.innerText = 'Current User';
+      
+      const viewExecDecision = document.getElementById('view-exec-decision');
+      if (viewExecDecision) viewExecDecision.innerText = 'Confirmed';
+    }
+  }
+  if(window.addAuditLog) window.addAuditLog('Decision Marked', `User marked comment as Decision.`);
+};
+
+window.confirmRoutingDecision = function() {
+  const primaryInput = document.getElementById('primary-responsible-input');
+  const supportInput = document.getElementById('supporting-responsible-input');
+  const primary = primaryInput ? primaryInput.value : '';
+  const support = supportInput ? supportInput.value : '';
+  
+  if (!primary) {
+    alert("Please select a Primary Responsible.");
+    return;
+  }
+  
+  const overrideReason = document.getElementById('override-reason-input')?.value;
+  
+  if (primary === 'TC' && (!overrideReason || overrideReason.trim() === '')) {
+    alert("OVERRIDE REASON is required because Primary differs from System Suggestion (Delivery BU).");
+    return;
+  }
+  
+  window.isRoutingConfirmed = true;
+  
+  const badge = document.getElementById('routing-status-badge');
+  if (badge) {
+    badge.className = 'badge b-blue';
+    badge.innerText = 'Confirmed';
+    badge.style.background = '#E0F2FE';
+    badge.style.color = '#0284C7';
+    badge.style.border = '1px solid #7DD3FC';
+  }
+  
+  const inputEl = document.getElementById('override-reason-input');
+  const btnConfirm = document.getElementById('btn-confirm-routing');
+  
+  if (primaryInput) primaryInput.disabled = true;
+  if (supportInput) supportInput.disabled = true;
+  if (inputEl) inputEl.disabled = true;
+  if (btnConfirm) btnConfirm.style.display = 'none';
+  
+  const viewPm = document.getElementById('view-pm');
+  const viewSm = document.getElementById('view-sm');
+  
+  if (viewPm) viewPm.innerText = primary;
+  if (viewSm) viewSm.innerText = support || '--';
+  
+  if(window.addAuditLog) window.addAuditLog('Routing Confirmed', `Primary: ${primary}, Support: ${support}. Reason: ${overrideReason || 'N/A'}`);
+};
+
+if (!window.addAuditLog) {
+  window.addAuditLog = function(title, desc) {
+    const container = document.querySelector('.timeline-container');
+    if (container) {
+      const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const html = `
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="ph ph-info" style="color: #3B82F6;"></i></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <strong>${title}</strong>
+              <span class="timeline-time">Today, ${time}</span>
+            </div>
+            <div class="timeline-body">
+              ${desc}
+            </div>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('afterbegin', html);
+    }
+  };
+}
+
+window.savePostMortem = function() {
+  const outcome = document.getElementById('pm-outcome') ? document.getElementById('pm-outcome').value : '';
+  if (!outcome) {
+    alert("Please select the Final Outcome (Won/Lost) before saving.");
+    return;
+  }
+  
+  // Simulate saving to Knowledge Hub
+  alert(`Knowledge Record Auto-created in Draft Status!\n\nRedirecting to Case Study Hub...`);
+  window.location.href = "case_studies.html";
+};
+
+window.validateProposalSubmission = function() {
+  if (!window.mockDeliverables) return true;
+  const missing = window.mockDeliverables.filter(d => d.isRequired && d.status !== 'Submitted');
+  if (missing.length > 0) {
+    const missingNames = missing.map(m => m.name).join(', ');
+    alert(`Cannot submit proposal. The following required deliverables are incomplete: ${missingNames}`);
+    return false;
+  }
+  return true;
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const bidStatusSelect = document.getElementById('select-bid-status');
+  if (bidStatusSelect) {
+    let previousValue = bidStatusSelect.value;
+    
+    bidStatusSelect.addEventListener('change', (e) => {
+      const newValue = e.target.value;
+      if (['Proposal Presented', 'Done', 'Bid Win'].includes(newValue)) {
+        if (!window.validateProposalSubmission()) {
+          e.target.value = previousValue;
+          return;
+        }
+      }
+      previousValue = newValue;
+      if (window.showToast) {
+        window.showToast(`Bid status updated to ${newValue}`, 'success');
+      } else {
+        alert(`Bid status updated to ${newValue}`);
+      }
+    });
+  }
 });
